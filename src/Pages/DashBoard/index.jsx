@@ -8,7 +8,7 @@ export default function DashBoard() {
 
   return (
     <Container>
-      <h2>Aprender Taboada</h2>
+      <h2>Aprenda Taboada</h2>
       <LevelContainer>
         {levels?.map((elem, i) => (
           <Level key={i}>
@@ -58,11 +58,12 @@ const Level = styled.li`
     padding: 20px;
 
     margin: 5px;
-    background-color: #006eff;
+    background: linear-gradient(to bottom, #006eff, #0059ce);
     color: white;
-    font-size: 25px;
-    border-radius: 10px;
-    border: 4px solid #006eff;
+    font-size: 30px;
+    font-weight: bold;
+    border-radius: 20px;
+    border-bottom: 5px solid #174a8d;
 
     cursor: pointer;
     transition: background-color 0.2s ease-in-out, transform 0.1s ease-in-out;

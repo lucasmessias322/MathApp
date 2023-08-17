@@ -58,7 +58,7 @@ const Container = styled.div`
     padding: 10px;
     margin: 0 auto;
     li {
-      padding: 10px;
+      padding: 5px;
       font-size: 30px;
     }
   }

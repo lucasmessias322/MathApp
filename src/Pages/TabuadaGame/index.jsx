@@ -67,10 +67,11 @@ export default function TabuadaGame() {
             <FaVolumeMute color="white" size={20} />
           )}
         </span>
+        <span className="stars"></span>
       </Header>
 
       <Container>
-        <h2>Tabuada {tabuNumber}</h2>
+        {/* <h2>Tabuada {tabuNumber}</h2> */}
         <DisplayEquation>{equation}</DisplayEquation>
         <DisplayResponse>{response}</DisplayResponse>
         <ButtonsContainer>
@@ -99,14 +100,12 @@ export default function TabuadaGame() {
   );
 }
 
-// ... The rest of your styled components remain unchanged
-
 const ContainerTabuada = styled.div`
   color: white;
   display: flex;
   flex-direction: column;
-  align-items: center;
-  justify-content: center;
+  /* align-items: center;
+  justify-content: center; */
 
   h2 {
     color: #0471ff;
@@ -118,14 +117,13 @@ const ContainerTabuada = styled.div`
 const Header = styled.header`
   display: flex;
   justify-content: space-between;
-  padding: 10px;
-  position: fixed;
-  top: 0;
-  left: 0;
+  align-items: center;
+  padding: 20px 15px;
+
   .volume {
     border: 2px solid #006eff;
     background-color: #006eff;
-    padding: 10px;
+    padding: 5px;
     border-radius: 100%;
     display: flex;
     justify-content: center;
@@ -146,25 +144,27 @@ const Container = styled.div`
 
 const DisplayEquation = styled.div`
   width: 90%;
-  max-width: 300px;
+  max-width: 250px;
   padding: 20px;
   border: 2px solid #006eff;
   background-color: #343541;
   border-radius: 10px;
   height: 40px;
+  font-weight: bold;
   font-size: 35px;
   text-align: center;
 `;
 
 const DisplayResponse = styled.div`
   width: 90%;
-  max-width: 300px;
+  max-width: 250px;
   padding: 20px;
   border: 2px solid #006eff;
   background-color: #343541;
   border-radius: 10px;
   height: 40px;
-  font-size: 30px;
+  font-weight: bold;
+  font-size: 35px;
   text-align: center;
   margin-top: 10px;
 `;
@@ -181,45 +181,26 @@ const ButtonsContainer = styled.ul`
   margin: 20px auto;
 `;
 
-// const Buttons = styled.div`
-//   padding: 10px;
-//   height: 60px;
-//   width: 60px;
-//   margin: 5px;
-//   display: flex;
-//   align-items: center;
-//   justify-content: center;
-//   font-size: 25px;
-//   color: white;
-//   background-color: #006eff;
-//   border-radius: 10px;
-//   border: 4px solid #006eff;
-
-//   &:hover {
-//     background-color: #343541;
-//   }
-// `;
-// ... (imports and component code)
-
 const Buttons = styled.div`
   padding: 10px;
-  height: 60px;
-  width: 60px;
+  height: 70px;
+  width: 70px;
   margin: 5px;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 25px;
+  font-size: 30px;
+  font-weight: bold;
   color: white;
-  background-color: #006eff;
-  border-radius: 10px;
-  border: 4px solid #006eff;
+  background: linear-gradient(to bottom, #006eff, #0059ce);
+  border-radius: 20px;
+  border-bottom: 5px solid #174a8d;
   cursor: pointer;
-  transition: background-color 0.2s ease-in-out, transform 0.1s ease-in-out;
+  transition: transform 0.1s ease-in-out;
 
-  &:hover {
+  /* &:hover {
     background-color: #343541;
-  }
+  } */
 
   &:active {
     transform: scale(0.95);
