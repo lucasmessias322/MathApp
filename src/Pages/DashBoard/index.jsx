@@ -28,7 +28,8 @@ const Container = styled.div`
   h2 {
     width: 100%;
     color: #0471ff;
-    font-size: 30px;
+    font-size: 35px;
+    padding: 20px;
     text-align: center;
   }
 `;
@@ -53,16 +54,16 @@ const Level = styled.li`
     align-items: center;
     justify-content: center;
 
-    width: 50px;
-    height: 40px;
+    width: 100px;
+    height: 100px;
     padding: 20px;
 
     margin: 5px;
     background: linear-gradient(to bottom, #006eff, #0059ce);
     color: white;
-    font-size: 30px;
+    font-size: 35px;
     font-weight: bold;
-    border-radius: 20px;
+    border-radius: 10px;
     border-bottom: 5px solid #174a8d;
 
     cursor: pointer;

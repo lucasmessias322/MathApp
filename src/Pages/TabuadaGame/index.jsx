@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import { useParams } from "react-router-dom";
-import { FaVolumeUp, FaVolumeMute } from "react-icons/fa";
+import { FaVolumeUp, FaVolumeMute, FaCoins } from "react-icons/fa";
 
 export default function TabuadaGame() {
   const tabuNumber = parseInt(useParams().tabuada);
@@ -11,6 +11,7 @@ export default function TabuadaGame() {
   const [playCorrectSound, setPlayCorrectSound] = useState(false);
   const [playWrongSound, setPlayWrongSound] = useState(false);
   const [isSoundEnabled, setIsSoundEnabled] = useState(true);
+  const [score, setScore] = useState(0);
 
   useEffect(() => {
     generateEquation();
@@ -44,9 +45,14 @@ export default function TabuadaGame() {
       generateEquation();
       setPlayCorrectSound(true);
       setPlayWrongSound(false);
+      setScore(score + 1); // Increment score on correct answer
     } else {
       setPlayCorrectSound(false);
       setPlayWrongSound(true);
+
+      if (score > 0) {
+        setScore(score - 1); // Decrement score on wrong answer, but only if score is positive
+      }
 
       // Mostra a resposta correta em verde por meio segundo
       setResponse(correctAnswer.toString());
@@ -60,20 +66,22 @@ export default function TabuadaGame() {
   return (
     <ContainerTabuada>
       <Header>
-        <span className="volume" onClick={() => handleButtonClicked("🔊")}>
+        <div className="volume" onClick={() => handleButtonClicked("🔊")}>
           {isSoundEnabled ? (
             <FaVolumeUp color="white" size={20} />
           ) : (
             <FaVolumeMute color="white" size={20} />
           )}
-        </span>
-        <span className="stars"></span>
+        </div>
+        <div className="score">
+          <FaCoins color="#ffd900" size={20} />
+          <span>{score}</span>
+        </div>
       </Header>
-
       <Container>
-        {/* <h2>Tabuada {tabuNumber}</h2> */}
         <DisplayEquation>{equation}</DisplayEquation>
         <DisplayResponse>{response}</DisplayResponse>
+
         <ButtonsContainer>
           {[1, 2, 3, 4, 5, 6, 7, 8, 9, 0, "C", "="].map((value) => (
             <Buttons key={value} onClick={() => handleButtonClicked(value)}>
@@ -104,9 +112,7 @@ const ContainerTabuada = styled.div`
   color: white;
   display: flex;
   flex-direction: column;
-  /* align-items: center;
-  justify-content: center; */
-
+  height: 100vh;
   h2 {
     color: #0471ff;
     font-size: 30px;
@@ -115,56 +121,79 @@ const ContainerTabuada = styled.div`
 `;
 
 const Header = styled.header`
+  width: 100%;
+
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 20px 15px;
+  padding-bottom: 15px;
 
   .volume {
     border: 2px solid #006eff;
     background-color: #006eff;
     padding: 5px;
+    margin: 10px;
     border-radius: 100%;
     display: flex;
     justify-content: center;
     align-items: center;
+    margin-right: 10px; // Add margin for spacing
+  }
+
+  .score {
+    background-color: #006eff;
+    padding: 5px 20px;
+    border-top-left-radius: 20px;
+    border-bottom-left-radius: 20px;
+
+    span {
+      font-size: 18px;
+      color: #ffffff;
+      padding-left: 10px;
+    }
   }
 `;
 
 const Container = styled.div`
-  width: 100%;
+  width: 90%;
   max-width: 400px;
-  /* padding: 20px; */
+  padding: 20px;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  /* margin: 0 auto; */
+  margin: 0 auto;
 `;
 
 const DisplayEquation = styled.div`
-  width: 90%;
-  max-width: 250px;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
   padding: 20px;
   border: 2px solid #006eff;
   background-color: #343541;
   border-radius: 10px;
-  height: 40px;
+  height: 100px;
   font-weight: bold;
-  font-size: 35px;
+  font-size: 40px;
   text-align: center;
 `;
 
 const DisplayResponse = styled.div`
-  width: 90%;
-  max-width: 250px;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
   padding: 20px;
   border: 2px solid #006eff;
   background-color: #343541;
   border-radius: 10px;
-  height: 40px;
+  height: 100px;
   font-weight: bold;
-  font-size: 35px;
+  font-size: 40px;
   text-align: center;
   margin-top: 10px;
 `;
@@ -176,31 +205,30 @@ const ButtonsContainer = styled.ul`
   flex-wrap: wrap;
   align-items: center;
   justify-content: center;
-  padding: 0px;
+  /* padding: 10px; */
   list-style: none;
-  margin: 20px auto;
+  margin: 10px auto;
 `;
 
-const Buttons = styled.div`
-  padding: 10px;
-  height: 70px;
-  width: 70px;
-  margin: 5px;
+const Buttons = styled.button`
+  user-select: none;
+  outline: none;
+  border: none;
+  padding: 20px;
+  height: 90px;
+  width: 90px;
+  margin: 4px;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 30px;
+  font-size: 35px;
   font-weight: bold;
   color: white;
   background: linear-gradient(to bottom, #006eff, #0059ce);
-  border-radius: 20px;
+  border-radius: 10px;
   border-bottom: 5px solid #174a8d;
   cursor: pointer;
   transition: transform 0.1s ease-in-out;
-
-  /* &:hover {
-    background-color: #343541;
-  } */
 
   &:active {
     transform: scale(0.95);
