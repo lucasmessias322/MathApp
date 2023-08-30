@@ -12,6 +12,7 @@ export default function TabuadaGame() {
   const [playWrongSound, setPlayWrongSound] = useState(false);
   const [isSoundEnabled, setIsSoundEnabled] = useState(true);
   const [score, setScore] = useState(0);
+  const [maxScore, setMaxScore] = useState(0);
 
   useEffect(() => {
     generateEquation();
@@ -46,6 +47,9 @@ export default function TabuadaGame() {
       setPlayCorrectSound(true);
       setPlayWrongSound(false);
       setScore(score + 1); // Increment score on correct answer
+      if (score + 1 > maxScore) {
+        setMaxScore(score + 1);
+      }
     } else {
       setPlayCorrectSound(false);
       setPlayWrongSound(true);
@@ -63,6 +67,26 @@ export default function TabuadaGame() {
     }
   };
 
+  useEffect(() => {
+    const savedMaxScore = localStorage.getItem("maxScore");
+    if (savedMaxScore) {
+      const parsedSavedMaxScore = parseInt(savedMaxScore);
+      if (score > parsedSavedMaxScore) {
+        localStorage.setItem("maxScore", score.toString());
+        setMaxScore(score);
+      } else {
+        setMaxScore(parsedSavedMaxScore);
+      }
+    }
+  }, [score]);
+
+  useEffect(() => {
+    const savedMaxScore = localStorage.getItem("maxScore");
+    if (savedMaxScore) {
+      setMaxScore(parseInt(savedMaxScore));
+    }
+  }, []);
+
   return (
     <ContainerTabuada>
       <Header>
@@ -76,6 +100,8 @@ export default function TabuadaGame() {
         <div className="score">
           <FaCoins color="#ffd900" size={20} />
           <span>{score}</span>
+          <span>/</span>
+          <span className="maxScore">{maxScore}</span>
         </div>
       </Header>
       <Container>
@@ -150,6 +176,10 @@ const Header = styled.header`
       font-size: 18px;
       color: #ffffff;
       padding-left: 10px;
+    }
+
+    span.maxScore {
+      color: #ffd900;
     }
   }
 `;
