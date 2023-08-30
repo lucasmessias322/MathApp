@@ -122,7 +122,8 @@ const ContainerTabuada = styled.div`
 
 const Header = styled.header`
   width: 100%;
-
+  max-width: 400px;
+  margin: 0 auto;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -163,6 +164,10 @@ const Container = styled.div`
   align-items: center;
   justify-content: center;
   margin: 0 auto;
+
+  @media (min-width: 500px) {
+    padding: 0px;
+  }
 `;
 
 const DisplayEquation = styled.div`
@@ -232,5 +237,10 @@ const Buttons = styled.button`
 
   &:active {
     transform: scale(0.95);
+  }
+
+  @media (min-width: 500px) {
+    height: 80px;
+    width: 80px;
   }
 `;
