@@ -4,7 +4,6 @@ self.addEventListener("install", (event) => {
       return cache.addAll([
         "/", // Add the paths to your assets
         "/index.html",
-        "/soundeffects",
         // ...add other paths
       ]);
     })
