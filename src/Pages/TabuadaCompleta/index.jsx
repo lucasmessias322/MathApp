@@ -52,12 +52,14 @@ const Container = styled.div`
 
   ul {
     width: 100%;
+    max-width: 500px;
     display: flex;
     justify-content: center;
     flex-direction: column;
     list-style: none;
     padding: 10px;
     margin: 0 auto;
+
     li {
       padding: 5px;
       font-size: 30px;

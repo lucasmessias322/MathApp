@@ -36,7 +36,7 @@ const Container = styled.div`
 
 const LevelContainer = styled.ul`
   width: 100%;
-  /* max-width: 300px; */
+  max-width: 500px;
   margin: 0 auto;
   display: flex;
   flex-wrap: wrap;

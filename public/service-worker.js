@@ -1,11 +1,25 @@
+const cacheName = "tabuada-cache-v1"; // Update version when you change assets
+
 self.addEventListener("install", (event) => {
   event.waitUntil(
-    caches.open("tabuada-cache").then((cache) => {
+    caches.open(cacheName).then((cache) => {
       return cache.addAll([
         "/", // Add the paths to your assets
         "/index.html",
         // ...add other paths
       ]);
+    })
+  );
+});
+
+self.addEventListener("activate", (event) => {
+  event.waitUntil(
+    caches.keys().then((cacheNames) => {
+      return Promise.all(
+        cacheNames
+          .filter((name) => name !== cacheName)
+          .map((name) => caches.delete(name))
+      );
     })
   );
 });
@@ -18,18 +32,23 @@ self.addEventListener("fetch", (event) => {
         return response;
       }
 
-      // If the resource is not cached, fetch it and cache it
-      return fetch(event.request).then((response) => {
-        // Clone the response to use it for caching and for serving to the browser
-        const clonedResponse = response.clone();
+      // If the resource is not cached, try to fetch it
+      return fetch(event.request)
+        .then((networkResponse) => {
+          // Clone the response to use it for caching and for serving to the browser
+          const clonedResponse = networkResponse.clone();
 
-        // Open a cache and put the cloned response in it
-        caches.open("tabuada-cache").then((cache) => {
-          cache.put(event.request, clonedResponse);
+          // Open the cache and put the cloned response in it
+          caches.open(cacheName).then((cache) => {
+            cache.put(event.request, clonedResponse);
+          });
+
+          return networkResponse;
+        })
+        .catch(() => {
+          // If fetch fails and there's no cache, return a fallback response
+          return caches.match("/offline.html"); // Provide an offline fallback page
         });
-
-        return response;
-      });
     })
   );
 });
