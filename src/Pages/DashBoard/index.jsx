@@ -13,7 +13,7 @@ export default function DashBoard() {
       <LevelContainer>
         {levels?.map((elem, i) => (
           <Level key={i}>
-            <Link to={`#/TaboadaCompleta/${elem}`}>
+            <Link to={`/TaboadaCompleta/${elem}`}>
               <span>{elem}</span>
             </Link>
           </Level>
