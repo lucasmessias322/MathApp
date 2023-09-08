@@ -31,7 +31,7 @@ export default function TaboadaCompleta() {
         ))}
       </ul>
       <StartGameContainer>
-        <Link to={`/TabuadaGame/${tabuNumber}`}>
+        <Link to={`#/TabuadaGame/${tabuNumber}`}>
           <FaPlay size={35} />
         </Link>
       </StartGameContainer>
