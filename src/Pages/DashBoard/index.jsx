@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
+
 const numerosArray = Array.from({ length: 10 }, (_, index) => index + 1);
 
 export default function DashBoard() {
