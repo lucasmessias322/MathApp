@@ -1,11 +1,25 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
+import { AiOutlineStar, AiTwotoneStar } from "react-icons/ai";
 
 const numerosArray = Array.from({ length: 10 }, (_, index) => index + 1);
 
 export default function DashBoard() {
   const [levels, setLevels] = useState(numerosArray);
+
+  // Função para criar as estrelas com base no recorde
+  function renderStars(level) {
+    const stars = [];
+    const record = localStorage.getItem(`record_${level}`);
+
+    for (let i = 0; i < 5; i++) {
+      const starColor = record >= (i + 1) * 100 ? "#ffd900" : "#0044C6";
+      stars.push(<AiTwotoneStar key={i} color={starColor} />);
+    }
+
+    return stars;
+  }
 
   return (
     <Container>
@@ -15,6 +29,8 @@ export default function DashBoard() {
           <Level key={i}>
             <Link to={`/TaboadaCompleta/${elem}`}>
               <span>{elem}</span>
+              <div className="stars">{renderStars(elem)}</div>
+              {/* Exibe as estrelas */}
             </Link>
           </Level>
         ))}
@@ -37,7 +53,7 @@ const Container = styled.div`
 
 const LevelContainer = styled.ul`
   width: 100%;
-  max-width: 500px;
+  max-width: 400px;
   margin: 0 auto;
   display: flex;
   flex-wrap: wrap;
@@ -54,18 +70,20 @@ const Level = styled.li`
     display: flex;
     align-items: center;
     justify-content: center;
+    flex-direction: column;
 
     width: 100px;
     height: 100px;
     padding: 20px;
 
     margin: 5px;
-    background: linear-gradient(to bottom, #006eff, #0059ce);
+    /* background: linear-gradient(to bottom, #006eff, #0059ce); */
+    background: linear-gradient(179deg, #014ad8 1.22%, #002466 98.84%);
+    box-shadow: 5px 5px 4px 0px #010b1f;
     color: white;
-    font-size: 35px;
+    font-size: 30px;
     font-weight: bold;
-    border-radius: 10px;
-    border-bottom: 5px solid #174a8d;
+    border-radius: 20px;
 
     cursor: pointer;
     transition: background-color 0.2s ease-in-out, transform 0.1s ease-in-out;
@@ -76,6 +94,13 @@ const Level = styled.li`
 
     &:active {
       transform: scale(0.95);
+      box-shadow: 5px 5px 4px 0px #010b1f inset;
+    }
+
+    div.stars {
+      display: flex;
+      font-size: 12px;
+      padding: 5px 0px;
     }
   }
 `;

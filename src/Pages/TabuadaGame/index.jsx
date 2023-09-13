@@ -380,6 +380,7 @@ const ContainerTabuada = styled.div`
   display: flex;
   flex-direction: column;
   height: 100vh;
+  padding: 10px;
   h2 {
     color: #0471ff;
     font-size: 30px;
@@ -394,6 +395,7 @@ const Header = styled.header`
   display: flex;
   justify-content: space-between;
   align-items: center;
+
   padding-bottom: 15px;
 
   .volume {
@@ -460,7 +462,7 @@ const DisplayEquation = styled.div`
 
   padding: 20px;
   border: 2px solid #006eff;
-  background-color: #343541;
+  background-color: #19191f;
   border-radius: 10px;
   height: 100px;
   font-weight: bold;
@@ -476,7 +478,7 @@ const DisplayResponse = styled.div`
 
   padding: 20px;
   border: 2px solid #006eff;
-  background-color: #343541;
+  background-color: #19191f;
   border-radius: 10px;
   height: 100px;
   font-weight: bold;

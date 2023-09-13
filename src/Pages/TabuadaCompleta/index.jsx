@@ -22,7 +22,7 @@ export default function TaboadaCompleta() {
 
   return (
     <Container>
-      <h2>Taboada do {tabuNumber}</h2>
+      <h2>Level {tabuNumber}</h2>
       <ul>
         {table.map((item) => (
           <li key={item.num}>
@@ -84,8 +84,15 @@ const StartGameContainer = styled.div`
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: #006eff;
+
     padding: 20px;
     border-radius: 100%;
+    background: linear-gradient(179deg, #014ad8 1.22%, #002466 98.84%);
+    box-shadow: 5px 5px 4px 0px #010b1f;
+
+    &:active {
+      transform: scale(0.95);
+      box-shadow: 5px 5px 4px 0px #010b1f inset;
+    }
   }
 `;
