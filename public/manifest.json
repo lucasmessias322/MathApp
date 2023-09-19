@@ -1,6 +1,6 @@
 {
-  "short_name": "MathApp",
-  "name": "MathApp",
+  "short_name": "MathGame",
+  "name": "MathGame",
   "icons": [
     {
       "src": "favicon.ico",
@@ -20,6 +20,6 @@
   ],
   "start_url": "./",
   "display": "standalone",
-  "theme_color": " #343541",
-  "background_color": "#343541"
+  "theme_color": "#19191F",
+  "background_color": "#19191F"
 }

@@ -1,4 +1,4 @@
-const cacheName = "tabuada-cache-v4"; // Update version when you change assets
+const cacheName = "tabuada-cache-v5"; // Update version when you change assets
 
 self.addEventListener("install", (event) => {
   event.waitUntil(
