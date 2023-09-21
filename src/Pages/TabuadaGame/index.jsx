@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import styled from "styled-components";
+import * as C from "./style";
 import { useParams } from "react-router-dom";
 import { FaVolumeUp, FaVolumeMute, FaCoins } from "react-icons/fa";
 
@@ -14,6 +14,8 @@ export default function TabuadaGame() {
   const [score, setScore] = useState(0);
   const [thermometer, setThermometer] = useState(0);
   const [lastResponseTime, setLastResponseTime] = useState(Date.now());
+  // Lê o recorde atual da taboada atual do localStorage
+  const currentRecord = localStorage.getItem(`record_${tabuNumber}`);
 
   const updateThermometer = (isCorrect) => {
     let newThermometer = thermometer;
@@ -133,12 +135,9 @@ export default function TabuadaGame() {
     }
   };
 
-  // Lê o recorde atual da taboada atual do localStorage
-  const currentRecord = localStorage.getItem(`record_${tabuNumber}`);
-
   return (
-    <ContainerTabuada>
-      <Header>
+    <C.ContainerTabuada>
+      <C.Header>
         <div className="volume" onClick={() => handleButtonClicked("🔊")}>
           {isSoundEnabled ? (
             <FaVolumeUp color="white" size={20} />
@@ -156,22 +155,22 @@ export default function TabuadaGame() {
             <span>Max: {currentRecord || 0}</span>
           </div>
         </div>
-      </Header>
-      <Container>
-        <ThermometerContainer>
-          <ThermometerFill style={{ width: `${thermometer}%` }} />
-        </ThermometerContainer>
-        <DisplayEquation>{equation}</DisplayEquation>
-        <DisplayResponse>{response}</DisplayResponse>
+      </C.Header>
+      <C.Container>
+        <C.ThermometerContainer>
+          <C.ThermometerFill style={{ width: `${thermometer}%` }} />
+        </C.ThermometerContainer>
+        <C.DisplayEquation>{equation}</C.DisplayEquation>
+        <C.DisplayResponse>{response}</C.DisplayResponse>
 
-        <ButtonsContainer>
+        <C.ButtonsContainer>
           {[1, 2, 3, 4, 5, 6, 7, 8, 9, 0, "C", "="].map((value) => (
-            <Buttons key={value} onClick={() => handleButtonClicked(value)}>
+            <C.Buttons key={value} onClick={() => handleButtonClicked(value)}>
               {value}
-            </Buttons>
+            </C.Buttons>
           ))}
-        </ButtonsContainer>
-      </Container>
+        </C.ButtonsContainer>
+      </C.Container>
       {playCorrectSound && isSoundEnabled && (
         <audio
           src="/soundeffects/rightanswer.mp3"
@@ -186,156 +185,157 @@ export default function TabuadaGame() {
           onEnded={() => setPlayWrongSound(false)}
         />
       )}
-    </ContainerTabuada>
+    </C.ContainerTabuada>
   );
 }
 
-const ThermometerContainer = styled.div`
-  width: 100%;
-  height: 5px; /* Altura do termômetro */
-  background-color: #ccc; /* Cor de fundo do termômetro */
-  border-radius: 5px; /* Borda arredondada */
-  margin: 5px 0px;
+// const ContainerTabuada = styled.div`
+//   color: white;
+//   display: flex;
+//   flex-direction: column;
+//   height: 100vh;
+//   padding: 5px 10px;
+//   h2 {
+//     color: #0471ff;
+//     font-size: 30px;
+//     text-align: center;
+//   }
+// `;
 
-  /* Adicione outros estilos conforme necessário */
-`;
+// const Header = styled.header`
+//   width: 100%;
+//   max-width: 400px;
+//   margin: 0 auto;
+//   display: flex;
+//   justify-content: space-between;
+//   align-items: center;
 
-const ThermometerFill = styled.div`
-  height: 100%;
-  background-color: #06f; /* Cor de preenchimento do termômetro */
-  border-radius: 5px 0 0 5px; /* Borda arredondada apenas no lado esquerdo */
-  transition: width 0.5s ease-in-out; /* Efeito de transição suave para a largura */
+//   padding-bottom: 15px;
 
-  /* Adicione outros estilos conforme necessário */
-`;
+//   .volume {
+//     border: 2px solid #006eff;
+//     background-color: #006eff;
+//     padding: 5px;
+//     margin: 10px;
+//     border-radius: 100%;
+//     display: flex;
+//     justify-content: center;
+//     align-items: center;
+//     margin-right: 10px;
+//   }
 
-const ContainerTabuada = styled.div`
-  color: white;
-  display: flex;
-  flex-direction: column;
-  height: 100vh;
-  padding: 10px;
-  h2 {
-    color: #0471ff;
-    font-size: 30px;
-    text-align: center;
-  }
-`;
+//   .scoreAndRecord {
+//     display: flex;
+//     .score {
+//       background-color: #006eff;
+//       padding: 5px 10px;
+//       border-top-left-radius: 20px;
+//       border-bottom-left-radius: 20px;
 
-const Header = styled.header`
-  width: 100%;
-  max-width: 400px;
-  margin: 0 auto;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+//       span {
+//         font-size: 18px;
+//         color: #ffffff;
+//         padding-left: 10px;
+//       }
+//     }
+//     .record {
+//       background-color: #006eff;
+//       padding: 5px 20px;
+//       border-top-right-radius: 20px;
+//       border-bottom-right-radius: 20px;
 
-  padding-bottom: 15px;
+//       span {
+//         font-size: 18px;
+//         color: #ffffff;
+//         padding-left: 10px;
+//       }
+//     }
+//   }
+// `;
 
-  .volume {
-    border: 2px solid #006eff;
-    background-color: #006eff;
-    padding: 5px;
-    margin: 10px;
-    border-radius: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin-right: 10px;
-  }
+// const Container = styled.div`
+//   width: 90%;
+//   max-width: 400px;
+//   padding: 20px;
+//   display: flex;
+//   flex-direction: column;
+//   align-items: center;
+//   justify-content: center;
+//   margin: 0 auto;
 
-  .scoreAndRecord {
-    display: flex;
-    .score {
-      background-color: #006eff;
-      padding: 5px 10px;
-      border-top-left-radius: 20px;
-      border-bottom-left-radius: 20px;
+//   @media (min-width: 500px) {
+//     padding: 0px;
+//   }
+// `;
 
-      span {
-        font-size: 18px;
-        color: #ffffff;
-        padding-left: 10px;
-      }
-    }
-    .record {
-      background-color: #006eff;
-      padding: 5px 20px;
-      border-top-right-radius: 20px;
-      border-bottom-right-radius: 20px;
+// const ThermometerContainer = styled.div`
+//   width: 100%;
+//   height: 4px; /* Altura do termômetro */
+//   background-color: #ccc; /* Cor de fundo do termômetro */
+//   border-radius: 5px; /* Borda arredondada */
+//   margin: 5px 0px;
+// `;
 
-      span {
-        font-size: 18px;
-        color: #ffffff;
-        padding-left: 10px;
-      }
-    }
-  }
-`;
+// const ThermometerFill = styled.div`
+//   height: 100%;
+//   background: linear-gradient(270deg, #016fff 0%, #032b9a 100%);
+//   border-radius: 5px 0 0 5px; /* Borda arredondada apenas no lado esquerdo */
+//   transition: width 0.5s ease-in-out; /* Efeito de transição suave para a largura */
+// `;
 
-const Container = styled.div`
-  width: 90%;
-  max-width: 400px;
-  padding: 20px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  margin: 0 auto;
+// const DisplayEquation = styled.div`
+//   width: 100%;
+//   display: flex;
+//   justify-content: center;
+//   align-items: center;
 
-  @media (min-width: 500px) {
-    padding: 0px;
-  }
-`;
+//   padding: 20px;
+//   border: 2px solid #006eff;
+//   background-color: #19191f;
+//   border-radius: 10px;
+//   height: 100px;
+//   font-weight: bold;
+//   font-size: 40px;
+//   text-align: center;
+// `;
 
-const DisplayEquation = styled.div`
-  width: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+// const DisplayResponse = styled.div`
+//   width: 100%;
+//   display: flex;
+//   justify-content: center;
+//   align-items: center;
 
-  padding: 20px;
-  border: 2px solid #006eff;
-  background-color: #19191f;
-  border-radius: 10px;
-  height: 100px;
-  font-weight: bold;
-  font-size: 40px;
-  text-align: center;
-`;
-
-const DisplayResponse = styled.div`
-  width: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-
-  padding: 20px;
-  border: 2px solid #006eff;
-  background-color: #19191f;
-  border-radius: 10px;
-  height: 100px;
-  font-weight: bold;
-  font-size: 40px;
-  text-align: center;
-  margin-top: 10px;
-`;
-
+//   padding: 20px;
+//   border: 2px solid #006eff;
+//   background-color: #19191f;
+//   border-radius: 10px;
+//   height: 100px;
+//   font-weight: bold;
+//   font-size: 40px;
+//   text-align: center;
+//   margin-top: 10px;
+// `;
 // const ButtonsContainer = styled.ul`
 //   width: 100%;
-//   max-width: 350px;
-//   display: flex;
-//   flex-wrap: wrap;
+//   max-width: 240px; /* Aumente a largura máxima para caber 3 botões por linha em dispositivos móveis */
+//   display: grid;
+//   grid-template-columns: repeat(3, 1fr); /* 3 colunas por linha */
+//   grid-column-gap: 0px; /* Espaçamento entre as colunas verticais dos botões */
+//   grid-row-gap: 0px; /* Espaçamento entre as linhas dos botões */
 //   align-items: center;
 //   justify-content: center;
 //   list-style: none;
 //   margin: 10px auto;
+
+//   @media (max-width: 500px) {
+//     max-width: 240px; /* Aumente a largura máxima para telas maiores, se necessário */
+//   }
 // `;
 
 // const Buttons = styled.button`
 //   outline: none;
 //   border: none;
-//   padding: 20px;
+//   /* padding: 20px; */
 //   height: 90px;
 //   width: 90px;
 //   margin: 4px;
@@ -345,7 +345,7 @@ const DisplayResponse = styled.div`
 //   font-size: 35px;
 //   font-weight: bold;
 //   color: white;
-//   background: linear-gradient(180deg, #016fff 0%, #024194 100%);
+//   background: linear-gradient(to bottom, #006eff, #0050b9);
 //   box-shadow: 0px 4px 4px 0px #001736;
 //   border-radius: 10px;
 //   cursor: pointer;
@@ -360,60 +360,12 @@ const DisplayResponse = styled.div`
 //   @media (min-width: 500px) {
 //     height: 80px;
 //     width: 80px;
+//     font-size: 30px;
+//   }
+
+//   @media (max-width: 300px) {
+//     height: 70px;
+//     width: 70px;
+//     font-size: 30px;
 //   }
 // `;
-
-const ButtonsContainer = styled.ul`
-  width: 100%;
-  max-width: 240px; /* Aumente a largura máxima para caber 3 botões por linha em dispositivos móveis */
-  display: grid;
-  grid-template-columns: repeat(3, 1fr); /* 3 colunas por linha */
-  grid-column-gap: 0px; /* Espaçamento entre as colunas verticais dos botões */
-  grid-row-gap: 0px; /* Espaçamento entre as linhas dos botões */
-  align-items: center;
-  justify-content: center;
-  list-style: none;
-  margin: 10px auto;
-
-  @media (max-width: 500px) {
-    max-width: 240px; /* Aumente a largura máxima para telas maiores, se necessário */
-  }
-`;
-
-const Buttons = styled.button`
-  outline: none;
-  border: none;
-  /* padding: 20px; */
-  height: 90px;
-  width: 90px;
-  margin: 4px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 35px;
-  font-weight: bold;
-  color: white;
-  background: linear-gradient(to bottom, #006eff, #0050b9);
-  box-shadow: 0px 4px 4px 0px #001736;
-  border-radius: 10px;
-  cursor: pointer;
-  transition: transform 0.1s ease-in-out;
-  user-select: none;
-
-  &:active {
-    transform: scale(0.95);
-    box-shadow: 0px 4px 4px 0px #001736 inset;
-  }
-
-  @media (min-width: 500px) {
-    height: 80px;
-    width: 80px;
-    font-size: 30px;
-  }
-
-  @media (max-width: 300px) {
-    height: 70px;
-    width: 70px;
-    font-size: 30px;
-  }
-`;
