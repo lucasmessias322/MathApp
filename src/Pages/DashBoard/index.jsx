@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import styled from "styled-components";
-import { Link } from "react-router-dom";
+import { Link} from "react-router-dom";
 import { AiOutlineStar, AiTwotoneStar } from "react-icons/ai";
 
 const numerosArray = Array.from({ length: 10 }, (_, index) => index + 1);
@@ -12,10 +12,14 @@ export default function DashBoard() {
   function renderStars(level) {
     const stars = [];
     const record = localStorage.getItem(`record_${level}`);
+    const starsEarned = localStorage.getItem(`stars_${level}`);
 
     for (let i = 0; i < 5; i++) {
-      const starColor = record >= (i + 1) * 100 ? "#ffd900" : "#0044C6";
-      stars.push(<AiTwotoneStar key={i} color={starColor} />);
+      if (i < starsEarned) {
+        stars.push(<AiTwotoneStar key={i} color="#ffd900" />);
+      } else {
+        stars.push(<AiOutlineStar key={i} color="#0044C6" />);
+      }
     }
 
     return stars;
