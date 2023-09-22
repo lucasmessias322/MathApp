@@ -12,6 +12,7 @@ export default function TabuadaGame() {
   const [playWrongSound, setPlayWrongSound] = useState(false);
   const [isSoundEnabled, setIsSoundEnabled] = useState(true);
   const [score, setScore] = useState(0);
+
   const [thermometer, setThermometer] = useState(0);
   const [lastResponseTime, setLastResponseTime] = useState(Date.now());
   // Lê o recorde atual da taboada atual do localStorage
@@ -21,12 +22,23 @@ export default function TabuadaGame() {
   const [starsEarned, setStarsEarned] = useState(0);
   const stars = localStorage.getItem(`stars_${tabuNumber}`);
 
+  // buscando pontos salvos
+  const savedPoints = Number(localStorage.getItem("points"));
+  const [points, setPoints] = useState(savedPoints);
+
+  useEffect(() => {
+    if (savedPoints !== points) {
+      // Save points
+      localStorage.setItem(`points`, points);
+    }
+  }, [points]);
+
   const updateThermometer = (isCorrect) => {
     let newThermometer = thermometer;
 
     if (isCorrect) {
       // Se a resposta estiver correta, aumente o termômetro
-      newThermometer += 20; // Aumente em 5%
+      newThermometer += 2; // Aumente em 5%
 
       // Certifique-se de que o termômetro não ultrapasse 100%
       if (newThermometer > 100) {
@@ -124,6 +136,11 @@ export default function TabuadaGame() {
       setPlayWrongSound(false);
       setScore(score + 1); // Increment score on correct answer
 
+      setPoints(points + 1);
+
+      // // Save points
+      // localStorage.setItem(`points`, points + 1);
+
       // Chama a função para atualizar o termômetro
       updateThermometer(true);
 
@@ -138,6 +155,7 @@ export default function TabuadaGame() {
 
       if (score > 0) {
         setScore(score - 1); // Decrement score on wrong answer, but only if score is positive
+        setPoints(points - 1);
       }
 
       // Mostra a resposta correta  por meio segundo

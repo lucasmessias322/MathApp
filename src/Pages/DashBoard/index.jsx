@@ -1,12 +1,19 @@
 import React, { useState } from "react";
 import styled from "styled-components";
-import { Link} from "react-router-dom";
+import { Link } from "react-router-dom";
 import { AiOutlineStar, AiTwotoneStar } from "react-icons/ai";
 
 const numerosArray = Array.from({ length: 10 }, (_, index) => index + 1);
 
 export default function DashBoard() {
   const [levels, setLevels] = useState(numerosArray);
+  const totalPoints = Number(localStorage.getItem("points"));
+
+  // Calcula o nível atual com base nos pontos
+  const currentLevel = Math.floor(totalPoints / 500);
+
+  // Calcula a largura da barra de nível
+  const fillWidth = ((totalPoints % 500) / 500) * 100;
 
   // Função para criar as estrelas com base no recorde
   function renderStars(level) {
@@ -27,7 +34,21 @@ export default function DashBoard() {
 
   return (
     <Container>
-      <h2>Aprenda Taboada</h2>
+      {/* <h2>Aprenda Taboada</h2> */}
+      {/* <NivelsBarContainer>
+        <NivelBar>
+          <div className="fillnivelbar" style={{ width: "20%" }}>
+            <span>0</span>
+          </div>
+        </NivelBar>
+      </NivelsBarContainer> */}
+      <NivelsBarContainer>
+        <NivelBar>
+          <div className="fillnivelbar" style={{ width: `${fillWidth}%` }}>
+            <span>Nível {currentLevel}</span>
+          </div>
+        </NivelBar>
+      </NivelsBarContainer>
       <LevelContainer>
         {levels?.map((elem, i) => (
           <Level key={i}>
@@ -45,7 +66,8 @@ export default function DashBoard() {
 
 const Container = styled.div`
   width: 100%;
-
+  max-width: 400px;
+  margin: 0 auto;
   h2 {
     width: 100%;
     color: #0471ff;
@@ -105,6 +127,47 @@ const Level = styled.li`
       display: flex;
       font-size: 12px;
       padding: 5px 0px;
+    }
+  }
+`;
+
+const NivelsBarContainer = styled.div`
+  width: 100%;
+  background-color: #19191f;
+
+  /* border-bottom: 1px solid rgba(0, 0, 0, 0.25); */
+  padding: 30px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`;
+
+const NivelBar = styled.div`
+  width: 100%;
+  height: 20px;
+  background: #121216;
+
+  border-radius: 20px;
+
+  .fillnivelbar {
+    /* width: 50%; */
+    height: 100%;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background-color: #032b9a;
+    border-radius: 20px 0 0 20px;
+    transition: width 0.5s ease-in-out;
+
+    span {
+      position: absolute;
+
+      left: 50%;
+      color: white;
+      font-size: 15px;
+      font-weight: bold;
     }
   }
 `;
