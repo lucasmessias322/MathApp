@@ -38,7 +38,7 @@ export default function TabuadaGame() {
 
     if (isCorrect) {
       // Se a resposta estiver correta, aumente o termômetro
-      newThermometer += 2; // Aumente em 5%
+      newThermometer += 2; // Aumente em 2%
 
       // Certifique-se de que o termômetro não ultrapasse 100%
       if (newThermometer > 100) {
@@ -59,7 +59,7 @@ export default function TabuadaGame() {
       // Verifique se o termômetro não está em 0% antes de diminuir
 
       if (newThermometer != 100) {
-        newThermometer -= 2; // Diminua em 5%
+        newThermometer -= 2; // Diminua em 2%
       }
 
       // Certifique-se de que o termômetro não seja menor que 0%
@@ -134,27 +134,21 @@ export default function TabuadaGame() {
       generateEquation();
       setPlayCorrectSound(true);
       setPlayWrongSound(false);
-      setScore(score + 1); // Increment score on correct answer
-
+      setScore(score + 1); 
       setPoints(points + 1);
 
-      // // Save points
-      // localStorage.setItem(`points`, points + 1);
-
-      // Chama a função para atualizar o termômetro
       updateThermometer(true);
 
       // Atualiza o tempo da última resposta
       setLastResponseTime(Date.now());
 
-      // Chamada para atualizar o recorde
       updateRecord();
     } else {
       setPlayCorrectSound(false);
       setPlayWrongSound(true);
 
       if (score > 0) {
-        setScore(score - 1); // Decrement score on wrong answer, but only if score is positive
+        setScore(score - 1);
         setPoints(points - 1);
       }
 
