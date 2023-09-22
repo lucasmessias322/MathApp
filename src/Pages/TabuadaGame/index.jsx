@@ -19,27 +19,29 @@ export default function TabuadaGame() {
   const navigateTo = useNavigate();
 
   const [starsEarned, setStarsEarned] = useState(0);
+  const stars = localStorage.getItem(`stars_${tabuNumber}`);
 
   const updateThermometer = (isCorrect) => {
     let newThermometer = thermometer;
 
     if (isCorrect) {
       // Se a resposta estiver correta, aumente o termômetro
-      newThermometer += 2; // Aumente em 5%
+      newThermometer += 20; // Aumente em 5%
 
       // Certifique-se de que o termômetro não ultrapasse 100%
       if (newThermometer > 100) {
         newThermometer = 100;
 
-        // Adicione uma estrela quando o termômetro atingir 100%
-        setStarsEarned(starsEarned + 1);
+        // Certifique-se de que ele não de mais de 5 estrelas
+        if (Number(stars) !== 5) {
+          // Adicione uma estrela quando o termômetro atingir 100%
+          setStarsEarned(starsEarned + 1);
 
-        const stars = localStorage.getItem(`stars_${tabuNumber}`);
-        console.log(Number(stars) + 1);
-        // Salve o número de estrelas no localStorage
-        localStorage.setItem(`stars_${tabuNumber}`, Number(stars) + 1);
-        // window.alert(Number(stars) + 1);
-        navigateTo("/");
+          // Salve o número de estrelas no localStorage
+          localStorage.setItem(`stars_${tabuNumber}`, Number(stars) + 1);
+
+          navigateTo("/");
+        }
       }
     } else if (newThermometer > 0) {
       // Verifique se o termômetro não está em 0% antes de diminuir
