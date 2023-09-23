@@ -67,7 +67,9 @@ export default function TabuadaGame() {
           // Salve o número de estrelas no localStorage
           localStorage.setItem(`stars_${tabuNumber}`, Number(stars) + 1);
 
-          navigateTo("/");
+          setTimeout(() => {
+            navigateTo("/");
+          }, 1500);
         }
       }
     } else if (newThermometer > 0) {
@@ -183,7 +185,7 @@ export default function TabuadaGame() {
   };
 
   return (
-    <C.ContainerTabuada>
+    <C.ContainerTabuada fillHeight={thermometer}>
       <C.Header>
         <div className="volume" onClick={() => handleButtonClicked("🔊")}>
           {isSoundEnabled ? (
@@ -204,9 +206,6 @@ export default function TabuadaGame() {
         </div>
       </C.Header>
       <C.Container>
-        <C.ThermometerContainer>
-          <C.ThermometerFill style={{ width: `${thermometer}%` }} />
-        </C.ThermometerContainer>
         <C.DisplayEquation>{equation}</C.DisplayEquation>
         <C.DisplayResponse>{response}</C.DisplayResponse>
 

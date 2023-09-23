@@ -6,6 +6,14 @@ export const ContainerTabuada = styled.div`
   flex-direction: column;
   height: 100vh;
   padding: 5px 10px;
+
+  transition: 1s ease-in-out;
+  background: url("/termometerbg.png");
+  background-size: 100%
+    ${(props) => (props.fillHeight ? props.fillHeight + "%" : "0%")};
+  background-repeat: no-repeat;
+  background-position: bottom center;
+
   h2 {
     color: #0471ff;
     font-size: 30px;
@@ -91,7 +99,7 @@ export const ThermometerFill = styled.div`
   height: 100%;
   background: linear-gradient(270deg, #016fff 0%, #032b9a 100%);
   border-radius: 5px 0 0 5px; /* Borda arredondada apenas no lado esquerdo */
-  transition: width 1s ease-in-out; /* Efeito de transição suave para a largura */
+  transition: width 1s ease-in-out;
 `;
 
 export const DisplayEquation = styled.div`
