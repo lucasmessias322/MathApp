@@ -75,27 +75,27 @@ export const NivelBar = styled.div`
   width: 100%;
   height: 25px;
   background: #121216;
-
   border-radius: 20px;
 
   .fillnivelbar {
-    /* width: 50%; */
     height: 100%;
-
+    width: 100%;
     display: flex;
     align-items: center;
     justify-content: center;
-
-    background-color: #032b9a;
+    background: url("/nivelbarprogress.png");
+    background-size: ${(props) =>
+        props.fillWidth ? props.fillWidth + "%" : "0%"}
+      100%;
+    background-repeat: no-repeat;
     border-radius: 25px 0 0 25px;
     transition: width 0.5s ease-in-out;
 
     span {
-      position: absolute;
-
-      left: 50%;
+      text-align: center;
+      padding: 10px;
       color: white;
-      font-size: 15px;
+      font-size: 14px;
       font-weight: bold;
     }
   }

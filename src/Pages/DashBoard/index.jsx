@@ -34,9 +34,9 @@ export default function DashBoard() {
   return (
     <C.Container>
       <C.NivelsBarContainer>
-        <C.NivelBar>
-          <div className="fillnivelbar" style={{ width: `${fillWidth}%` }}>
-            <span>{currentLevel}</span>
+        <C.NivelBar fillWidth={fillWidth}>
+          <div className="fillnivelbar">
+            <span>Nível {currentLevel}</span>
           </div>
         </C.NivelBar>
       </C.NivelsBarContainer>

@@ -12,6 +12,7 @@ export default function TabuadaGame() {
   const [playWrongSound, setPlayWrongSound] = useState(false);
   const [isSoundEnabled, setIsSoundEnabled] = useState(true);
   const [score, setScore] = useState(0);
+  const [pointsPerCorrect, setPointsPerCorrect] = useState(5);
 
   const [thermometer, setThermometer] = useState(0);
   const [lastResponseTime, setLastResponseTime] = useState(Date.now());
@@ -33,12 +34,26 @@ export default function TabuadaGame() {
     }
   }, [points]);
 
+  useEffect(() => {
+    const pointsMapping = {
+      0: 5,
+      1: 4,
+      2: 3,
+      3: 2,
+      4: 1,
+      5: 0.1,
+    };
+
+    const points = pointsMapping[stars] || 5;
+    setPointsPerCorrect(points);
+  }, [stars]);
+
   const updateThermometer = (isCorrect) => {
     let newThermometer = thermometer;
 
     if (isCorrect) {
       // Se a resposta estiver correta, aumente o termômetro
-      newThermometer += 2; // Aumente em 2%
+      newThermometer += pointsPerCorrect; // Aumente em 2%
 
       // Certifique-se de que o termômetro não ultrapasse 100%
       if (newThermometer > 100) {
@@ -59,7 +74,7 @@ export default function TabuadaGame() {
       // Verifique se o termômetro não está em 0% antes de diminuir
 
       if (newThermometer != 100) {
-        newThermometer -= 2; // Diminua em 2%
+        newThermometer -= pointsPerCorrect; // Diminua em 2%
       }
 
       // Certifique-se de que o termômetro não seja menor que 0%
@@ -134,7 +149,7 @@ export default function TabuadaGame() {
       generateEquation();
       setPlayCorrectSound(true);
       setPlayWrongSound(false);
-      setScore(score + 1); 
+      setScore(score + 1);
       setPoints(points + 1);
 
       updateThermometer(true);
