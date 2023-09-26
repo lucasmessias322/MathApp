@@ -68,7 +68,7 @@ export default function TabuadaGame() {
           localStorage.setItem(`stars_${tabuNumber}`, Number(stars) + 1);
 
           setTimeout(() => {
-            navigateTo("/");
+            navigateTo("/tabuadalevels");
           }, 1500);
         }
       }
@@ -176,7 +176,7 @@ export default function TabuadaGame() {
         setResponse("");
       }, 500);
 
-      // Chama a função para atualizar o termômetro
+      // Chama a função p  ara atualizar o termômetro
       updateThermometer(false);
 
       // Atualiza o tempo da última resposta mesmo em caso de resposta errada
@@ -186,7 +186,8 @@ export default function TabuadaGame() {
 
   return (
     <C.ContainerTabuada fillHeight={thermometer}>
-      <C.Header>
+     
+      <C.Container> <C.Header>
         <div className="volume" onClick={() => handleButtonClicked("🔊")}>
           {isSoundEnabled ? (
             <FaVolumeUp color="white" size={20} />
@@ -205,7 +206,6 @@ export default function TabuadaGame() {
           </div>
         </div>
       </C.Header>
-      <C.Container>
         <C.DisplayEquation>{equation}</C.DisplayEquation>
         <C.DisplayResponse>{response}</C.DisplayResponse>
 

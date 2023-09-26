@@ -4,6 +4,8 @@ export const ContainerTabuada = styled.div`
   color: white;
   display: flex;
   flex-direction: column;
+  justify-content: center;
+  align-items: center;
   height: 100vh;
   padding: 5px 10px;
 
@@ -13,12 +15,6 @@ export const ContainerTabuada = styled.div`
     ${(props) => (props.fillHeight ? props.fillHeight + "%" : "0%")};
   background-repeat: no-repeat;
   background-position: bottom center;
-
-  h2 {
-    color: #0471ff;
-    font-size: 30px;
-    text-align: center;
-  }
 `;
 
 export const Header = styled.header`
@@ -81,6 +77,8 @@ export const Container = styled.div`
   align-items: center;
   justify-content: center;
   margin: 0 auto;
+  position: fixed;
+  top: 0;
 
   @media (min-width: 500px) {
     padding: 0px;

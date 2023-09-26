@@ -1,55 +1,64 @@
-import React, { useState } from "react";
-import { Link } from "react-router-dom";
-import { AiOutlineStar, AiTwotoneStar } from "react-icons/ai";
-import * as C from "./style";
-
-const numerosArray = Array.from({ length: 10 }, (_, index) => index + 1);
+import React from "react";
+import styled from "styled-components";
+import { Link, useNavigate } from "react-router-dom";
 
 export default function DashBoard() {
-  const [levels, setLevels] = useState(numerosArray);
-  const totalPoints = Number(localStorage.getItem("points"));
-
-  // Calcula o nível atual com base nos pontos
-  const currentLevel = Math.floor(totalPoints / 500);
-
-  // Calcula a largura da barra de nível
-  const fillWidth = ((totalPoints % 500) / 500) * 100;
-
-  // Função para criar as estrelas com base no recorde
-  function renderStars(level) {
-    const stars = [];
-    const starsEarned = localStorage.getItem(`stars_${level}`);
-
-    for (let i = 0; i < 5; i++) {
-      if (i < starsEarned) {
-        stars.push(<AiTwotoneStar key={i} color="#ffd900" />);
-      } else {
-        stars.push(<AiOutlineStar key={i} color="#0044C6" />);
-      }
-    }
-
-    return stars;
-  }
-
+  const navigateTo = useNavigate;
   return (
-    <C.Container>
-      <C.NivelsBarContainer>
-        <C.NivelBar fillWidth={fillWidth}>
-          <div className="fillnivelbar">
-            <span>Nível {currentLevel}</span>
-          </div>
-        </C.NivelBar>
-      </C.NivelsBarContainer>
-      <C.LevelContainer>
-        {levels?.map((elem, i) => (
-          <C.Level key={i}>
-            <Link to={`/TaboadaCompleta/${elem}`}>
-              <span>{elem}</span>
-              <div className="stars">{renderStars(elem)}</div>
-            </Link>
-          </C.Level>
-        ))}
-      </C.LevelContainer>
-    </C.Container>
+    <Container>
+      <h2>MathGames</h2>
+      <GamesContainer>
+        <Game>
+          <span>ADIÇÂO</span>
+        </Game>
+        <Game>
+          <span>SUBTRAÇÂO</span>
+        </Game>
+        <Game>
+          <Link to="/tabuadalevels">
+            <span>TABOADA DE MUTIPLICAÇÂO</span>
+          </Link>
+        </Game>
+      </GamesContainer>
+    </Container>
   );
 }
+
+const Container = styled.div`
+  max-width: 400px;
+  padding: 20px;
+  margin: 0 auto;
+
+  h2 {
+    font-size: 35px;
+    color: #014ad8;
+    padding: 20px 10px;
+    text-align: center;
+  }
+`;
+
+const GamesContainer = styled.ul`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin-top: 20px;
+`;
+
+const Game = styled.li`
+  user-select: none;
+  width: 100%;
+  list-style: none;
+  margin: 5px;
+  width: 100%;
+  background-color: #23232b;
+  border-radius: 10px;
+  text-align: center;
+  padding: 20px;
+
+  span {
+    color: white;
+    font-weight: bold;
+    font-size: 17px;
+  }
+`;
