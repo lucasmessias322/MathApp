@@ -9,7 +9,9 @@ export default function DashBoard() {
       <h2>MathGames</h2>
       <GamesContainer>
         <Game>
-          <span>ADIÇÂO</span>
+          <Link to="aditionGame">
+            <span>ADIÇÂO</span>
+          </Link>
         </Game>
         <Game>
           <span>SUBTRAÇÂO</span>

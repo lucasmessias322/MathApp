@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
-import * as C from "./style";
 import { useParams, useNavigate } from "react-router-dom";
-import { FaVolumeUp, FaVolumeMute, FaCoins } from "react-icons/fa";
+import MathLayout from "../../components/MathLayout";
 
 export default function TabuadaGame() {
   const tabuNumber = parseInt(useParams().tabuada);
@@ -185,52 +184,65 @@ export default function TabuadaGame() {
   };
 
   return (
-    <C.ContainerTabuada fillHeight={thermometer}>
-     
-      <C.Container> <C.Header>
-        <div className="volume" onClick={() => handleButtonClicked("🔊")}>
-          {isSoundEnabled ? (
-            <FaVolumeUp color="white" size={20} />
-          ) : (
-            <FaVolumeMute color="white" size={20} />
-          )}
-        </div>
-        <div className="scoreAndRecord">
-          <div className="score">
-            <FaCoins color="#ffd900" size={20} />
-            <span>{score}</span>
-          </div>
-          <div className="record">
-            <FaCoins color="#ffd900" size={20} />
-            <span>Max: {currentRecord || 0}</span>
-          </div>
-        </div>
-      </C.Header>
-        <C.DisplayEquation>{equation}</C.DisplayEquation>
-        <C.DisplayResponse>{response}</C.DisplayResponse>
+    <MathLayout
+      score={score}
+      currentRecord={currentRecord}
+      handleButtonClicked={handleButtonClicked}
+      thermometer={thermometer}
+      equation={equation}
+      response={response}
+      playCorrectSound={playCorrectSound}
+      isSoundEnabled={isSoundEnabled}
+      playWrongSound={playWrongSound}
+      setPlayCorrectSound={setPlayCorrectSound}
+      setPlayWrongSound={setPlayWrongSound}
+    />
+    // <C.ContainerTabuada fillHeight={thermometer}>
+    //   <C.Container>
+    //     <C.Header>
+    //         <div className="volume" onClick={() => handleButtonClicked("🔊")}>
+    //           {isSoundEnabled ? (
+    //             <FaVolumeUp color="white" size={20} />
+    //           ) : (
+    //             <FaVolumeMute color="white" size={20} />
+    //           )}
+    //         </div>
+    //         <div className="scoreAndRecord">
+    //           <div className="score">
+    //             <FaCoins color="#ffd900" size={20} />
+    //             <span>{score}</span>
+    //           </div>
+    //           <div className="record">
+    //             <FaCoins color="#ffd900" size={20} />
+    //             <span>Max: {currentRecord || 0}</span>
+    //           </div>
+    //         </div>
+    //     </C.Header>
+    //     <C.DisplayEquation>{equation}</C.DisplayEquation>
+    //     <C.DisplayResponse>{response}</C.DisplayResponse>
 
-        <C.ButtonsContainer>
-          {[1, 2, 3, 4, 5, 6, 7, 8, 9, 0, "C", "="].map((value) => (
-            <C.Buttons key={value} onClick={() => handleButtonClicked(value)}>
-              {value}
-            </C.Buttons>
-          ))}
-        </C.ButtonsContainer>
-      </C.Container>
-      {playCorrectSound && isSoundEnabled && (
-        <audio
-          src="/soundeffects/rightanswer.mp3"
-          autoPlay
-          onEnded={() => setPlayCorrectSound(false)}
-        />
-      )}
-      {playWrongSound && isSoundEnabled && (
-        <audio
-          src="/soundeffects/mixkit-wrong-electricity-buzz-955.wav"
-          autoPlay
-          onEnded={() => setPlayWrongSound(false)}
-        />
-      )}
-    </C.ContainerTabuada>
+    //     <C.ButtonsContainer>
+    //       {[1, 2, 3, 4, 5, 6, 7, 8, 9, 0, "C", "="].map((value) => (
+    //         <C.Buttons key={value} onClick={() => handleButtonClicked(value)}>
+    //           {value}
+    //         </C.Buttons>
+    //       ))}
+    //     </C.ButtonsContainer>
+    //   </C.Container>
+    //   {playCorrectSound && isSoundEnabled && (
+    //     <audio
+    //       src="/soundeffects/rightanswer.mp3"
+    //       autoPlay
+    //       onEnded={() => setPlayCorrectSound(false)}
+    //     />
+    //   )}
+    //   {playWrongSound && isSoundEnabled && (
+    //     <audio
+    //       src="/soundeffects/mixkit-wrong-electricity-buzz-955.wav"
+    //       autoPlay
+    //       onEnded={() => setPlayWrongSound(false)}
+    //     />
+    //   )}
+    // </C.ContainerTabuada>
   );
 }
