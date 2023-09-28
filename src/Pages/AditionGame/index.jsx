@@ -38,18 +38,18 @@ export default function AditionGame() {
       <IslandsPhasesGenerator
         phases={phases}
         calculateMarginLeft={calculateMarginLeft}
-        bgImage="/floating_pixel_island.png"
+        bgImage="/assets/Terrestrial400.png"
       />
       <IslandsPhasesGenerator
         phases={phases}
         calculateMarginLeft={calculateMarginLeft}
-        bgImage="landscape-consists-of-terraced-plateaus-with-multicolored-waterfalls-and-3d-floating-islands-ai-generated-png.webp"
+        bgImage="/assets/mars.png"
       />
 
       <IslandsPhasesGenerator
         phases={phases}
         calculateMarginLeft={calculateMarginLeft}
-        bgImage="/landscape-consists-of-terraced-plateaus-with-multicolored-waterfalls.webp"
+        bgImage="/assets/jupiter.png"
       />
     </Container>
   );
@@ -100,6 +100,9 @@ const PhasesContainer = styled.div`
   align-items: flex-start; /* Alinhar os itens no topo */
   align-items: center;
   margin: 0px 0px;
+  background-image: url("/assets/stars-28.png");
+  background-size: contain;
+  background-position: center;
 `;
 
 const PhaseItem = styled.button`
@@ -109,8 +112,9 @@ const PhaseItem = styled.button`
   height: 100px;
   background-image: url(${(props) => (props.bgImage ? props.bgImage : "")});
   background-repeat: no-repeat;
-  background-size: cover;
+  background-size: contain;
   background-color: transparent;
+  background-position: center;
   margin: 20px 10px;
 
   display: flex;
@@ -124,6 +128,6 @@ const PhaseItem = styled.button`
     top: -60px;
     /* background-color: #fff; */
     color: white;
-    font-size: 14px;
+    font-size: 10px;
   }
 `;
