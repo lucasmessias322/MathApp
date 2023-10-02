@@ -9,10 +9,9 @@ export default function AditionGame() {
   const [playWrongSound, setPlayWrongSound] = useState(false);
   const [isSoundEnabled, setIsSoundEnabled] = useState(true);
 
-  // termometer
-  const [thermometer, setThermometer] = useState(0);
-  const [lastResponseTime, setLastResponseTime] = useState(Date.now());
-  const [pointsPerCorrect, setPointsPerCorrect] = useState(5);
+  const [progressBar, setProgressBar] = useState(0);
+
+  const [pointsPerCorrect, setPointsPerCorrect] = useState(10);
 
   // buscando pontos salvos
   const savedPoints = Number(localStorage.getItem("totalPoints"));
@@ -34,10 +33,7 @@ export default function AditionGame() {
       setTotalPoints(totalPoints + 1);
       setPoints(points + 1);
 
-      updateThermometer(true);
-
-      // Atualiza o tempo da última resposta
-      setLastResponseTime(Date.now());
+      updateProgressBar(true);
     } else {
       setPlayCorrectSound(false);
       setPlayWrongSound(true);
@@ -55,10 +51,7 @@ export default function AditionGame() {
       }, 500);
 
       // Chama a função p  ara atualizar o termômetro
-      updateThermometer(false);
-
-      // Atualiza o tempo da última resposta mesmo em caso de resposta errada
-      setLastResponseTime(Date.now());
+      updateProgressBar(false);
     }
   };
 
@@ -95,65 +88,41 @@ export default function AditionGame() {
   useEffect(() => {
     generateAditionEquation(1);
   }, []);
-  
+
   // termometer controlls
-  const updateThermometer = (isCorrect) => {
-    let newThermometer = thermometer;
+  const updateProgressBar = (isCorrect) => {
+    let NewprogressBar = progressBar;
 
     if (isCorrect) {
       // Se a resposta estiver correta, aumente o termômetro
-      newThermometer += pointsPerCorrect; // Aumente em 2%
+      NewprogressBar += pointsPerCorrect;
 
       // Certifique-se de que o termômetro não ultrapasse 100%
-      if (newThermometer > 100) {
-        newThermometer = 100;
+      if (NewprogressBar > 100) {
+        NewprogressBar = 100;
       }
-    } else if (newThermometer > 0) {
+    } else if (NewprogressBar > 0) {
       // Verifique se o termômetro não está em 0% antes de diminuir
 
-      if (newThermometer != 100) {
-        newThermometer -= pointsPerCorrect; // Diminua em 2%
+      if (NewprogressBar != 100) {
+        NewprogressBar -= pointsPerCorrect;
       }
 
       // Certifique-se de que o termômetro não seja menor que 0%
-      if (newThermometer < 0) {
-        newThermometer = 0;
+      if (NewprogressBar < 0) {
+        NewprogressBar = 0;
       }
     }
-
-    setThermometer(newThermometer);
+    setProgressBar(NewprogressBar);
   };
-
-  useEffect(() => {
-    const timer = setInterval(() => {
-      const elapsedTime = Date.now() - lastResponseTime;
-
-      if (elapsedTime >= 2000) {
-        // Se passaram 2 segundos ou mais sem resposta
-        const decreaseAmount = Math.floor((elapsedTime / 1000) * 1); // Diminui 1% por segundo
-        const newThermometer = thermometer - decreaseAmount;
-
-        // Certifique-se de que o termômetro não seja menor que 0%
-        if (newThermometer < 0) {
-          setThermometer(0);
-
-          // se termometro for diferente de 100 decrementar caso contrario não fazer nada!
-        } else if (thermometer !== 100) {
-          setThermometer(newThermometer);
-        }
-      }
-    }, 1000);
-
-    return () => clearInterval(timer);
-  }, [lastResponseTime, thermometer]);
-  //
 
   return (
     <MathLayout
       points={points}
       currentRecord={false}
       handleButtonClicked={handleButtonClicked}
-      thermometer={thermometer}
+      thermometer={false}
+      progressBar={progressBar}
       equation={equation}
       response={response}
       playCorrectSound={playCorrectSound}

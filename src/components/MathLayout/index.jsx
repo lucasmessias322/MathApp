@@ -15,6 +15,7 @@ export default function MathLayout({
   playWrongSound,
   setPlayCorrectSound,
   setPlayWrongSound,
+  progressBar,
 }) {
   return (
     <Container fillHeight={thermometer}>
@@ -25,6 +26,15 @@ export default function MathLayout({
           handleButtonClicked={handleButtonClicked}
           isSoundEnabled={isSoundEnabled}
         />
+
+        {progressBar ? (
+          <EquationsProgressBarContainer fillWidth={progressBar}>
+            <div className="equationfillBar"></div>
+          </EquationsProgressBarContainer>
+        ) : (
+          ""
+        )}
+
         <DisplayEquation>{equation}</DisplayEquation>
         <DisplayResponse>{response}</DisplayResponse>
         <ButtonsCompoent handleButtonClicked={handleButtonClicked} />
@@ -111,4 +121,25 @@ const DisplayResponse = styled.div`
   font-size: 40px;
   text-align: center;
   margin-top: 10px;
+`;
+
+const EquationsProgressBarContainer = styled.div`
+  width: 100%;
+  width: 100%;
+  height: 5px;
+  background: #121216;
+
+  div.equationfillBar {
+    height: 100%;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: url("/nivelbarprogress.png");
+    background-size: ${(props) =>
+        props.fillWidth ? props.fillWidth + "%" : "0%"}
+      100%;
+    background-repeat: no-repeat;
+    transition: width 0.5s ease-in-out;
+  }
 `;
