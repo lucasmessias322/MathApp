@@ -4,6 +4,7 @@ import DashBoard from "./Pages/DashBoard";
 import TabuadaLevels from "./Pages/TabuadaLevels";
 import TaboadaCompleta from "./Pages/TabuadaCompleta";
 import TabuadaGame from "./Pages/TabuadaGame";
+import AditionLevels from "./Pages/AditionLevels";
 import AditionGame from "./Pages/AditionGame";
 
 export default function RoutesComponet() {
@@ -18,7 +19,8 @@ export default function RoutesComponet() {
           path="/TaboadaCompleta/:tabuada"
           element={<TaboadaCompleta />}
         />
-        <Route exact path="/aditionGame" element={<AditionGame />} />
+        <Route exact path="/aditionlevels" element={<AditionLevels />} />
+        <Route exact path="/aditiongame" element={<AditionGame />} />
       </Routes>
     </HashRouter>
   );

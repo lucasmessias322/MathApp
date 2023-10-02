@@ -4,8 +4,8 @@ import ButtonsCompoent from "./ButtonsCompoent";
 import styled from "styled-components";
 
 export default function MathLayout({
-  score,
-  currentRecord,
+  points,
+  currentTabuPointsRecord,
   handleButtonClicked,
   thermometer,
   equation,
@@ -20,8 +20,8 @@ export default function MathLayout({
     <Container fillHeight={thermometer}>
       <ContainerMathGame>
         <HeaderComponent
-          score={score}
-          currentRecord={currentRecord}
+          points={points}
+          currentTabuPointsRecord={currentTabuPointsRecord}
           handleButtonClicked={handleButtonClicked}
           isSoundEnabled={isSoundEnabled}
         />

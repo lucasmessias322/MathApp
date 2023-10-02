@@ -10,28 +10,29 @@ export default function TabuadaGame() {
   const [playCorrectSound, setPlayCorrectSound] = useState(false);
   const [playWrongSound, setPlayWrongSound] = useState(false);
   const [isSoundEnabled, setIsSoundEnabled] = useState(true);
-  const [score, setScore] = useState(0);
-  const [pointsPerCorrect, setPointsPerCorrect] = useState(5);
+ 
 
+  const [pointsPerCorrect, setPointsPerCorrect] = useState(5);
   const [thermometer, setThermometer] = useState(0);
   const [lastResponseTime, setLastResponseTime] = useState(Date.now());
   // Lê o recorde atual da taboada atual do localStorage
-  const currentRecord = localStorage.getItem(`record_${tabuNumber}`);
+  const currentTabuPointsRecord = localStorage.getItem(`record_${tabuNumber}`);
   const navigateTo = useNavigate();
 
   const [starsEarned, setStarsEarned] = useState(0);
   const stars = localStorage.getItem(`stars_${tabuNumber}`);
 
   // buscando pontos salvos
-  const savedPoints = Number(localStorage.getItem("points"));
-  const [points, setPoints] = useState(savedPoints);
+  const savedPoints = Number(localStorage.getItem("totalPoints"));
+  const [totalPoints, setTotalPoints] = useState(savedPoints);
+  const [points, setPoints] = useState(0);
 
   useEffect(() => {
-    if (savedPoints !== points) {
+    if (savedPoints !== totalPoints) {
       // Save points
-      localStorage.setItem(`points`, points);
+      localStorage.setItem(`totalPoints`, totalPoints);
     }
-  }, [points]);
+  }, [totalPoints]);
 
   useEffect(() => {
     const pointsMapping = {
@@ -87,6 +88,7 @@ export default function TabuadaGame() {
     setThermometer(newThermometer);
   };
 
+  // termometer controlls
   useEffect(() => {
     const timer = setInterval(() => {
       const elapsedTime = Date.now() - lastResponseTime;
@@ -112,9 +114,14 @@ export default function TabuadaGame() {
 
   // Função para atualizar o recorde específico da taboada atual
   const updateRecord = () => {
-    const currentRecord = localStorage.getItem(`record_${tabuNumber}`);
-    if (score > parseInt(currentRecord) || currentRecord === null) {
-      localStorage.setItem(`record_${tabuNumber}`, score.toString());
+    const currentTabuPointsRecord = localStorage.getItem(
+      `record_${tabuNumber}`
+    );
+    if (
+      points > parseInt(currentTabuPointsRecord) ||
+      currentTabuPointsRecord === null
+    ) {
+      localStorage.setItem(`record_${tabuNumber}`, points.toString());
     }
   };
 
@@ -150,8 +157,8 @@ export default function TabuadaGame() {
       generateEquation();
       setPlayCorrectSound(true);
       setPlayWrongSound(false);
-      setScore(score + 1);
       setPoints(points + 1);
+      setTotalPoints(totalPoints + 1);
 
       updateThermometer(true);
 
@@ -163,9 +170,9 @@ export default function TabuadaGame() {
       setPlayCorrectSound(false);
       setPlayWrongSound(true);
 
-      if (score > 0) {
-        setScore(score - 1);
+      if (points > 0) {
         setPoints(points - 1);
+        setTotalPoints(totalPoints - 1);
       }
 
       // Mostra a resposta correta  por meio segundo
@@ -185,8 +192,8 @@ export default function TabuadaGame() {
 
   return (
     <MathLayout
-      score={score}
-      currentRecord={currentRecord}
+      points={points}
+      currentTabuPointsRecord={currentTabuPointsRecord}
       handleButtonClicked={handleButtonClicked}
       thermometer={thermometer}
       equation={equation}
@@ -197,52 +204,5 @@ export default function TabuadaGame() {
       setPlayCorrectSound={setPlayCorrectSound}
       setPlayWrongSound={setPlayWrongSound}
     />
-    // <C.ContainerTabuada fillHeight={thermometer}>
-    //   <C.Container>
-    //     <C.Header>
-    //         <div className="volume" onClick={() => handleButtonClicked("🔊")}>
-    //           {isSoundEnabled ? (
-    //             <FaVolumeUp color="white" size={20} />
-    //           ) : (
-    //             <FaVolumeMute color="white" size={20} />
-    //           )}
-    //         </div>
-    //         <div className="scoreAndRecord">
-    //           <div className="score">
-    //             <FaCoins color="#ffd900" size={20} />
-    //             <span>{score}</span>
-    //           </div>
-    //           <div className="record">
-    //             <FaCoins color="#ffd900" size={20} />
-    //             <span>Max: {currentRecord || 0}</span>
-    //           </div>
-    //         </div>
-    //     </C.Header>
-    //     <C.DisplayEquation>{equation}</C.DisplayEquation>
-    //     <C.DisplayResponse>{response}</C.DisplayResponse>
-
-    //     <C.ButtonsContainer>
-    //       {[1, 2, 3, 4, 5, 6, 7, 8, 9, 0, "C", "="].map((value) => (
-    //         <C.Buttons key={value} onClick={() => handleButtonClicked(value)}>
-    //           {value}
-    //         </C.Buttons>
-    //       ))}
-    //     </C.ButtonsContainer>
-    //   </C.Container>
-    //   {playCorrectSound && isSoundEnabled && (
-    //     <audio
-    //       src="/soundeffects/rightanswer.mp3"
-    //       autoPlay
-    //       onEnded={() => setPlayCorrectSound(false)}
-    //     />
-    //   )}
-    //   {playWrongSound && isSoundEnabled && (
-    //     <audio
-    //       src="/soundeffects/mixkit-wrong-electricity-buzz-955.wav"
-    //       autoPlay
-    //       onEnded={() => setPlayWrongSound(false)}
-    //     />
-    //   )}
-    // </C.ContainerTabuada>
   );
 }

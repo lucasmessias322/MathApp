@@ -1,19 +1,14 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { AiOutlineStar, AiTwotoneStar } from "react-icons/ai";
+import NivelBarComponent from "../../components/NivelBarComponent";
 import * as C from "./style";
 
 const numerosArray = Array.from({ length: 10 }, (_, index) => index + 1);
 
 export default function TabuadaLevels() {
   const [levels, setLevels] = useState(numerosArray);
-  const totalPoints = Number(localStorage.getItem("points"));
-
-  // Calcula o nível atual com base nos pontos
-  const currentLevel = Math.floor(totalPoints / 500);
-
-  // Calcula a largura da barra de nível
-  const fillWidth = ((totalPoints % 500) / 500) * 100;
+  const totalPoints = Number(localStorage.getItem("totalPoints"));
 
   // Função para criar as estrelas com base no recorde
   function renderStars(level) {
@@ -33,13 +28,7 @@ export default function TabuadaLevels() {
 
   return (
     <C.Container>
-      <C.NivelsBarContainer>
-        <C.NivelBar fillWidth={fillWidth}>
-          <div className="fillnivelbar">
-            <span>Nível {currentLevel}</span>
-          </div>
-        </C.NivelBar>
-      </C.NivelsBarContainer>
+      <NivelBarComponent />
       <C.LevelContainer>
         {levels?.map((elem, i) => (
           <C.Level key={i}>

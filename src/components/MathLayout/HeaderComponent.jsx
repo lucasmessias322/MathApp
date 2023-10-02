@@ -3,10 +3,10 @@ import styled from "styled-components";
 import { FaVolumeUp, FaVolumeMute, FaCoins } from "react-icons/fa";
 
 export default function HeaderComponent({
-  score,
-  currentRecord,
+  points,
+  currentTabuPointsRecord,
   handleButtonClicked,
-  isSoundEnabled
+  isSoundEnabled,
 }) {
   return (
     <Header>
@@ -17,15 +17,18 @@ export default function HeaderComponent({
           <FaVolumeMute color="white" size={20} />
         )}
       </div>
-      <div className="scoreAndRecord">
-        <div className="score">
+      <div className="pointsAndRecord">
+        <div className="points">
           <FaCoins color="#ffd900" size={20} />
-          <span>{score}</span>
+          <span>{points}</span>
         </div>
-        <div className="record">
-          <FaCoins color="#ffd900" size={20} />
-          <span>Max: {currentRecord || 0}</span>
-        </div>
+
+        {currentTabuPointsRecord && (
+          <div className="record">
+            <FaCoins color="#ffd900" size={20} />
+            <span>Max: {currentTabuPointsRecord || 0}</span>
+          </div>
+        )}
       </div>
     </Header>
   );
@@ -53,9 +56,9 @@ const Header = styled.header`
     margin-right: 10px;
   }
 
-  .scoreAndRecord {
+  .pointsAndRecord {
     display: flex;
-    .score {
+    .points {
       background-color: #006eff;
       padding: 5px 10px;
       border-top-left-radius: 20px;

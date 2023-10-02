@@ -1,15 +1,18 @@
-import React from "react";
+import React,{useContext} from "react";
 import styled from "styled-components";
 import { Link, useNavigate } from "react-router-dom";
-
+import { AppContext } from "../../Contexts/AppContext";
 export default function DashBoard() {
   const navigateTo = useNavigate;
+  const {} = useContext(AppContext)
+
+ 
   return (
     <Container>
       <h2>MathGames</h2>
       <GamesContainer>
         <Game>
-          <Link to="aditionGame">
+          <Link to="aditionlevels">
             <span>ADIÇÂO</span>
           </Link>
         </Game>

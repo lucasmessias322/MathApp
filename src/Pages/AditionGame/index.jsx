@@ -1,133 +1,166 @@
-import React from "react";
-import { useState } from "react";
-import styled from "styled-components";
-import { IoMdDoneAll } from "react-icons/io";
-import { AiOutlineStar, AiTwotoneStar } from "react-icons/ai";
+import React, { useState, useEffect } from "react";
+import MathLayout from "../../components/MathLayout";
 
 export default function AditionGame() {
-  const phasesArray = Array.from({ length: 5 }, (_, index) => index);
-  const [phases, setPhases] = useState(phasesArray);
+  const [equation, setEquation] = useState("");
+  const [response, setResponse] = useState("");
+  const [correctAnswer, setCorrectAnswer] = useState(0);
+  const [playCorrectSound, setPlayCorrectSound] = useState(false);
+  const [playWrongSound, setPlayWrongSound] = useState(false);
+  const [isSoundEnabled, setIsSoundEnabled] = useState(true);
 
-  function calculateMarginLeft(index) {
-    // Calcule a margem esquerda com base na função seno
-    const amplitude = 150; // Ajuste conforme desejado
-    const frequency = 5; // A cada 5 items
-    const marginLeft = amplitude * Math.sin((2 * Math.PI * index) / frequency);
+  // termometer
+  const [thermometer, setThermometer] = useState(0);
+  const [lastResponseTime, setLastResponseTime] = useState(Date.now());
+  const [pointsPerCorrect, setPointsPerCorrect] = useState(5);
 
-    return marginLeft;
-  }
+  // buscando pontos salvos
+  const savedPoints = Number(localStorage.getItem("totalPoints"));
+  const [totalPoints, setTotalPoints] = useState(savedPoints);
+  const [points, setPoints] = useState(0);
 
-  // Função para criar as estrelas com base no recorde
-  function renderStars(level) {
-    const stars = [];
-    const starsEarned = 1;
+  useEffect(() => {
+    if (savedPoints !== totalPoints) {
+      // Save points
+      localStorage.setItem(`totalPoints`, totalPoints);
+    }
+  }, [totalPoints]);
 
-    for (let i = 0; i < 5; i++) {
-      if (i < starsEarned) {
-        stars.push(<AiTwotoneStar key={i} color="#ffd900" />);
-      } else {
-        stars.push(<AiOutlineStar key={i} color="#0044C6" />);
+  const checkAnswer = () => {
+    if (parseInt(response) === correctAnswer) {
+      generateAditionEquation(1);
+      setPlayCorrectSound(true);
+      setPlayWrongSound(false);
+      setTotalPoints(totalPoints + 1);
+      setPoints(points + 1);
+
+      updateThermometer(true);
+
+      // Atualiza o tempo da última resposta
+      setLastResponseTime(Date.now());
+    } else {
+      setPlayCorrectSound(false);
+      setPlayWrongSound(true);
+
+      if (points > 0) {
+        setPoints(points - 1);
+        setTotalPoints(totalPoints - 1);
+      }
+
+      // Mostra a resposta correta  por meio segundo
+      setResponse(correctAnswer.toString());
+
+      setTimeout(() => {
+        setResponse("");
+      }, 500);
+
+      // Chama a função p  ara atualizar o termômetro
+      updateThermometer(false);
+
+      // Atualiza o tempo da última resposta mesmo em caso de resposta errada
+      setLastResponseTime(Date.now());
+    }
+  };
+
+  const handleButtonClicked = (value) => {
+    if (value === "C") {
+      setResponse("");
+    } else if (value === "=") {
+      checkAnswer();
+    } else if (value === "🔊") {
+      setIsSoundEnabled(!isSoundEnabled);
+    } else {
+      setResponse(response + value);
+    }
+  };
+
+  const generateAditionEquation = (numDigits) => {
+    if (numDigits < 1) {
+      throw new Error("O número de dígitos deve ser pelo menos 1.");
+    }
+
+    const minNum = Math.pow(10, numDigits - 1);
+    const maxNum = Math.pow(10, numDigits) - 1;
+
+    const num1 = Math.floor(Math.random() * (maxNum - minNum + 1)) + minNum;
+    const num2 = Math.floor(Math.random() * (maxNum - minNum + 1)) + minNum;
+    const result = num1 + num2;
+    setEquation(`${num1} + ${num2}`);
+    setCorrectAnswer(result);
+    setResponse("");
+    setPlayCorrectSound(false);
+    setPlayWrongSound(false);
+  };
+
+  useEffect(() => {
+    generateAditionEquation(1);
+  }, []);
+  
+  // termometer controlls
+  const updateThermometer = (isCorrect) => {
+    let newThermometer = thermometer;
+
+    if (isCorrect) {
+      // Se a resposta estiver correta, aumente o termômetro
+      newThermometer += pointsPerCorrect; // Aumente em 2%
+
+      // Certifique-se de que o termômetro não ultrapasse 100%
+      if (newThermometer > 100) {
+        newThermometer = 100;
+      }
+    } else if (newThermometer > 0) {
+      // Verifique se o termômetro não está em 0% antes de diminuir
+
+      if (newThermometer != 100) {
+        newThermometer -= pointsPerCorrect; // Diminua em 2%
+      }
+
+      // Certifique-se de que o termômetro não seja menor que 0%
+      if (newThermometer < 0) {
+        newThermometer = 0;
       }
     }
 
-    return stars;
-  }
+    setThermometer(newThermometer);
+  };
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      const elapsedTime = Date.now() - lastResponseTime;
+
+      if (elapsedTime >= 2000) {
+        // Se passaram 2 segundos ou mais sem resposta
+        const decreaseAmount = Math.floor((elapsedTime / 1000) * 1); // Diminui 1% por segundo
+        const newThermometer = thermometer - decreaseAmount;
+
+        // Certifique-se de que o termômetro não seja menor que 0%
+        if (newThermometer < 0) {
+          setThermometer(0);
+
+          // se termometro for diferente de 100 decrementar caso contrario não fazer nada!
+        } else if (thermometer !== 100) {
+          setThermometer(newThermometer);
+        }
+      }
+    }, 1000);
+
+    return () => clearInterval(timer);
+  }, [lastResponseTime, thermometer]);
+  //
 
   return (
-    <Container>
-      <IslandsPhasesGenerator
-        phases={phases}
-        calculateMarginLeft={calculateMarginLeft}
-        bgImage="/assets/Terrestrial400.png"
-      />
-      <IslandsPhasesGenerator
-        phases={phases}
-        calculateMarginLeft={calculateMarginLeft}
-        bgImage="/assets/mars.png"
-      />
-
-      <IslandsPhasesGenerator
-        phases={phases}
-        calculateMarginLeft={calculateMarginLeft}
-        bgImage="/assets/jupiter.png"
-      />
-    </Container>
+    <MathLayout
+      points={points}
+      currentRecord={false}
+      handleButtonClicked={handleButtonClicked}
+      thermometer={thermometer}
+      equation={equation}
+      response={response}
+      playCorrectSound={playCorrectSound}
+      isSoundEnabled={isSoundEnabled}
+      playWrongSound={playWrongSound}
+      setPlayCorrectSound={setPlayCorrectSound}
+      setPlayWrongSound={setPlayWrongSound}
+    />
   );
 }
-
-function IslandsPhasesGenerator({ phases, calculateMarginLeft, bgImage }) {
-  return (
-    <PhasesContainer>
-      {phases.map((_, index) => (
-        <PhaseItem
-          key={index}
-          style={{ marginLeft: `${calculateMarginLeft(index)}px` }}
-          bgImage={bgImage}
-        >
-          <span>
-            <AiTwotoneStar color="#ffd900" />
-            <AiTwotoneStar color="#ffd900" />
-            <AiTwotoneStar color="#383846" />
-            <AiTwotoneStar color="#383846" />
-            <AiTwotoneStar color="#383846" />
-          </span>
-        </PhaseItem>
-      ))}
-    </PhasesContainer>
-  );
-}
-
-const Container = styled.div`
-  width: 100%;
-  max-width: 400px;
-  margin: 0 auto;
-
-  h2 {
-    color: #006eff;
-    padding: 20px 10px;
-    font-size: 35px;
-    text-align: center;
-  }
-`;
-const PhasesContainer = styled.div`
-  padding: 10px 30px;
-  max-width: 400px;
-  margin: 0 auto;
-  display: flex;
-  flex-wrap: wrap;
-  flex-direction: column;
-  justify-content: center;
-  align-items: flex-start; /* Alinhar os itens no topo */
-  align-items: center;
-  margin: 0px 0px;
-  background-image: url("/assets/stars-28.png");
-  background-size: contain;
-  background-position: center;
-`;
-
-const PhaseItem = styled.button`
-  border: none;
-  outline: none;
-  width: 100px;
-  height: 100px;
-  background-image: url(${(props) => (props.bgImage ? props.bgImage : "")});
-  background-repeat: no-repeat;
-  background-size: contain;
-  background-color: transparent;
-  background-position: center;
-  margin: 20px 10px;
-
-  display: flex;
-  align-items: center;
-  justify-content: flex-start;
-
-  span {
-    width: 100%;
-    text-align: center;
-    position: relative;
-    top: -60px;
-    /* background-color: #fff; */
-    color: white;
-    font-size: 10px;
-  }
-`;
