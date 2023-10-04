@@ -7,7 +7,7 @@ import NivelBarComponent from "../../components/NivelBarComponent";
 import IslandsPhasesGenerator from "../../components/AditionComponents/IslandsPhasesGenerator";
 
 export default function AditionLevels() {
-  const phasesArray = Array.from({ length: 5 }, (_, index) => index);
+  const phasesArray = Array.from({ length: 10 }, (_, index) => index);
   const [phases, setPhases] = useState(phasesArray);
 
   function calculateMarginLeft(index) {
@@ -22,20 +22,25 @@ export default function AditionLevels() {
   return (
     <Container>
       <NivelBarComponent />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
       <IslandsPhasesGenerator
         phases={phases}
         calculateMarginLeft={calculateMarginLeft}
         bgColor="#58cc02"
         borderColor="#46a302"
-        phaseCompletes={[1, 2, 3]}
+        phaseCompletes={[0, 1, 2]}
       />
-      <IslandsPhasesGenerator
+      {/* <IslandsPhasesGenerator
         phases={phases}
         calculateMarginLeft={calculateMarginLeft}
         bgColor="#b402cc"
         borderColor="#9002a3"
         phaseCompletes={[1, 2]}
-      />
+      /> */}
     </Container>
   );
 }

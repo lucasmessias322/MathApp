@@ -10,16 +10,46 @@ export default function IslandsPhasesGenerator({
   borderColor,
   phaseCompletes,
 }) {
+  function bgC(phase, ColorFor, phaseCompletes) {
+    if (phaseCompletes.includes(phase)) {
+      if (ColorFor == "bgColor") {
+        if (phase <= 4) {
+          return "#58cc02";
+        } else if (phase >= 4 && phase <= 10) {
+          return "#b402cc";
+        }
+      } else if (ColorFor == "borderColor") {
+        if (phase <= 4) {
+          return "#46a302";
+        } else if (phase >= 4 && phase <= 10) {
+          return "#9002a3";
+        }
+      }
+    }
+  }
+
+  function handleDificult(phase) {
+    if (phase <= 4) {
+      return 1;
+    } else if (phase >= 4 && phase <= 10) {
+      return 2;
+    } else if (phase >= 10 && phase <= 15) {
+      return 3;
+    } else if (phase >= 15 && phase <= 20) {
+      return 4;
+    }
+  }
+
   return (
     <PhasesContainer>
-      {phases.map((_, index) => (
+      {phases.map((phase, index) => (
         <PhaseItem
           key={index}
           style={{ marginLeft: `${calculateMarginLeft(index)}px` }}
-          bgColor={phaseCompletes.includes(index + 1) && bgColor}
-          borderColor={phaseCompletes.includes(index + 1) && borderColor}
+          bgColor={bgC(phase, "bgColor", phaseCompletes)}
+          borderColor={bgC(phase, "borderColor", phaseCompletes)}
         >
-          <Link to="/aditiongame">
+          <Link to={`/aditiongame/${phase}/${handleDificult(phase)}`}>
             <VscBook />
           </Link>
         </PhaseItem>

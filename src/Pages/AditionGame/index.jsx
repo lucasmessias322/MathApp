@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import MathLayout from "../../components/MathLayout";
+import { useParams, useNavigate } from "react-router-dom";
 
 export default function AditionGame() {
   const [equation, setEquation] = useState("");
@@ -8,6 +9,7 @@ export default function AditionGame() {
   const [playCorrectSound, setPlayCorrectSound] = useState(false);
   const [playWrongSound, setPlayWrongSound] = useState(false);
   const [isSoundEnabled, setIsSoundEnabled] = useState(true);
+  const navigateTo = useNavigate();
 
   const [progressBar, setProgressBar] = useState(0);
 
@@ -18,6 +20,9 @@ export default function AditionGame() {
   const [totalPoints, setTotalPoints] = useState(savedPoints);
   const [points, setPoints] = useState(0);
 
+  const phase = parseInt(useParams().phase);
+  const dificult = parseInt(useParams().dificult);
+
   useEffect(() => {
     if (savedPoints !== totalPoints) {
       // Save points
@@ -27,7 +32,7 @@ export default function AditionGame() {
 
   const checkAnswer = () => {
     if (parseInt(response) === correctAnswer) {
-      generateAditionEquation(1);
+      generateAditionEquation(dificult);
       setPlayCorrectSound(true);
       setPlayWrongSound(false);
       setTotalPoints(totalPoints + 1);
@@ -86,7 +91,7 @@ export default function AditionGame() {
   };
 
   useEffect(() => {
-    generateAditionEquation(1);
+    generateAditionEquation(dificult);
   }, []);
 
   // termometer controlls
@@ -100,6 +105,7 @@ export default function AditionGame() {
       // Certifique-se de que o termômetro não ultrapasse 100%
       if (NewprogressBar > 100) {
         NewprogressBar = 100;
+        navigateTo("/aditionlevels");
       }
     } else if (NewprogressBar > 0) {
       // Verifique se o termômetro não está em 0% antes de diminuir
