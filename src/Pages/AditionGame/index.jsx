@@ -56,7 +56,7 @@ export default function AditionGame() {
         setResponse("");
       }, 500);
 
-      // Chama a função p  ara atualizar o termômetro
+      
       updateProgressBar(false);
     }
   };

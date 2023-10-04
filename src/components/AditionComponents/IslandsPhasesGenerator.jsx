@@ -10,18 +10,19 @@ export default function IslandsPhasesGenerator({
   borderColor,
   phaseCompletes,
 }) {
+  const HandleColor = () => {};
+
   return (
     <PhasesContainer>
       {AditionphasesList.map((item, index) => (
         <PhaseItem
           key={index}
           style={{ marginLeft: `${calculateMarginLeft(index)}px` }}
-          bgColor={bgColor}
-          borderColor={borderColor}
+          bgColor={item.bgColor}
+          borderColor={item.borderColor}
         >
           <Link to={`/aditiongame/${item.phase}`}>
             <VscBook />
-            {/* <h2>{item.phase}</h2> */}
           </Link>
         </PhaseItem>
       ))}
