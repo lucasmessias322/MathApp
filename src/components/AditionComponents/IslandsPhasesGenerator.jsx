@@ -6,20 +6,17 @@ import { Link } from "react-router-dom";
 export default function IslandsPhasesGenerator({
   AditionphasesList,
   calculateMarginLeft,
-  bgColor,
-  borderColor,
-  phaseCompletes,
 }) {
-  const HandleColor = () => {};
-
   return (
     <PhasesContainer>
       {AditionphasesList.map((item, index) => (
         <PhaseItem
           key={index}
           style={{ marginLeft: `${calculateMarginLeft(index)}px` }}
-          bgColor={item.bgColor}
-          borderColor={item.borderColor}
+          bgColor={item.wasComplete || item.phase == "1" ? item.bgColor : false}
+          borderColor={
+            item.wasComplete || item.phase == "1" ? item.borderColor : false
+          }
         >
           <Link to={`/aditiongame/${item.phase}`}>
             <VscBook />
