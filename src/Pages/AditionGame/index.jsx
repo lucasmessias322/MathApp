@@ -1,18 +1,18 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import MathLayout from "../../components/MathLayout";
 import { useParams, useNavigate } from "react-router-dom";
+import { AppContext } from "../../Contexts/AppContext";
 
 export default function AditionGame() {
+  const navigateTo = useNavigate();
   const [equation, setEquation] = useState("");
   const [response, setResponse] = useState("");
   const [correctAnswer, setCorrectAnswer] = useState(0);
   const [playCorrectSound, setPlayCorrectSound] = useState(false);
   const [playWrongSound, setPlayWrongSound] = useState(false);
   const [isSoundEnabled, setIsSoundEnabled] = useState(true);
-  const navigateTo = useNavigate();
 
   const [progressBar, setProgressBar] = useState(0);
-
   const [pointsPerCorrect, setPointsPerCorrect] = useState(10);
 
   // buscando pontos salvos
@@ -20,8 +20,9 @@ export default function AditionGame() {
   const [totalPoints, setTotalPoints] = useState(savedPoints);
   const [points, setPoints] = useState(0);
 
-  const phase = parseInt(useParams().phase);
-  const dificult = parseInt(useParams().dificult);
+  const PhaseParam = useParams().phase;
+
+  const { AditionphasesList, setAditionphasesList } = useContext(AppContext);
 
   useEffect(() => {
     if (savedPoints !== totalPoints) {
@@ -32,7 +33,7 @@ export default function AditionGame() {
 
   const checkAnswer = () => {
     if (parseInt(response) === correctAnswer) {
-      generateAditionEquation(dificult);
+      generateAditionEquation(1, 10);
       setPlayCorrectSound(true);
       setPlayWrongSound(false);
       setTotalPoints(totalPoints + 1);
@@ -72,16 +73,21 @@ export default function AditionGame() {
     }
   };
 
-  const generateAditionEquation = (numDigits) => {
-    if (numDigits < 1) {
-      throw new Error("O número de dígitos deve ser pelo menos 1.");
-    }
+  const generateAditionEquation = () => {
+    let minRange;
+    let maxRange;
 
-    const minNum = Math.pow(10, numDigits - 1);
-    const maxNum = Math.pow(10, numDigits) - 1;
+    AditionphasesList.forEach((item, i) => {
+      if (item.phase == PhaseParam) {
+        minRange = item.minRange;
+        maxRange = item.maxRange;
+      }
+    });
 
-    const num1 = Math.floor(Math.random() * (maxNum - minNum + 1)) + minNum;
-    const num2 = Math.floor(Math.random() * (maxNum - minNum + 1)) + minNum;
+    const num1 =
+      Math.floor(Math.random() * (maxRange - minRange + 1)) + minRange;
+    const num2 =
+      Math.floor(Math.random() * (maxRange - minRange + 1)) + minRange;
     const result = num1 + num2;
     setEquation(`${num1} + ${num2}`);
     setCorrectAnswer(result);
@@ -91,7 +97,7 @@ export default function AditionGame() {
   };
 
   useEffect(() => {
-    generateAditionEquation(dificult);
+    generateAditionEquation(1, 10);
   }, []);
 
   // termometer controlls

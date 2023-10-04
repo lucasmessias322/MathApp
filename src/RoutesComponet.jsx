@@ -20,7 +20,7 @@ export default function RoutesComponet() {
           element={<TaboadaCompleta />}
         />
         <Route exact path="/aditionlevels" element={<AditionLevels />} />
-        <Route exact path="/aditiongame/:phase/:dificult" element={<AditionGame />} />
+        <Route exact path="/aditiongame/:phase" element={<AditionGame />} />
       </Routes>
     </HashRouter>
   );

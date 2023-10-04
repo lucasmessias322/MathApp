@@ -1,7 +1,9 @@
 import React, { createContext, useState, useEffect } from "react";
 
 const initialStates = {
+  AditionphasesList: [{}],
   totalPoints: 0,
+  setAditionphasesList: Function,
   setTotalPoints: Function,
   setStorage: Function,
 };
@@ -18,15 +20,6 @@ export function AppProvider({ children }) {
     });
   }
 
-  // useEffect(() => {
-  //   const TotalsavedPoints = Number(localStorage.getItem("points"));
-
-  //   if (TotalsavedPoints) {
-  //     updateState("totalPoints", TotalsavedPoints);
-  //   }
-
-  // }, []);
-
   function setStorage(key, value) {
     localStorage.setItem(key, value);
   }
@@ -37,6 +30,9 @@ export function AppProvider({ children }) {
         totalPoints: state.totalPoints,
         setTotalPoints: (totalPoints) =>
           updateState("totalPoints", totalPoints),
+        AditionphasesList: state.AditionphasesList,
+        setAditionphasesList: (AditionphasesList) =>
+          updateState("AditionphasesList", AditionphasesList),
         setStorage,
       }}
     >
