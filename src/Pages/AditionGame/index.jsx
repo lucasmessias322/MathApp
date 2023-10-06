@@ -56,7 +56,6 @@ export default function AditionGame() {
         setResponse("");
       }, 500);
 
-      
       updateProgressBar(false);
     }
   };
@@ -111,6 +110,14 @@ export default function AditionGame() {
       // Certifique-se de que o termômetro não ultrapasse 100%
       if (NewprogressBar > 100) {
         NewprogressBar = 100;
+
+        AditionphasesList[parseInt(PhaseParam)].wasComplete = true;
+
+        localStorage.setItem(
+          "aditionphasesList",
+          JSON.stringify(AditionphasesList)
+        );
+
         navigateTo("/aditionlevels");
       }
     } else if (NewprogressBar > 0) {

@@ -18,7 +18,13 @@ export default function IslandsPhasesGenerator({
             item.wasComplete || item.phase == "1" ? item.borderColor : false
           }
         >
-          <Link to={`/aditiongame/${item.phase}`}>
+          <Link
+            to={
+              item.wasComplete || item.phase == "1"
+                ? `/aditiongame/${item.phase}`
+                : ""
+            }
+          >
             <VscBook />
           </Link>
         </PhaseItem>

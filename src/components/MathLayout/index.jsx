@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import HeaderComponent from "./HeaderComponent";
 import ButtonsCompoent from "./ButtonsCompoent";
 import styled from "styled-components";
@@ -17,6 +17,8 @@ export default function MathLayout({
   setPlayWrongSound,
   progressBar,
 }) {
+
+
   return (
     <Container fillHeight={thermometer}>
       <ContainerMathGame>
@@ -24,7 +26,7 @@ export default function MathLayout({
           points={points}
           currentTabuPointsRecord={currentTabuPointsRecord}
           handleButtonClicked={handleButtonClicked}
-          isSoundEnabled={isSoundEnabled}
+          Sound={isSoundEnabled}
         />
 
         {progressBar ? (

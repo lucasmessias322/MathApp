@@ -10,6 +10,11 @@ export default function AditionLevels() {
   const [phases, setPhases] = useState(phasesArray);
   const { AditionphasesList, setAditionphasesList } = useContext(AppContext);
 
+  const aditionphasesListFromStorage = JSON.parse(
+    localStorage.getItem("aditionphasesList")
+  );
+  const [newaditionphasesList, setNewaditionphasesList] = useState([]);
+
   const aditionphasesList = [
     {
       phase: "1",
@@ -17,7 +22,7 @@ export default function AditionLevels() {
       maxRange: 10,
       bgColor: "#58cc02",
       borderColor: "#46a302",
-      wasComplete: false,
+      wasComplete: true,
     },
     {
       phase: "2",
@@ -110,7 +115,15 @@ export default function AditionLevels() {
   ];
 
   useEffect(() => {
-    setAditionphasesList(aditionphasesList);
+    if (!aditionphasesListFromStorage) {
+      setNewaditionphasesList(aditionphasesList);
+      setAditionphasesList(aditionphasesList);
+      console.log("Aqui");
+      console.log(aditionphasesList);
+    } else {
+      setNewaditionphasesList(aditionphasesListFromStorage);
+      setAditionphasesList(aditionphasesListFromStorage);
+    }
   }, []);
 
   function calculateMarginLeft(index) {
@@ -130,7 +143,7 @@ export default function AditionLevels() {
       <br />
       <br />
       <IslandsPhasesGenerator
-        AditionphasesList={AditionphasesList}
+        AditionphasesList={newaditionphasesList}
         calculateMarginLeft={calculateMarginLeft}
         phaseCompletes={[0, 1, 2]}
       />
