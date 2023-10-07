@@ -7,6 +7,15 @@ export default function IslandsPhasesGenerator({
   AditionphasesList,
   calculateMarginLeft,
 }) {
+  // Passo 1: Inicialize a variável para rastrear a última fase completa
+  let lastCompletedPhase = -1;
+
+  // Passo 2: Encontre a última fase completa
+  AditionphasesList.forEach((item, index) => {
+    if (item.wasComplete || item.phase === "1") {
+      lastCompletedPhase = index;
+    }
+  });
   return (
     <PhasesContainer>
       {AditionphasesList.map((item, index) => (
@@ -17,6 +26,7 @@ export default function IslandsPhasesGenerator({
           borderColor={
             item.wasComplete || item.phase == "1" ? item.borderColor : false
           }
+          animationName={lastCompletedPhase == index ? `upDownanimation` : ""}
         >
           <Link
             to={
@@ -60,11 +70,10 @@ const PhaseItem = styled.button`
   justify-content: center;
   background-color: ${(props) => (props.bgColor ? props.bgColor : "gray")};
   padding-top: 15px;
-  /* animation-name: upDownanimation;
+  animation-name: ${(props) => props.animationName && props.animationName};
   animation-duration: 1s;
   animation-iteration-count: infinite;
-  animation-timing-function: linear;
-  animation-delay: 20s; */
+  animation-timing-function: forwards;
   position: relative;
 
   a {
@@ -82,7 +91,7 @@ const PhaseItem = styled.button`
       bottom: 0;
     }
     50% {
-      bottom: 10px;
+      bottom: 5px;
     }
   }
 `;
