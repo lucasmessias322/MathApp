@@ -4,149 +4,27 @@ import styled from "styled-components";
 import NivelBarComponent from "../../components/NivelBarComponent";
 import IslandsPhasesGenerator from "../../components/AditionComponents/IslandsPhasesGenerator";
 import { AppContext } from "../../Contexts/AppContext";
+import AditionphasesList from "../../components/AditionComponents/aditionphasesList";
 
 export default function AditionLevels() {
   const phasesArray = Array.from({ length: 10 }, (_, index) => index);
   const [phases, setPhases] = useState(phasesArray);
-  const { AditionphasesList, setAditionphasesList } = useContext(AppContext);
+  // const { AditionphasesList, setAditionphasesList } = useContext(AppContext);
 
   const aditionphasesListFromStorage = JSON.parse(
     localStorage.getItem("aditionphasesList")
   );
   const [newaditionphasesList, setNewaditionphasesList] = useState([]);
 
-  const aditionphasesList = [
-    {
-      phase: "1",
-      minRange: 1,
-      maxRange: 10,
-      bgColor: "#58cc02",
-      borderColor: "#46a302",
-      wasComplete: true,
-    },
-    {
-      phase: "2",
-      minRange: 1,
-      maxRange: 15,
-      bgColor: "#58cc02",
-      borderColor: "#46a302",
-      wasComplete: false,
-    },
-    {
-      phase: "3",
-      minRange: 1,
-      maxRange: 20,
-      bgColor: "#58cc02",
-      borderColor: "#46a302",
-      wasComplete: false,
-    },
-    {
-      phase: "4",
-      minRange: 1,
-      maxRange: 25,
-      bgColor: "#58cc02",
-      borderColor: "#46a302",
-      wasComplete: false,
-    },
-    {
-      phase: "5",
-      minRange: 1,
-      maxRange: 30,
-      bgColor: "#58cc02",
-      borderColor: "#46a302",
-      wasComplete: false,
-    },
-    {
-      phase: "6",
-      minRange: 1,
-      maxRange: 35,
-      bgColor: "#b402cc",
-      borderColor: "#9002a3",
-      wasComplete: false,
-    },
-    {
-      phase: "7",
-      minRange: 10,
-      maxRange: 40,
-      bgColor: "#b402cc",
-      borderColor: "#9002a3",
-      wasComplete: false,
-    },
-    {
-      phase: "8",
-      minRange: 10,
-      maxRange: 45,
-      bgColor: "#b402cc",
-      borderColor: "#9002a3",
-      wasComplete: false,
-    },
-    {
-      phase: "9",
-      minRange: 10,
-      maxRange: 50,
-      bgColor: "#b402cc",
-      borderColor: "#9002a3",
-      wasComplete: false,
-    },
-    {
-      phase: "10",
-      minRange: 10,
-      maxRange: 55,
-      bgColor: "#b402cc",
-      borderColor: "#9002a3",
-      wasComplete: false,
-    },
-    {
-      phase: "11",
-      minRange: 10,
-      maxRange: 60,
-      bgColor: "#0242cc",
-      borderColor: "#0228a3",
-      wasComplete: false,
-    },
-    {
-      phase: "12",
-      minRange: 10,
-      maxRange: 65,
-      bgColor: "#0242cc",
-      borderColor: "#0228a3",
-      wasComplete: false,
-    },
-    {
-      phase: "12",
-      minRange: 10,
-      maxRange: 70,
-      bgColor: "#0242cc",
-      borderColor: "#0228a3",
-      wasComplete: false,
-    },
-    {
-      phase: "12",
-      minRange: 10,
-      maxRange: 75,
-      bgColor: "#0242cc",
-      borderColor: "#0228a3",
-      wasComplete: false,
-    },
-    {
-      phase: "12",
-      minRange: 10,
-      maxRange: 80,
-      bgColor: "#0242cc",
-      borderColor: "#0228a3",
-      wasComplete: false,
-    },
-  ];
-
   useEffect(() => {
     if (!aditionphasesListFromStorage) {
-      setNewaditionphasesList(aditionphasesList);
-      setAditionphasesList(aditionphasesList);
+      localStorage.setItem("aditionphasesList", JSON.stringify(AditionphasesList));
+      setNewaditionphasesList(AditionphasesList);
+
       console.log("Aqui");
-      console.log(aditionphasesList);
+      console.log(AditionphasesList);
     } else {
       setNewaditionphasesList(aditionphasesListFromStorage);
-      setAditionphasesList(aditionphasesListFromStorage);
     }
   }, []);
 

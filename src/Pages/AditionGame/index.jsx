@@ -2,6 +2,7 @@ import React, { useState, useEffect, useContext } from "react";
 import MathLayout from "../../components/MathLayout";
 import { useParams, useNavigate } from "react-router-dom";
 import { AppContext } from "../../Contexts/AppContext";
+import AditionphasesList from "../../components/AditionComponents/aditionphasesList.js";
 
 export default function AditionGame() {
   const navigateTo = useNavigate();
@@ -22,7 +23,19 @@ export default function AditionGame() {
 
   const PhaseParam = useParams().phase;
 
-  const { AditionphasesList, setAditionphasesList } = useContext(AppContext);
+  const [newaditionphasesList, setNewaditionphasesList] =
+    useState(AditionphasesList);
+  const aditionphasesListFromStorage = JSON.parse(
+    localStorage.getItem("aditionphasesList")
+  );
+
+  useEffect(() => {
+    if (!aditionphasesListFromStorage) {
+      setNewaditionphasesList(AditionphasesList);
+    } else {
+      setNewaditionphasesList(aditionphasesListFromStorage);
+    }
+  }, []);
 
   useEffect(() => {
     if (savedPoints !== totalPoints) {
@@ -76,7 +89,7 @@ export default function AditionGame() {
     let minRange;
     let maxRange;
 
-    AditionphasesList.forEach((item, i) => {
+    newaditionphasesList.forEach((item, i) => {
       if (item.phase == PhaseParam) {
         minRange = item.minRange;
         maxRange = item.maxRange;
@@ -111,11 +124,11 @@ export default function AditionGame() {
       if (NewprogressBar > 100) {
         NewprogressBar = 100;
 
-        AditionphasesList[parseInt(PhaseParam)].wasComplete = true;
+        newaditionphasesList[parseInt(PhaseParam)].wasComplete = true;
 
         localStorage.setItem(
           "aditionphasesList",
-          JSON.stringify(AditionphasesList)
+          JSON.stringify(newaditionphasesList)
         );
 
         navigateTo("/aditionlevels");

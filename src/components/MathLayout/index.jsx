@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import HeaderComponent from "./HeaderComponent";
 import ButtonsCompoent from "./ButtonsCompoent";
 import styled from "styled-components";
+import { useNavigate } from "react-router-dom";
 
 export default function MathLayout({
   points,
@@ -18,7 +19,6 @@ export default function MathLayout({
   progressBar,
 }) {
 
-
   return (
     <Container fillHeight={thermometer}>
       <ContainerMathGame>
@@ -26,7 +26,7 @@ export default function MathLayout({
           points={points}
           currentTabuPointsRecord={currentTabuPointsRecord}
           handleButtonClicked={handleButtonClicked}
-          Sound={isSoundEnabled}
+          isSoundEnabled={isSoundEnabled}
         />
 
         {progressBar ? (

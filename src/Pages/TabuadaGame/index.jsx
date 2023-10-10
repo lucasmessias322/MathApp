@@ -10,7 +10,6 @@ export default function TabuadaGame() {
   const [playCorrectSound, setPlayCorrectSound] = useState(false);
   const [playWrongSound, setPlayWrongSound] = useState(false);
   const [isSoundEnabled, setIsSoundEnabled] = useState(true);
- 
 
   const [pointsPerCorrect, setPointsPerCorrect] = useState(5);
   const [thermometer, setThermometer] = useState(0);
@@ -203,6 +202,7 @@ export default function TabuadaGame() {
       playWrongSound={playWrongSound}
       setPlayCorrectSound={setPlayCorrectSound}
       setPlayWrongSound={setPlayWrongSound}
+      currentTabuPointsRecord={currentTabuPointsRecord}
     />
   );
 }
