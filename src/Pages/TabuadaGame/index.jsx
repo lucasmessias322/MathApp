@@ -41,64 +41,69 @@ export default function TabuadaGame() {
     setPointsPerCorrect(pointsMapping[stars] || 5);
   }, [stars]);
 
-  const updateThermometer = (isCorrect) => {
+  function increaseThermometer() {
     let newThermometer = thermometer;
 
-    if (isCorrect) {
-      // Se a resposta estiver correta, aumente o termômetro
-      newThermometer += pointsPerCorrect;
+    newThermometer += pointsPerCorrect;
 
-      // Certifique-se de que o termômetro não ultrapasse 100%
-      if (newThermometer > 100) {
-        newThermometer = 100;
+    // when the termometer is 100%
+    if (newThermometer > 100) {
+      newThermometer = 100;
 
-        // Certifique-se de que ele não de mais de 5 estrelas
-        if (Number(stars) !== 5) {
-          // Adicione uma estrela quando o termômetro atingir 100%
-          setStarsEarned(starsEarned + 1);
+      if (Number(stars) !== 5) {
+        //add a star when the thermometer reaches 100%
+        setStarsEarned(starsEarned + 1);
 
-          // Salve o número de estrelas no localStorage
-          setLocalStorageValue(`stars_${tabuNumber}`, Number(stars) + 1);
+        // Save the stars number in the localStorage
+        setLocalStorageValue(`stars_${tabuNumber}`, Number(stars) + 1);
 
-          setTimeout(() => {
-            navigateTo("/tabuadalevels");
-          }, 1500);
-        }
-      }
-    } else if (newThermometer > 0) {
-      // Verifique se o termômetro não está em 0% antes de diminuir
-
-      if (newThermometer != 100) {
-        newThermometer -= pointsPerCorrect;
-      }
-
-      // Certifique-se de que o termômetro não seja menor que 0%
-      if (newThermometer < 0) {
-        newThermometer = 0;
+        // Redirect the user to the tabuadalevels page
+        setTimeout(() => {
+          navigateTo("/tabuadalevels");
+        }, 1500);
       }
     }
 
     setThermometer(newThermometer);
-  };
+  }
 
-  // termometer controlls
+  function decreaseThermometer() {
+    let newThermometer = thermometer;
+
+    // if the termometer is diferente off 100% decrease
+    if (newThermometer != 100) {
+      newThermometer -= pointsPerCorrect;
+    }
+
+    // Certifique-se de que o termômetro não seja menor que 0%
+    if (newThermometer < 0) {
+      newThermometer = 0;
+    }
+    setThermometer(newThermometer);
+  }
+
+  function decreaseThermometerBasedOnTime(elapsedTime) {
+    // Se passaram 2 segundos ou mais sem resposta
+    const decreaseAmount = Math.floor((elapsedTime / 1000) * 1); // Diminui 1% por segundo
+    const newThermometer = thermometer - decreaseAmount;
+
+    // Certifique-se de que o termômetro não seja menor que 0%
+    if (newThermometer < 0) {
+      setThermometer(0);
+
+      // se termometro for diferente de 100 decrementar caso contrario não fazer nada!
+    } else if (thermometer !== 100) {
+      setThermometer(newThermometer);
+    }
+  }
+
+  // Decrease termometer based on time
   useEffect(() => {
     const timer = setInterval(() => {
       const elapsedTime = Date.now() - lastResponseTime;
 
       if (elapsedTime >= 2000) {
-        // Se passaram 2 segundos ou mais sem resposta
-        const decreaseAmount = Math.floor((elapsedTime / 1000) * 1); // Diminui 1% por segundo
-        const newThermometer = thermometer - decreaseAmount;
-
-        // Certifique-se de que o termômetro não seja menor que 0%
-        if (newThermometer < 0) {
-          setThermometer(0);
-
-          // se termometro for diferente de 100 decrementar caso contrario não fazer nada!
-        } else if (thermometer !== 100) {
-          setThermometer(newThermometer);
-        }
+        decreaseThermometerBasedOnTime(elapsedTime);
       }
     }, 1000);
 
@@ -139,7 +144,7 @@ export default function TabuadaGame() {
       setPlayWrongSound(false);
       setTotalPoints(totalPoints + 1);
 
-      updateThermometer(true);
+      increaseThermometer();
 
       // Atualiza o tempo da última resposta
       setLastResponseTime(Date.now());
@@ -159,7 +164,7 @@ export default function TabuadaGame() {
       }, 500);
 
       // Chama a função p  ara atualizar o termômetro
-      updateThermometer(false);
+      decreaseThermometer();
 
       // Atualiza o tempo da última resposta mesmo em caso de resposta errada
       setLastResponseTime(Date.now());
