@@ -17,19 +17,22 @@ export default function HeaderComponent({
           <FaVolumeMute color="white" size={20} />
         )}
       </div>
-      <div className="pointsAndRecord">
-        <div className="points">
-          <FaCoins color="#ffd900" size={20} />
-          <span>{points}</span>
-        </div>
 
-        {currentTabuPointsRecord && (
-          <div className="record">
+      {points && (
+        <div className="pointsAndRecord">
+          <div className="points">
             <FaCoins color="#ffd900" size={20} />
-            <span>Max: {currentTabuPointsRecord || 0}</span>
+            <span>{points}</span>
           </div>
-        )}
-      </div>
+
+          {currentTabuPointsRecord && (
+            <div className="record">
+              <FaCoins color="#ffd900" size={20} />
+              <span>Max: {currentTabuPointsRecord || 0}</span>
+            </div>
+          )}
+        </div>
+      )}
     </Header>
   );
 }

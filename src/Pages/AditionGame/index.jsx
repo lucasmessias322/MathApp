@@ -6,27 +6,28 @@ import AditionphasesList from "../../components/AditionComponents/aditionphasesL
 
 export default function AditionGame() {
   const navigateTo = useNavigate();
+  const { getLocalStorageValue, setLocalStorageValue } = useContext(AppContext);
   const [equation, setEquation] = useState("");
   const [response, setResponse] = useState("");
   const [correctAnswer, setCorrectAnswer] = useState(0);
   const [playCorrectSound, setPlayCorrectSound] = useState(false);
   const [playWrongSound, setPlayWrongSound] = useState(false);
   const [isSoundEnabled, setIsSoundEnabled] = useState(true);
-
   const [progressBar, setProgressBar] = useState(0);
-  const [pointsPerCorrect, setPointsPerCorrect] = useState(10);
-
-  // buscando pontos salvos
-  const savedPoints = Number(localStorage.getItem("totalPoints"));
-  const [totalPoints, setTotalPoints] = useState(savedPoints);
-  const [points, setPoints] = useState(0);
-
-  const PhaseParam = useParams().phase;
-
+  const [pointsPerCorrect, setPointsPerCorrect] = useState(20);
+  const [totalPoints, setTotalPoints] = useState(
+    Number(getLocalStorageValue("totalPoints"))
+  );
   const [newaditionphasesList, setNewaditionphasesList] =
     useState(AditionphasesList);
+
+  // buscando pontos salvos
+  const savedPoints = Number(getLocalStorageValue("totalPoints"));
+
+  const CurrentPhase = useParams().phase;
+
   const aditionphasesListFromStorage = JSON.parse(
-    localStorage.getItem("aditionphasesList")
+    getLocalStorageValue("aditionphasesList")
   );
 
   useEffect(() => {
@@ -35,12 +36,18 @@ export default function AditionGame() {
     } else {
       setNewaditionphasesList(aditionphasesListFromStorage);
     }
+
+    if (newaditionphasesList.wasComplete) {
+      setPointsPerCorrect(0);
+    } else {
+      setPointsPerCorrect(20);
+    }
   }, []);
 
   useEffect(() => {
     if (savedPoints !== totalPoints) {
       // Save points
-      localStorage.setItem(`totalPoints`, totalPoints);
+      setLocalStorageValue(`totalPoints`, totalPoints);
     }
   }, [totalPoints]);
 
@@ -49,17 +56,15 @@ export default function AditionGame() {
       generateAditionEquation(1, 10);
       setPlayCorrectSound(true);
       setPlayWrongSound(false);
-      setTotalPoints(totalPoints + 1);
-      setPoints(points + 1);
+      setTotalPoints(totalPoints + pointsPerCorrect);
 
       updateProgressBar(true);
     } else {
       setPlayCorrectSound(false);
       setPlayWrongSound(true);
 
-      if (points > 0) {
-        setPoints(points - 1);
-        setTotalPoints(totalPoints - 1);
+      if (totalPoints > 0) {
+        setTotalPoints(totalPoints - pointsPerCorrect);
       }
 
       // Mostra a resposta correta  por meio segundo
@@ -90,7 +95,7 @@ export default function AditionGame() {
     let maxRange;
 
     newaditionphasesList.forEach((item, i) => {
-      if (item.phase == PhaseParam) {
+      if (item.phase == CurrentPhase) {
         minRange = item.minRange;
         maxRange = item.maxRange;
       }
@@ -118,15 +123,16 @@ export default function AditionGame() {
 
     if (isCorrect) {
       // Se a resposta estiver correta, aumente o termômetro
-      NewprogressBar += pointsPerCorrect;
+      NewprogressBar += 10;
 
       // Certifique-se de que o termômetro não ultrapasse 100%
       if (NewprogressBar > 100) {
         NewprogressBar = 100;
 
-        newaditionphasesList[parseInt(PhaseParam)].wasComplete = true;
+        newaditionphasesList[parseInt(CurrentPhase)].releasedPhase = true;
+        newaditionphasesList[parseInt(CurrentPhase) - 1].wasComplete = true;
 
-        localStorage.setItem(
+        setLocalStorageValue(
           "aditionphasesList",
           JSON.stringify(newaditionphasesList)
         );
@@ -137,7 +143,7 @@ export default function AditionGame() {
       // Verifique se o termômetro não está em 0% antes de diminuir
 
       if (NewprogressBar != 100) {
-        NewprogressBar -= pointsPerCorrect;
+        NewprogressBar -= 10;
       }
 
       // Certifique-se de que o termômetro não seja menor que 0%
@@ -150,7 +156,6 @@ export default function AditionGame() {
 
   return (
     <MathLayout
-      points={points}
       currentRecord={false}
       handleButtonClicked={handleButtonClicked}
       thermometer={false}

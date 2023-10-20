@@ -4,10 +4,10 @@ import styled from "styled-components";
 export default function NivelBarComponent() {
   const totalPoints = Number(localStorage.getItem("totalPoints"));
   // Calcula o nível atual com base nos pontos
-  const currentLevel = Math.floor(totalPoints / 500);
+  const currentLevel = Math.floor(totalPoints / 1000);
 
   // Calcula a largura da barra de nível
-  const fillWidth = ((totalPoints % 500) / 500) * 100;
+  const fillWidth = ((totalPoints % 1000) / 1000) * 100;
 
   return (
     <Container>

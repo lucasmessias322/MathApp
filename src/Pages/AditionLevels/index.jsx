@@ -8,21 +8,19 @@ import AditionphasesList from "../../components/AditionComponents/aditionphasesL
 
 export default function AditionLevels() {
   const phasesArray = Array.from({ length: 10 }, (_, index) => index);
-  const [phases, setPhases] = useState(phasesArray);
-  // const { AditionphasesList, setAditionphasesList } = useContext(AppContext);
-
+  const { getLocalStorageValue, setLocalStorageValue } = useContext(AppContext);
   const aditionphasesListFromStorage = JSON.parse(
-    localStorage.getItem("aditionphasesList")
+    getLocalStorageValue("aditionphasesList")
   );
   const [newaditionphasesList, setNewaditionphasesList] = useState([]);
 
   useEffect(() => {
     if (!aditionphasesListFromStorage) {
-      localStorage.setItem("aditionphasesList", JSON.stringify(AditionphasesList));
+      setLocalStorageValue(
+        "aditionphasesList",
+        JSON.stringify(AditionphasesList)
+      );
       setNewaditionphasesList(AditionphasesList);
-
-      console.log("Aqui");
-      console.log(AditionphasesList);
     } else {
       setNewaditionphasesList(aditionphasesListFromStorage);
     }
@@ -47,7 +45,6 @@ export default function AditionLevels() {
       <IslandsPhasesGenerator
         AditionphasesList={newaditionphasesList}
         calculateMarginLeft={calculateMarginLeft}
-        phaseCompletes={[0, 1, 2]}
       />
     </Container>
   );

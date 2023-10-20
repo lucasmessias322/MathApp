@@ -8,12 +8,12 @@ export default function IslandsPhasesGenerator({
   calculateMarginLeft,
 }) {
   // Passo 1: Inicialize a variável para rastrear a última fase completa
-  let lastCompletedPhase = -1;
+  let lastReleasedPhase = -1;
 
   // Passo 2: Encontre a última fase completa
   AditionphasesList.forEach((item, index) => {
-    if (item.wasComplete || item.phase === "1") {
-      lastCompletedPhase = index;
+    if (item.releasedPhase) {
+      lastReleasedPhase = index;
     }
   });
   return (
@@ -22,19 +22,11 @@ export default function IslandsPhasesGenerator({
         <PhaseItem
           key={index}
           style={{ marginLeft: `${calculateMarginLeft(index)}px` }}
-          bgColor={item.wasComplete || item.phase == "1" ? item.bgColor : false}
-          borderColor={
-            item.wasComplete || item.phase == "1" ? item.borderColor : false
-          }
-          animationName={lastCompletedPhase == index ? `upDownanimation` : ""}
+          bgColor={item.releasedPhase ? item.bgColor : false}
+          borderColor={item.releasedPhase ? item.borderColor : false}
+          animationName={lastReleasedPhase == index ? `upDownanimation` : ""}
         >
-          <Link
-            to={
-              item.wasComplete || item.phase == "1"
-                ? `/aditiongame/${item.phase}`
-                : ""
-            }
-          >
+          <Link to={item.releasedPhase ? `/aditiongame/${item.phase}` : ""}>
             <VscBook />
           </Link>
         </PhaseItem>

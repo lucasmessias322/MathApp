@@ -5,7 +5,8 @@ const AditionphasesList = [
     maxRange: 10,
     bgColor: "#58cc02",
     borderColor: "#46a302",
-    wasComplete: true,
+    wasComplete: false,
+    releasedPhase: true,
   },
   {
     phase: "2",
@@ -14,6 +15,7 @@ const AditionphasesList = [
     bgColor: "#58cc02",
     borderColor: "#46a302",
     wasComplete: false,
+    releasedPhase: false,
   },
   {
     phase: "3",
@@ -22,6 +24,7 @@ const AditionphasesList = [
     bgColor: "#58cc02",
     borderColor: "#46a302",
     wasComplete: false,
+    releasedPhase: false,
   },
   {
     phase: "4",
@@ -30,6 +33,7 @@ const AditionphasesList = [
     bgColor: "#58cc02",
     borderColor: "#46a302",
     wasComplete: false,
+    releasedPhase: false,
   },
   {
     phase: "5",
@@ -38,6 +42,7 @@ const AditionphasesList = [
     bgColor: "#58cc02",
     borderColor: "#46a302",
     wasComplete: false,
+    releasedPhase: false,
   },
   {
     phase: "6",
@@ -46,6 +51,7 @@ const AditionphasesList = [
     bgColor: "#b402cc",
     borderColor: "#9002a3",
     wasComplete: false,
+    releasedPhase: false,
   },
   {
     phase: "7",
@@ -54,6 +60,7 @@ const AditionphasesList = [
     bgColor: "#b402cc",
     borderColor: "#9002a3",
     wasComplete: false,
+    releasedPhase: false,
   },
   {
     phase: "8",
@@ -62,6 +69,7 @@ const AditionphasesList = [
     bgColor: "#b402cc",
     borderColor: "#9002a3",
     wasComplete: false,
+    releasedPhase: false,
   },
   {
     phase: "9",
@@ -70,6 +78,7 @@ const AditionphasesList = [
     bgColor: "#b402cc",
     borderColor: "#9002a3",
     wasComplete: false,
+    releasedPhase: false,
   },
   {
     phase: "10",
@@ -78,6 +87,7 @@ const AditionphasesList = [
     bgColor: "#b402cc",
     borderColor: "#9002a3",
     wasComplete: false,
+    releasedPhase: false,
   },
   {
     phase: "11",
@@ -86,6 +96,7 @@ const AditionphasesList = [
     bgColor: "#0242cc",
     borderColor: "#0228a3",
     wasComplete: false,
+    releasedPhase: false,
   },
   {
     phase: "12",
@@ -94,6 +105,7 @@ const AditionphasesList = [
     bgColor: "#0242cc",
     borderColor: "#0228a3",
     wasComplete: false,
+    releasedPhase: false,
   },
   {
     phase: "12",
@@ -102,6 +114,7 @@ const AditionphasesList = [
     bgColor: "#0242cc",
     borderColor: "#0228a3",
     wasComplete: false,
+    releasedPhase: false,
   },
   {
     phase: "12",
@@ -110,6 +123,7 @@ const AditionphasesList = [
     bgColor: "#0242cc",
     borderColor: "#0228a3",
     wasComplete: false,
+    releasedPhase: false,
   },
   {
     phase: "12",
@@ -118,6 +132,7 @@ const AditionphasesList = [
     bgColor: "#0242cc",
     borderColor: "#0228a3",
     wasComplete: false,
+    releasedPhase: false,
   },
 ];
 export default AditionphasesList;

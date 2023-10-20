@@ -1,35 +1,30 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import MathLayout from "../../components/MathLayout";
+import { AppContext } from "../../Contexts/AppContext";
 
 export default function TabuadaGame() {
-  const tabuNumber = parseInt(useParams().tabuada);
+  const navigateTo = useNavigate();
   const [equation, setEquation] = useState("");
   const [response, setResponse] = useState("");
-  const [correctAnswer, setCorrectAnswer] = useState(0);
   const [playCorrectSound, setPlayCorrectSound] = useState(false);
   const [playWrongSound, setPlayWrongSound] = useState(false);
   const [isSoundEnabled, setIsSoundEnabled] = useState(true);
-
+  const [correctAnswer, setCorrectAnswer] = useState(0);
   const [pointsPerCorrect, setPointsPerCorrect] = useState(5);
   const [thermometer, setThermometer] = useState(0);
   const [lastResponseTime, setLastResponseTime] = useState(Date.now());
-  // Lê o recorde atual da taboada atual do localStorage
-  const currentTabuPointsRecord = localStorage.getItem(`record_${tabuNumber}`);
-  const navigateTo = useNavigate();
-
   const [starsEarned, setStarsEarned] = useState(0);
-  const stars = localStorage.getItem(`stars_${tabuNumber}`);
-
-  // buscando pontos salvos
-  const savedPoints = Number(localStorage.getItem("totalPoints"));
+  const tabuNumber = parseInt(useParams().tabuada);
+  const { getLocalStorageValue, setLocalStorageValue } = useContext(AppContext);
+  const savedPoints = Number(getLocalStorageValue("totalPoints"));
   const [totalPoints, setTotalPoints] = useState(savedPoints);
-  const [points, setPoints] = useState(0);
+  const stars = getLocalStorageValue(`stars_${tabuNumber}`);
 
   useEffect(() => {
     if (savedPoints !== totalPoints) {
       // Save points
-      localStorage.setItem(`totalPoints`, totalPoints);
+      setLocalStorageValue(`totalPoints`, totalPoints);
     }
   }, [totalPoints]);
 
@@ -43,8 +38,7 @@ export default function TabuadaGame() {
       5: 0.1,
     };
 
-    const points = pointsMapping[stars] || 5;
-    setPointsPerCorrect(points);
+    setPointsPerCorrect(pointsMapping[stars] || 5);
   }, [stars]);
 
   const updateThermometer = (isCorrect) => {
@@ -52,7 +46,7 @@ export default function TabuadaGame() {
 
     if (isCorrect) {
       // Se a resposta estiver correta, aumente o termômetro
-      newThermometer += pointsPerCorrect; // Aumente em 2%
+      newThermometer += pointsPerCorrect;
 
       // Certifique-se de que o termômetro não ultrapasse 100%
       if (newThermometer > 100) {
@@ -64,7 +58,7 @@ export default function TabuadaGame() {
           setStarsEarned(starsEarned + 1);
 
           // Salve o número de estrelas no localStorage
-          localStorage.setItem(`stars_${tabuNumber}`, Number(stars) + 1);
+          setLocalStorageValue(`stars_${tabuNumber}`, Number(stars) + 1);
 
           setTimeout(() => {
             navigateTo("/tabuadalevels");
@@ -75,7 +69,7 @@ export default function TabuadaGame() {
       // Verifique se o termômetro não está em 0% antes de diminuir
 
       if (newThermometer != 100) {
-        newThermometer -= pointsPerCorrect; // Diminua em 2%
+        newThermometer -= pointsPerCorrect;
       }
 
       // Certifique-se de que o termômetro não seja menor que 0%
@@ -111,19 +105,6 @@ export default function TabuadaGame() {
     return () => clearInterval(timer);
   }, [lastResponseTime, thermometer]);
 
-  // Função para atualizar o recorde específico da taboada atual
-  const updateRecord = () => {
-    const currentTabuPointsRecord = localStorage.getItem(
-      `record_${tabuNumber}`
-    );
-    if (
-      points > parseInt(currentTabuPointsRecord) ||
-      currentTabuPointsRecord === null
-    ) {
-      localStorage.setItem(`record_${tabuNumber}`, points.toString());
-    }
-  };
-
   useEffect(() => {
     generateEquation();
   }, [tabuNumber]);
@@ -156,21 +137,17 @@ export default function TabuadaGame() {
       generateEquation();
       setPlayCorrectSound(true);
       setPlayWrongSound(false);
-      setPoints(points + 1);
       setTotalPoints(totalPoints + 1);
 
       updateThermometer(true);
 
       // Atualiza o tempo da última resposta
       setLastResponseTime(Date.now());
-
-      updateRecord();
     } else {
       setPlayCorrectSound(false);
       setPlayWrongSound(true);
 
-      if (points > 0) {
-        setPoints(points - 1);
+      if (totalPoints > 0) {
         setTotalPoints(totalPoints - 1);
       }
 
@@ -191,8 +168,6 @@ export default function TabuadaGame() {
 
   return (
     <MathLayout
-      points={points}
-      currentTabuPointsRecord={currentTabuPointsRecord}
       handleButtonClicked={handleButtonClicked}
       thermometer={thermometer}
       equation={equation}
@@ -202,7 +177,6 @@ export default function TabuadaGame() {
       playWrongSound={playWrongSound}
       setPlayCorrectSound={setPlayCorrectSound}
       setPlayWrongSound={setPlayWrongSound}
-      currentTabuPointsRecord={currentTabuPointsRecord}
     />
   );
 }

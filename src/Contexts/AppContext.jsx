@@ -1,11 +1,12 @@
 import React, { createContext, useState, useEffect } from "react";
 
 const initialStates = {
-  AditionphasesList: [{}],
+  AditionphasesList: Array,
   totalPoints: 0,
   setAditionphasesList: Function,
   setTotalPoints: Function,
-  setStorage: Function,
+  getLocalStorageValue: Function,
+  setLocalStorageValue: Function,
 };
 
 export const AppContext = createContext(initialStates);
@@ -20,7 +21,13 @@ export function AppProvider({ children }) {
     });
   }
 
-  function setStorage(key, value) {
+  // Função para obter um valor do localStorage
+  function getLocalStorageValue(key) {
+    return localStorage.getItem(key);
+  }
+
+  // Função para definir um valor no localStorage
+  function setLocalStorageValue(key, value) {
     localStorage.setItem(key, value);
   }
 
@@ -33,7 +40,8 @@ export function AppProvider({ children }) {
         AditionphasesList: state.AditionphasesList,
         setAditionphasesList: (AditionphasesList) =>
           updateState("AditionphasesList", AditionphasesList),
-        setStorage,
+        getLocalStorageValue,
+        setLocalStorageValue,
       }}
     >
       {children}
