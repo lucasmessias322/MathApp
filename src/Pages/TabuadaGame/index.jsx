@@ -47,7 +47,7 @@ export default function TabuadaGame() {
     newThermometer += pointsPerCorrect;
 
     // when the termometer is 100%
-    if (newThermometer > 100) {
+    if (newThermometer >= 100) {
       newThermometer = 100;
 
       if (Number(stars) !== 5) {
@@ -58,9 +58,7 @@ export default function TabuadaGame() {
         setLocalStorageValue(`stars_${tabuNumber}`, Number(stars) + 1);
 
         // Redirect the user to the tabuadalevels page
-        setTimeout(() => {
-          navigateTo("/tabuadalevels");
-        }, 1500);
+        navigateTo("/tabuadalevels");
       }
     }
 
