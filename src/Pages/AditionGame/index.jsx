@@ -4,6 +4,7 @@ import { useParams, useNavigate } from "react-router-dom";
 import { AppContext } from "../../Contexts/AppContext";
 import AditionphasesList from "../../components/AditionComponents/aditionphasesList.js";
 
+
 export default function AditionGame() {
   const navigateTo = useNavigate();
   const { getLocalStorageValue, setLocalStorageValue } = useContext(AppContext);

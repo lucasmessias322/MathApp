@@ -5,6 +5,8 @@ import NivelBarComponent from "../../components/NivelBarComponent";
 import IslandsPhasesGenerator from "../../components/AditionComponents/IslandsPhasesGenerator";
 import { AppContext } from "../../Contexts/AppContext";
 import AditionphasesList from "../../components/AditionComponents/aditionphasesList";
+import { MdArrowBackIosNew } from "react-icons/md";
+import { Link } from "react-router-dom";
 
 export default function AditionLevels() {
   const phasesArray = Array.from({ length: 10 }, (_, index) => index);
@@ -37,6 +39,11 @@ export default function AditionLevels() {
   return (
     <Container>
       <NivelBarComponent />
+      <ReturnArrow>
+        <Link to="/">
+          <MdArrowBackIosNew />
+        </Link>
+      </ReturnArrow>
       <br />
       <br />
       <br />
@@ -61,4 +68,15 @@ const Container = styled.div`
     font-size: 35px;
     text-align: center;
   }
+`;
+
+const ReturnArrow = styled.div`
+  padding: 5px;
+  font-size: 40px;
+  color: #0059ff;
+  position: fixed;
+  width: 100px;
+  height: 100px;
+  z-index: 9999;
+  top: 100px;
 `;
