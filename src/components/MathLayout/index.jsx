@@ -18,7 +18,6 @@ export default function MathLayout({
   setPlayWrongSound,
   progressBar,
 }) {
-
   return (
     <Container fillHeight={thermometer}>
       <ContainerMathGame>

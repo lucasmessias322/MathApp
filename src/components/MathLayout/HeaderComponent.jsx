@@ -1,38 +1,25 @@
 import React, { useEffect } from "react";
 import styled from "styled-components";
-import { FaVolumeUp, FaVolumeMute, FaCoins } from "react-icons/fa";
+import { FaVolumeUp, FaVolumeMute, FaHome } from "react-icons/fa";
+import { HiMenu } from "react-icons/hi";
+import { Link } from "react-router-dom";
 
 export default function HeaderComponent({
-  points,
-  currentTabuPointsRecord,
   handleButtonClicked,
   isSoundEnabled,
 }) {
   return (
     <Header>
-      <div className="volume" onClick={() => handleButtonClicked("🔊")}>
-        {isSoundEnabled ? (
-          <FaVolumeUp color="white" size={20} />
-        ) : (
-          <FaVolumeMute color="white" size={20} />
-        )}
-      </div>
-
-      {points && (
-        <div className="pointsAndRecord">
-          <div className="points">
-            <FaCoins color="#ffd900" size={20} />
-            <span>{points}</span>
-          </div>
-
-          {currentTabuPointsRecord && (
-            <div className="record">
-              <FaCoins color="#ffd900" size={20} />
-              <span>Max: {currentTabuPointsRecord || 0}</span>
-            </div>
-          )}
-        </div>
-      )}
+      <OptionsLeft>
+        <Option>
+          <Link to="/">
+            <FaHome />
+          </Link>
+        </Option>
+        <Option onClick={() => handleButtonClicked("🔊")}>
+          {isSoundEnabled ? <FaVolumeUp /> : <FaVolumeMute />}
+        </Option>
+      </OptionsLeft>
     </Header>
   );
 }
@@ -47,43 +34,37 @@ const Header = styled.header`
 
   padding-bottom: 15px;
 
-  .volume {
+  /* .volume {
     border: 2px solid #006eff;
     background-color: #006eff;
     padding: 5px;
     margin: 10px;
+    font-size: 25px;
     border-radius: 100%;
     display: flex;
     justify-content: center;
     align-items: center;
     margin-right: 10px;
-  }
+  } */
+`;
 
-  .pointsAndRecord {
-    display: flex;
-    .points {
-      background-color: #006eff;
-      padding: 5px 10px;
-      border-top-left-radius: 20px;
-      border-bottom-left-radius: 20px;
+const OptionsLeft = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
 
-      span {
-        font-size: 18px;
-        color: #ffffff;
-        padding-left: 10px;
-      }
-    }
-    .record {
-      background-color: #006eff;
-      padding: 5px 20px;
-      border-top-right-radius: 20px;
-      border-bottom-right-radius: 20px;
-
-      span {
-        font-size: 18px;
-        color: #ffffff;
-        padding-left: 10px;
-      }
-    }
-  }
+const Option = styled.div`
+  width: 35px;
+  height: 35px;
+  padding: 5px;
+  margin-top: 10px;
+  margin: 5px;
+  font-size: 20px;
+  border: 2px solid #006eff;
+  background-color: #006eff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 100%;
 `;
