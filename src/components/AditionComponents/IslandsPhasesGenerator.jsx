@@ -6,6 +6,7 @@ import { Link } from "react-router-dom";
 export default function IslandsPhasesGenerator({
   AditionphasesList,
   calculateMarginLeft,
+
 }) {
   // Passo 1: Inicialize a variável para rastrear a última fase completa
   let lastReleasedPhase = -1;
@@ -22,9 +23,9 @@ export default function IslandsPhasesGenerator({
         <PhaseItem
           key={index}
           style={{ marginLeft: `${calculateMarginLeft(index)}px` }}
-          bgColor={item.releasedPhase ? item.bgColor : false}
-          borderColor={item.releasedPhase ? item.borderColor : false}
-          animationName={lastReleasedPhase == index ? `upDownanimation` : ""}
+          bgcolor={item.releasedPhase ? item.bgColor : ""}
+          bordercolor={item.releasedPhase ? item.borderColor : ""}
+          animationname={lastReleasedPhase == index ? `upDownanimation` : ""}
         >
           <Link to={item.releasedPhase ? `/aditiongame/${item.phase}` : ""}>
             <VscBook />
@@ -56,13 +57,13 @@ const PhaseItem = styled.button`
   margin: 20px 10px;
   border-radius: 50%;
   border-bottom: 10px solid
-    ${(props) => (props.borderColor ? props.borderColor : "darkgray")};
+    ${(props) => (props.bordercolor ? props.bordercolor : "darkgray")};
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: ${(props) => (props.bgColor ? props.bgColor : "gray")};
+  background-color: ${(props) => (props.bgcolor ? props.bgcolor : "gray")};
   padding-top: 15px;
-  animation-name: ${(props) => props.animationName && props.animationName};
+  animation-name: ${(props) => props.animationname && props.animationname};
   animation-duration: 1s;
   animation-iteration-count: infinite;
   animation-timing-function: forwards;

@@ -11,7 +11,7 @@ export default function NivelBarComponent() {
 
   return (
     <Container>
-      <NivelBar fillWidth={fillWidth}>
+      <NivelBar fillwidth={fillWidth}>
         <div className="fillnivelbar">
           <span>Nível {currentLevel}</span>
         </div>
@@ -48,7 +48,7 @@ const NivelBar = styled.div`
     justify-content: center;
     background: url("/nivelbarprogress.png");
     background-size: ${(props) =>
-        props.fillWidth ? props.fillWidth + "%" : "0%"}
+        props.fillwidth ? props.fillwidth + "%" : "0%"}
       100%;
     background-repeat: no-repeat;
     border-radius: 25px 0 0 25px;

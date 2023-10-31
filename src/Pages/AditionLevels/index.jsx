@@ -9,7 +9,6 @@ import { MdArrowBackIosNew } from "react-icons/md";
 import { Link } from "react-router-dom";
 
 export default function AditionLevels() {
-  const phasesArray = Array.from({ length: 10 }, (_, index) => index);
   const { getLocalStorageValue, setLocalStorageValue } = useContext(AppContext);
   const aditionphasesListFromStorage = JSON.parse(
     getLocalStorageValue("aditionphasesList")

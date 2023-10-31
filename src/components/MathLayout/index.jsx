@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import HeaderComponent from "./HeaderComponent";
 import ButtonsCompoent from "./ButtonsCompoent";
 import styled from "styled-components";
-import { useNavigate } from "react-router-dom";
 
 export default function MathLayout({
   points,
@@ -19,7 +18,7 @@ export default function MathLayout({
   progressBar,
 }) {
   return (
-    <Container fillHeight={thermometer}>
+    <Container fillheight={thermometer}>
       <ContainerMathGame>
         <HeaderComponent
           points={points}
@@ -29,7 +28,7 @@ export default function MathLayout({
         />
 
         {progressBar ? (
-          <EquationsProgressBarContainer fillWidth={progressBar}>
+          <EquationsProgressBarContainer fillwidth={progressBar}>
             <div className="equationfillBar"></div>
           </EquationsProgressBarContainer>
         ) : (
@@ -70,7 +69,7 @@ const Container = styled.div`
   transition: 1s ease-in-out;
   background: url("/termometerbg.png");
   background-size: 100%
-    ${(props) => (props.fillHeight ? props.fillHeight + "%" : "0%")};
+    ${(props) => (props.fillheight ? props.fillheight + "%" : "0%")};
   background-repeat: no-repeat;
   background-position: bottom center;
 `;
@@ -138,7 +137,7 @@ const EquationsProgressBarContainer = styled.div`
     justify-content: center;
     background: url("/nivelbarprogress.png");
     background-size: ${(props) =>
-        props.fillWidth ? props.fillWidth + "%" : "0%"}
+        props.fillwidth ? props.fillwidth + "%" : "0%"}
       100%;
     background-repeat: no-repeat;
     transition: width 0.5s ease-in-out;
