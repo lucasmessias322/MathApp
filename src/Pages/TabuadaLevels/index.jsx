@@ -28,7 +28,7 @@ export default function TabuadaLevels() {
 
   return (
     <C.Container>
-      <NivelBarComponent />
+      <NivelBarComponent  />
       <C.LevelContainer>
         {levels?.map((elem, i) => (
           <C.Level key={i}>

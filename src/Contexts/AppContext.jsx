@@ -7,6 +7,7 @@ const initialStates = {
   setTotalPoints: Function,
   getLocalStorageValue: Function,
   setLocalStorageValue: Function,
+  savedPoints: Number,
 };
 
 export const AppContext = createContext(initialStates);
@@ -42,6 +43,7 @@ export function AppProvider({ children }) {
           updateState("AditionphasesList", AditionphasesList),
         getLocalStorageValue,
         setLocalStorageValue,
+        savedPoints: Number(getLocalStorageValue("totalPoints")),
       }}
     >
       {children}

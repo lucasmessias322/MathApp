@@ -2,9 +2,9 @@ import React, { useState, useEffect, useContext } from "react";
 import MathLayout from "../../components/MathLayout";
 import { useParams, useNavigate } from "react-router-dom";
 import { AppContext } from "../../Contexts/AppContext";
-import { AditionphasesList } from "../../components/AditAndSubtrComponents/aditAndSubtrphasesList";
+import { SubtractionphasesList } from "../../components/AditAndSubtrComponents/aditAndSubtrphasesList";
 
-export default function AditionGame() {
+export default function SubtractionGame() {
   const navigateTo = useNavigate();
   const { getLocalStorageValue, setLocalStorageValue, savedPoints } =
     useContext(AppContext);
@@ -19,12 +19,12 @@ export default function AditionGame() {
   const [totalPoints, setTotalPoints] = useState(
     Number(getLocalStorageValue("totalPoints"))
   );
-  const [phasesList, setPhasesList] = useState(AditionphasesList);
+  const [phasesList, setPhasesList] = useState(SubtractionphasesList);
 
   const CurrentPhase = useParams().phase;
 
   const phasesListFromStorage = JSON.parse(
-    getLocalStorageValue("aditionphasesList")
+    getLocalStorageValue("subtractionphasesList")
   );
 
   useEffect(() => {
@@ -39,7 +39,7 @@ export default function AditionGame() {
     } else if (!phasesListFromStorage[parseInt(CurrentPhase) - 1].wasComplete) {
       setPointsPerCorrect(20);
     }
-  }, []);
+  }, [phasesListFromStorage]);
 
   useEffect(() => {
     if (savedPoints !== totalPoints) {
@@ -48,9 +48,9 @@ export default function AditionGame() {
     }
   }, [totalPoints]);
 
-  const checkAnswer = () => {
+  const checkAnswer = ({ generateEquation = Function }) => {
     if (parseInt(response) === correctAnswer) {
-      generateAditionEquation(1, 10);
+      generateEquation(1, 10);
       setPlayCorrectSound(true);
       setPlayWrongSound(false);
       setTotalPoints(totalPoints + pointsPerCorrect);
@@ -79,7 +79,7 @@ export default function AditionGame() {
     if (value === "C") {
       setResponse("");
     } else if (value === "=") {
-      checkAnswer();
+      checkAnswer({ generateEquation: generateSubtractionEquation });
     } else if (value === "🔊") {
       setIsSoundEnabled(!isSoundEnabled);
     } else {
@@ -87,7 +87,7 @@ export default function AditionGame() {
     }
   };
 
-  const generateAditionEquation = () => {
+  const generateSubtractionEquation = () => {
     let minRange;
     let maxRange;
 
@@ -98,12 +98,15 @@ export default function AditionGame() {
       }
     });
 
-    const num1 =
-      Math.floor(Math.random() * (maxRange - minRange + 1)) + minRange;
     const num2 =
       Math.floor(Math.random() * (maxRange - minRange + 1)) + minRange;
-    const result = num1 + num2;
-    setEquation(`${num1} + ${num2}`);
+    const minNum1 = num2; // O primeiro número é igual ou maior que num2
+    const maxNum1 = maxRange; // O primeiro número está dentro do intervalo
+    const num1 = Math.floor(Math.random() * (maxNum1 - minNum1 + 1)) + minNum1;
+
+    const result = num1 - num2;
+
+    setEquation(`${num1} - ${num2}`);
     setCorrectAnswer(result);
     setResponse("");
     setPlayCorrectSound(false);
@@ -111,7 +114,7 @@ export default function AditionGame() {
   };
 
   useEffect(() => {
-    generateAditionEquation(1, 10);
+    generateSubtractionEquation();
   }, []);
 
   // termometer controlls
@@ -129,9 +132,12 @@ export default function AditionGame() {
         phasesList[parseInt(CurrentPhase)].releasedPhase = true;
         phasesList[parseInt(CurrentPhase) - 1].wasComplete = true;
 
-        setLocalStorageValue("aditionphasesList", JSON.stringify(phasesList));
+        setLocalStorageValue(
+          "subtractionphasesList",
+          JSON.stringify(phasesList)
+        );
 
-        navigateTo("/aditionlevels");
+        navigateTo("/subtractionlevels");
       }
     } else if (NewprogressBar > 0) {
       // Verifique se o termômetro não está em 0% antes de diminuir

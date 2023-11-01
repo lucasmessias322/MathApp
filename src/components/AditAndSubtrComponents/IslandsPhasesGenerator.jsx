@@ -4,22 +4,22 @@ import { VscBook } from "react-icons/vsc";
 import { Link } from "react-router-dom";
 
 export default function IslandsPhasesGenerator({
-  AditionphasesList,
+  phasesList,
   calculateMarginLeft,
-
+  gameUrlPath,
 }) {
   // Passo 1: Inicialize a variável para rastrear a última fase completa
   let lastReleasedPhase = -1;
 
   // Passo 2: Encontre a última fase completa
-  AditionphasesList.forEach((item, index) => {
+  phasesList.forEach((item, index) => {
     if (item.releasedPhase) {
       lastReleasedPhase = index;
     }
   });
   return (
     <PhasesContainer>
-      {AditionphasesList.map((item, index) => (
+      {phasesList.map((item, index) => (
         <PhaseItem
           key={index}
           style={{ marginLeft: `${calculateMarginLeft(index)}px` }}
@@ -27,7 +27,7 @@ export default function IslandsPhasesGenerator({
           bordercolor={item.releasedPhase ? item.borderColor : ""}
           animationname={lastReleasedPhase == index ? `upDownanimation` : ""}
         >
-          <Link to={item.releasedPhase ? `/aditiongame/${item.phase}` : ""}>
+          <Link to={item.releasedPhase ? `${gameUrlPath}/${item.phase}` : ""}>
             <VscBook />
           </Link>
         </PhaseItem>

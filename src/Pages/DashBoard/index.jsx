@@ -1,12 +1,8 @@
-import React,{useContext} from "react";
+import React, { useContext } from "react";
 import styled from "styled-components";
 import { Link, useNavigate } from "react-router-dom";
-import { AppContext } from "../../Contexts/AppContext";
-export default function DashBoard() {
-  const navigateTo = useNavigate;
-  const {} = useContext(AppContext)
 
- 
+export default function DashBoard() {
   return (
     <Container>
       <h2>MathGames</h2>
@@ -14,6 +10,11 @@ export default function DashBoard() {
         <Game>
           <Link to="aditionlevels">
             <span>ADIÇÂO</span>
+          </Link>
+        </Game>
+        <Game>
+          <Link to="subtractionlevels">
+            <span>SUBITRAÇÂO</span>
           </Link>
         </Game>
         <Game>
