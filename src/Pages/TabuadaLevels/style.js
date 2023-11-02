@@ -60,3 +60,14 @@ export const Level = styled.li`
     }
   }
 `;
+
+export const ReturnArrow = styled.div`
+  padding: 5px;
+  font-size: 40px;
+  color: #0059ff;
+  position: fixed;
+  width: 100px;
+  height: 100px;
+  z-index: 9999;
+  top: 70px;
+`;
