@@ -15,7 +15,7 @@ export const LevelContainer = styled.ul`
   align-items: center;
   justify-content: center;
   padding: 20px 10px;
-  padding-top: 100px;
+  padding-top: 120px;
 `;
 
 export const Level = styled.li`
@@ -28,8 +28,8 @@ export const Level = styled.li`
     justify-content: center;
     flex-direction: column;
 
-    width: 100px;
-    height: 100px;
+    width: 115px;
+    height: 115px;
     padding: 20px;
 
     margin: 5px;

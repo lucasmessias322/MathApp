@@ -29,7 +29,7 @@ export default function DashBoard() {
 
 const Container = styled.div`
   max-width: 400px;
-  padding: 20px;
+  padding: 10px;
   margin: 0 auto;
 
   h2 {

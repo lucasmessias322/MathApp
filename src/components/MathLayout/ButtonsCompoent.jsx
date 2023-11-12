@@ -23,7 +23,7 @@ const ButtonsContainer = styled.ul`
   align-items: center;
   justify-content: center;
   list-style: none;
-  margin: 10px auto;
+  margin: 15px auto;
 
   @media (max-width: 500px) {
     max-width: 240px; /* Aumente a largura máxima para telas maiores, se necessário */
@@ -33,9 +33,8 @@ const ButtonsContainer = styled.ul`
 const Buttons = styled.button`
   outline: none;
   border: none;
-  /* padding: 20px; */
-  height: 90px;
-  width: 90px;
+  height: 100px;
+  width: 100px;
   margin: 4px;
   display: flex;
   align-items: center;

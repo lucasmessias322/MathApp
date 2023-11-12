@@ -28,7 +28,7 @@ export default function SubtractionGame() {
     const minNum1 = num2; // O primeiro número é igual ou maior que num2
     const maxNum1 = maxRange; // O primeiro número está dentro do intervalo
     const num1 = Math.floor(Math.random() * (maxNum1 - minNum1 + 1)) + minNum1;
-
+ 
     const result = num1 - num2;
 
     setEquation(`${num1} - ${num2}`);

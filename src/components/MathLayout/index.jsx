@@ -75,8 +75,8 @@ const Container = styled.div`
 `;
 
 const ContainerMathGame = styled.div`
-  width: 90%;
-  max-width: 400px;
+  width: 100%;
+  max-width: 500px;
   padding: 20px;
   display: flex;
   flex-direction: column;
@@ -90,6 +90,7 @@ const ContainerMathGame = styled.div`
     padding: 0px;
   }
 `;
+
 const DisplayEquation = styled.div`
   width: 100%;
   display: flex;
