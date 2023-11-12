@@ -51,12 +51,12 @@ const NivelBar = styled.div`
         props.fillwidth ? props.fillwidth + "%" : "0%"}
       100%;
     background-repeat: no-repeat;
-    border-radius: 25px 0 0 25px;
+    border-radius: 20px 0 0 20px;
     transition: width 0.5s ease-in-out;
 
     span {
       text-align: center;
-      padding: 10px;
+      padding: 15px;
       color: white;
       font-size: 14px;
       font-weight: bold;

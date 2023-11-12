@@ -97,7 +97,7 @@ const DisplayEquation = styled.div`
   justify-content: center;
   align-items: center;
 
-  padding: 20px;
+  padding: 20px 0px;
   border: 2px solid #006eff;
   background-color: #19191f;
   border-radius: 10px;

@@ -28,24 +28,26 @@ export default function DashBoard() {
 }
 
 const Container = styled.div`
+  width: 90%;
   max-width: 400px;
   padding: 10px;
   margin: 0 auto;
 
   h2 {
-    font-size: 40px;
+    font-size: 45px;
     color: #014ad8;
-    padding: 20px 10px;
+    padding: 20px 5px;
     text-align: center;
   }
 `;
 
 const GamesContainer = styled.ul`
+  max-width: 400px;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  margin-top: 20px;
+  margin-top: 30px;
 `;
 
 const Game = styled.li`
@@ -57,11 +59,11 @@ const Game = styled.li`
   background-color: #23232b;
   border-radius: 10px;
   text-align: center;
-  padding: 20px;
+  padding: 22px 5px;
 
   span {
     color: white;
     font-weight: bold;
-    font-size: 20px;
+    font-size: 18px;
   }
 `;
