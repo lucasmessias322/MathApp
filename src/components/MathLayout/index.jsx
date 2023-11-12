@@ -76,7 +76,7 @@ const Container = styled.div`
 
 const ContainerMathGame = styled.div`
   width: 100%;
-  max-width: 500px;
+  max-width: 400px;
   padding: 20px;
   display: flex;
   flex-direction: column;

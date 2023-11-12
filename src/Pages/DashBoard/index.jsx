@@ -33,7 +33,7 @@ const Container = styled.div`
   margin: 0 auto;
 
   h2 {
-    font-size: 35px;
+    font-size: 40px;
     color: #014ad8;
     padding: 20px 10px;
     text-align: center;
@@ -62,6 +62,6 @@ const Game = styled.li`
   span {
     color: white;
     font-weight: bold;
-    font-size: 17px;
+    font-size: 20px;
   }
 `;

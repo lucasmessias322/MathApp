@@ -33,13 +33,13 @@ const ButtonsContainer = styled.ul`
 const Buttons = styled.button`
   outline: none;
   border: none;
-  height: 100px;
-  width: 100px;
+  height: 105px;
+  width: 105px;
   margin: 4px;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 35px;
+  font-size: 40px;
   font-weight: bold;
   color: white;
   background: linear-gradient(to bottom, #006eff, #0050b9);
