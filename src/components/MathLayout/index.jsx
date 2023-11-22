@@ -67,7 +67,7 @@ const Container = styled.div`
   padding: 5px 10px;
 
   transition: 1s ease-in-out;
-  background: url("/termometerbg.png");
+  background: url("/assets/termometerbg.png");
   background-size: 100%
     ${(props) => (props.fillheight ? props.fillheight + "%" : "0%")};
   background-repeat: no-repeat;
@@ -136,7 +136,7 @@ const EquationsProgressBarContainer = styled.div`
     display: flex;
     align-items: center;
     justify-content: center;
-    background: url("/nivelbarprogress.png");
+    background: url("/assets/nivelbarprogress.png");
     background-size: ${(props) =>
         props.fillwidth ? props.fillwidth + "%" : "0%"}
       100%;

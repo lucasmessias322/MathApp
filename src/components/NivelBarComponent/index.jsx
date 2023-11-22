@@ -46,7 +46,7 @@ const NivelBar = styled.div`
     display: flex;
     align-items: center;
     justify-content: center;
-    background: url("/nivelbarprogress.png");
+    background: url("/assets/nivelbarprogress.png");
     background-size: ${(props) =>
         props.fillwidth ? props.fillwidth + "%" : "0%"}
       100%;
