@@ -33,6 +33,19 @@ const Header = styled.header`
   align-items: center;
 
   padding-bottom: 15px;
+
+  /* .volume {
+    border: 2px solid #006eff;
+    background-color: #006eff;
+    padding: 5px;
+    margin: 10px;
+    font-size: 25px;
+    border-radius: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-right: 10px;
+  } */
 `;
 
 const OptionsLeft = styled.div`
@@ -45,7 +58,7 @@ const Option = styled.div`
   width: 35px;
   height: 35px;
   padding: 5px;
-  margin-top: 5px;
+  margin-top: 10px;
   margin: 5px;
   font-size: 20px;
   border: 2px solid #006eff;
