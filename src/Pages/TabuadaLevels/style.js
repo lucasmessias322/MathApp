@@ -28,8 +28,8 @@ export const Level = styled.li`
     justify-content: center;
     flex-direction: column;
 
-    width: 115px;
-    height: 115px;
+    width: 105px;
+    height: 105px;
     padding: 20px;
 
     margin: 5px;
