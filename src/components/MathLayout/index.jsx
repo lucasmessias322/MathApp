@@ -4,8 +4,6 @@ import ButtonsCompoent from "./ButtonsCompoent";
 import styled from "styled-components";
 
 export default function MathLayout({
-  points,
-  currentTabuPointsRecord,
   handleButtonClicked,
   thermometer,
   equation,
@@ -16,13 +14,15 @@ export default function MathLayout({
   setPlayCorrectSound,
   setPlayWrongSound,
   progressBar,
+  recordGamePoints,
+  currentGamepoints,
 }) {
   return (
     <Container fillheight={thermometer}>
       <ContainerMathGame>
         <HeaderComponent
-          points={points}
-          currentTabuPointsRecord={currentTabuPointsRecord}
+          recordGamePoints={recordGamePoints}
+          currentGamepoints={currentGamepoints}
           handleButtonClicked={handleButtonClicked}
           isSoundEnabled={isSoundEnabled}
         />

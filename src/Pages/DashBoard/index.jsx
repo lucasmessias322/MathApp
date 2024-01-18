@@ -22,6 +22,11 @@ export default function DashBoard() {
             <span>TABOADA DE MUTIPLICAÇÂO</span>
           </Link>
         </Game>
+        <Game>
+          <Link to="/tabuadatleatoria">
+            <span>TABOADA ALEATÓRIA</span>
+          </Link>
+        </Game>
       </GamesContainer>
     </Container>
   );

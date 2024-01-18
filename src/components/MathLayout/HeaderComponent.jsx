@@ -1,12 +1,13 @@
 import React, { useEffect } from "react";
 import styled from "styled-components";
 import { FaVolumeUp, FaVolumeMute, FaHome } from "react-icons/fa";
-import { HiMenu } from "react-icons/hi";
 import { Link } from "react-router-dom";
 
 export default function HeaderComponent({
   handleButtonClicked,
   isSoundEnabled,
+  recordGamePoints,
+  currentGamepoints,
 }) {
   return (
     <Header>
@@ -20,6 +21,11 @@ export default function HeaderComponent({
           {isSoundEnabled ? <FaVolumeUp /> : <FaVolumeMute />}
         </Option>
       </OptionsLeft>
+      {recordGamePoints >= 0 && (
+        <h2>
+          {currentGamepoints}/{recordGamePoints}
+        </h2>
+      )}
     </Header>
   );
 }
