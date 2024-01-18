@@ -119,41 +119,35 @@ export default function TabuadaGame() {
     setEquation(`${num1} x ${num2}`);
     setCorrectAnswer(result);
     setResponse("");
-    setPlayCorrectSound(false);
-    setPlayWrongSound(false);
   };
 
-  const handleButtonClicked = (value) => {
-    if (value === "C") {
-      setResponse("");
-    } else if (value === "=") {
-      checkAnswer();
-    } else if (value === "🔊") {
-      setIsSoundEnabled(!isSoundEnabled);
-    } else {
-      setResponse(response + value);
-    }
+  const updatePoints = (isCorrect) => {
+    const pointsChange = isCorrect ? 1 : -1;
+
+    setTotalPoints(totalPoints + pointsChange);
+  };
+
+  const toggleSounds = (correct) => {
+    setPlayCorrectSound(correct);
+    setPlayWrongSound(!correct);
   };
 
   const checkAnswer = () => {
-    if (parseInt(response) === correctAnswer) {
-      generateEquation();
-      setPlayCorrectSound(true);
-      setPlayWrongSound(false);
-      setTotalPoints(totalPoints + 1);
+    // Se correto retorna true se errado retorna false
+    const isCorrect = parseInt(response) === correctAnswer;
 
+    toggleSounds(isCorrect);
+    if (totalPoints > 0) {
+      updatePoints(isCorrect);
+    }
+
+    if (isCorrect) {
+      generateEquation();
       increaseThermometer();
 
       // Atualiza o tempo da última resposta
       setLastResponseTime(Date.now());
     } else {
-      setPlayCorrectSound(false);
-      setPlayWrongSound(true);
-
-      if (totalPoints > 0) {
-        setTotalPoints(totalPoints - 1);
-      }
-
       // Mostra a resposta correta  por meio segundo
       setResponse(correctAnswer.toString());
 
@@ -171,7 +165,6 @@ export default function TabuadaGame() {
 
   return (
     <MathLayout
-      handleButtonClicked={handleButtonClicked}
       thermometer={thermometer}
       equation={equation}
       response={response}
@@ -180,6 +173,9 @@ export default function TabuadaGame() {
       playWrongSound={playWrongSound}
       setPlayCorrectSound={setPlayCorrectSound}
       setPlayWrongSound={setPlayWrongSound}
+      setResponse={setResponse}
+      setIsSoundEnabled={setIsSoundEnabled}
+      checkAnswer={checkAnswer}
     />
   );
 }

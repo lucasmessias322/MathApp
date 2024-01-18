@@ -4,7 +4,6 @@ import ButtonsCompoent from "./ButtonsCompoent";
 import styled from "styled-components";
 
 export default function MathLayout({
-  handleButtonClicked,
   thermometer,
   equation,
   response,
@@ -16,7 +15,26 @@ export default function MathLayout({
   progressBar,
   recordGamePoints,
   currentGamepoints,
+  setResponse,
+  setIsSoundEnabled,
+  checkAnswer,
 }) {
+  const handleButtonClicked = (value) => {
+    switch (value) {
+      case "C":
+        setResponse("");
+        break;
+      case "=":
+        checkAnswer();
+        break;
+      case "🔊":
+        setIsSoundEnabled(!isSoundEnabled);
+        break;
+      default:
+        setResponse((prevResponse) => prevResponse + value);
+        break;
+    }
+  };
   return (
     <Container fillheight={thermometer}>
       <ContainerMathGame>
@@ -25,6 +43,10 @@ export default function MathLayout({
           currentGamepoints={currentGamepoints}
           handleButtonClicked={handleButtonClicked}
           isSoundEnabled={isSoundEnabled}
+          playCorrectSound={playCorrectSound}
+          playWrongSound={playWrongSound}
+          setPlayCorrectSound={setPlayCorrectSound}
+          setPlayWrongSound={setPlayWrongSound}
         />
 
         {progressBar ? (
@@ -39,20 +61,6 @@ export default function MathLayout({
         <DisplayResponse>{response}</DisplayResponse>
         <ButtonsCompoent handleButtonClicked={handleButtonClicked} />
       </ContainerMathGame>
-      {playCorrectSound && isSoundEnabled && (
-        <audio
-          src="/soundeffects/rightanswer.mp3"
-          autoPlay
-          onEnded={() => setPlayCorrectSound(false)}
-        />
-      )}
-      {playWrongSound && isSoundEnabled && (
-        <audio
-          src="/soundeffects/mixkit-wrong-electricity-buzz-955.wav"
-          autoPlay
-          onEnded={() => setPlayWrongSound(false)}
-        />
-      )}
     </Container>
   );
 }

@@ -1,5 +1,4 @@
 import React, { useState, useEffect, useContext } from "react";
-import styled from "styled-components";
 import MathLayout from "../../components/MathLayout";
 import { AppContext } from "../../Contexts/AppContext";
 
@@ -15,10 +14,11 @@ export default function TabuadaAleatoria() {
   const recordGameRandomTabuPtsFromStorage =
     getLocalStorageValue("randomTabuRecord");
 
+  // O operador ?? verifica se o valor à esquerda é null ou undefined e, se for o caso, usa o valor à direita como padrão.
   const [recordGamePoints, setRecordGamepoints] = useState(
-    recordGameRandomTabuPtsFromStorage ? recordGameRandomTabuPtsFromStorage : 0
+    recordGameRandomTabuPtsFromStorage ?? 0
   );
-  const [currentGamepoints, setCurrentgamepoints] = useState(0);
+  const [currentGamepoints, setCurrentGamepoints] = useState(0);
 
   const savedPoints = Number(getLocalStorageValue("totalPoints"));
   const [totalPoints, setTotalPoints] = useState(savedPoints);
@@ -29,18 +29,6 @@ export default function TabuadaAleatoria() {
       setLocalStorageValue("randomTabuRecord", currentGamepoints);
     }
   }, [currentGamepoints]);
-
-  const handleButtonClicked = (value) => {
-    if (value === "C") {
-      setResponse("");
-    } else if (value === "=") {
-      checkAnswer();
-    } else if (value === "🔊") {
-      setIsSoundEnabled(!isSoundEnabled);
-    } else {
-      setResponse(response + value);
-    }
-  };
 
   useEffect(() => {
     generateEquation();
@@ -53,30 +41,32 @@ export default function TabuadaAleatoria() {
     setEquation(`${num1} x ${num2}`);
     setCorrectAnswer(result);
     setResponse("");
-    setPlayCorrectSound(false);
-    setPlayWrongSound(false);
+  };
+
+  const toggleSounds = (correct) => {
+    setPlayCorrectSound(correct);
+    setPlayWrongSound(!correct);
+  };
+
+  const updatePoints = (isCorrect) => {
+    const pointsChange = isCorrect ? 1 : -1;
+
+    setTotalPoints(totalPoints + pointsChange);
+    setCurrentGamepoints(currentGamepoints + pointsChange);
   };
 
   const checkAnswer = () => {
-    if (parseInt(response) === correctAnswer) {
+    // Se correto retorna true se errado retorna false
+    const isCorrect = parseInt(response) === correctAnswer;
+
+    toggleSounds(isCorrect);
+    if (totalPoints > 0 || currentGamepoints > 0) {
+      updatePoints(isCorrect);
+    }
+
+    if (isCorrect) {
       generateEquation();
-      setPlayCorrectSound(true);
-      setPlayWrongSound(false);
-      setTotalPoints(totalPoints + 1);
-
-      setCurrentgamepoints(currentGamepoints + 1);
     } else {
-      setPlayCorrectSound(false);
-      setPlayWrongSound(true);
-
-      if (totalPoints > 0) {
-        setTotalPoints(totalPoints - 1);
-      }
-
-      if (currentGamepoints > 0) {
-        setCurrentgamepoints(currentGamepoints - 1);
-      }
-
       // Mostra a resposta correta  por meio segundo
       setResponse(correctAnswer.toString());
 
@@ -90,15 +80,16 @@ export default function TabuadaAleatoria() {
     <MathLayout
       recordGamePoints={recordGamePoints}
       currentGamepoints={currentGamepoints}
-      thermometer={false}
       equation={equation}
       response={response}
-      handleButtonClicked={handleButtonClicked}
       playCorrectSound={playCorrectSound}
       isSoundEnabled={isSoundEnabled}
       playWrongSound={playWrongSound}
       setPlayCorrectSound={setPlayCorrectSound}
       setPlayWrongSound={setPlayWrongSound}
+      setResponse={setResponse}
+      setIsSoundEnabled={setIsSoundEnabled}
+      checkAnswer={checkAnswer}
     />
   );
 }

@@ -34,6 +34,10 @@ export default function AditAndSubtrComponents({
   );
 
   useEffect(() => {
+    generateEquation();
+  }, []);
+
+  useEffect(() => {
     if (!phasesListFromStorage) {
       setPhasesList(phasesList);
     } else {
@@ -81,22 +85,6 @@ export default function AditAndSubtrComponents({
     }
   };
 
-  const handleButtonClicked = (value) => {
-    if (value === "C") {
-      setResponse("");
-    } else if (value === "=") {
-      checkAnswer();
-    } else if (value === "🔊") {
-      setIsSoundEnabled(!isSoundEnabled);
-    } else {
-      setResponse(response + value);
-    }
-  };
-
-  useEffect(() => {
-    generateEquation();
-  }, []);
-
   // termometer controlls
   const updateProgressBar = (isCorrect) => {
     let NewprogressBar = progressBar;
@@ -133,9 +121,6 @@ export default function AditAndSubtrComponents({
 
   return (
     <MathLayout
-      currentRecord={false}
-      handleButtonClicked={handleButtonClicked}
-      thermometer={false}
       progressBar={progressBar}
       equation={equation}
       response={response}
@@ -144,6 +129,9 @@ export default function AditAndSubtrComponents({
       playWrongSound={playWrongSound}
       setPlayCorrectSound={setPlayCorrectSound}
       setPlayWrongSound={setPlayWrongSound}
+      setResponse={setResponse}
+      setIsSoundEnabled={setIsSoundEnabled}
+      checkAnswer={checkAnswer}
     />
   );
 }

@@ -3,11 +3,19 @@ import styled from "styled-components";
 import { FaVolumeUp, FaVolumeMute, FaHome } from "react-icons/fa";
 import { Link } from "react-router-dom";
 
+const AudioPlayer = ({ src, play, onEnded }) => (
+  <>{play && <audio src={src} autoPlay onEnded={onEnded} />}</>
+);
+
 export default function HeaderComponent({
   handleButtonClicked,
   isSoundEnabled,
   recordGamePoints,
   currentGamepoints,
+  playCorrectSound,
+  playWrongSound,
+  setPlayCorrectSound,
+  setPlayWrongSound,
 }) {
   return (
     <Header>
@@ -26,6 +34,17 @@ export default function HeaderComponent({
           {currentGamepoints}/{recordGamePoints}
         </h2>
       )}
+
+      <AudioPlayer
+        src="/soundeffects/rightanswer.mp3"
+        play={playCorrectSound && isSoundEnabled}
+        onEnded={() => setPlayCorrectSound(false)}
+      />
+      <AudioPlayer
+        src="/soundeffects/mixkit-wrong-electricity-buzz-955.wav"
+        play={playWrongSound && isSoundEnabled}
+        onEnded={() => setPlayWrongSound(false)}
+      />
     </Header>
   );
 }
