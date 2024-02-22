@@ -45,7 +45,7 @@ const Buttons = styled.button`
   background: linear-gradient(to bottom right, #006eff, #024194);
   /* box-shadow: 0px 5px 5px 0px #001736; */
   border-radius: 20px;
-
+  user-select: none;
   transition: transform 0.1s ease-in-out;
 
   &:active {

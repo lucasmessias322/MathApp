@@ -29,19 +29,19 @@ export default function AditAndSubtrComponents({
   );
   const [phasesList, setPhasesList] = useState(PhasesList);
 
-  const phasesListFromStorage = JSON.parse(
-    getLocalStorageValue(PhasesListName)
-  );
-
   useEffect(() => {
     generateEquation();
   }, []);
 
   useEffect(() => {
+    const phasesListFromStorage = JSON.parse(
+      getLocalStorageValue(PhasesListName)
+    );
     if (!phasesListFromStorage) {
       setPhasesList(phasesList);
-    } else {
+    } else if (phasesListFromStorage) {
       setPhasesList(phasesListFromStorage);
+      console.log("Entrou no useEffect");
     }
 
     if (phasesListFromStorage[parseInt(CurrentPhase) - 1].wasComplete) {
@@ -49,7 +49,7 @@ export default function AditAndSubtrComponents({
     } else if (!phasesListFromStorage[parseInt(CurrentPhase) - 1].wasComplete) {
       setPointsPerCorrect(20);
     }
-  }, [phasesListFromStorage]);
+  }, [CurrentPhase]);
 
   useEffect(() => {
     if (savedPoints !== totalPoints) {
