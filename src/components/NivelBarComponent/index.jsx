@@ -23,7 +23,7 @@ export default function NivelBarComponent() {
 const Container = styled.div`
   width: 100%;
   max-width: 400px;
-  background-color: #19191f;
+  background-color: #15181c;
 
   position: fixed;
   z-index: 999;

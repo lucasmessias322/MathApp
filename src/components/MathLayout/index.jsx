@@ -3,6 +3,7 @@ import HeaderComponent from "./HeaderComponent";
 import ButtonsCompoent from "./ButtonsCompoent";
 import styled from "styled-components";
 const audio = new Audio("/soundeffects/happy-pop-2-185287.mp3");
+
 export default function MathLayout({
   thermometer,
   equation,
