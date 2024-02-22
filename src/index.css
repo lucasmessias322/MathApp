@@ -2,14 +2,12 @@
   box-sizing: border-box;
   margin: 0px;
   padding: 0px;
+  text-decoration: none;
+  color: inherit;
 }
 
 html,
 body {
   font-family: Arial, Helvetica, sans-serif;
-  background-color: #19191f;
-}
-a {
-  text-decoration: none;
-  color: inherit;
+  background-color: #15181c;
 }

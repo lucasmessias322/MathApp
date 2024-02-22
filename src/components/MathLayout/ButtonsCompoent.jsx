@@ -42,16 +42,15 @@ const Buttons = styled.button`
   font-size: 35px;
   font-weight: bold;
   color: white;
-  background: linear-gradient(to bottom, #006eff, #0050b9);
-  box-shadow: 0px 4px 4px 0px #001736;
-  border-radius: 10px;
-  cursor: pointer;
+  background: linear-gradient(to bottom right, #006eff, #024194);
+  /* box-shadow: 0px 5px 5px 0px #001736; */
+  border-radius: 20px;
+
   transition: transform 0.1s ease-in-out;
-  user-select: none;
 
   &:active {
     transform: scale(0.95);
-    box-shadow: 0px 4px 4px 0px #001736 inset;
+    box-shadow: 0px 10px 10px 0px #001736 inset;
   }
 
   @media (min-width: 500px) {
