@@ -42,8 +42,8 @@ const Buttons = styled.button`
   font-size: 35px;
   font-weight: bold;
   color: white;
-  background: linear-gradient(to bottom right, #006eff, #024194);
-  /* box-shadow: 0px 5px 5px 0px #001736; */
+  background: linear-gradient(to bottom, #006eff, #024194);
+  box-shadow: 0px 4px 4px 0px #001736;
   border-radius: 20px;
   user-select: none;
   transition: transform 0.1s ease-in-out;
