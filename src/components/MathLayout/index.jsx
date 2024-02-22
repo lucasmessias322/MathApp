@@ -98,10 +98,6 @@ const ContainerMathGame = styled.div`
   margin: 0 auto;
   position: fixed;
   top: 0;
-
-  @media (min-width: 500px) {
-    padding: 0px;
-  }
 `;
 
 const DisplayEquation = styled.div`
