@@ -108,7 +108,7 @@ const DisplayEquation = styled.div`
 
   padding: 20px 0px;
   border: 2px solid #006eff;
-  background-color: #19191f;
+  background-color: transparent;
   border-radius: 10px;
   height: 100px;
   font-weight: bold;
@@ -124,7 +124,7 @@ const DisplayResponse = styled.div`
 
   padding: 20px;
   border: 2px solid #006eff;
-  background-color: #19191f;
+  background-color: transparent;
   border-radius: 10px;
   height: 100px;
   font-weight: bold;

@@ -71,4 +71,8 @@ const Game = styled.li`
     font-weight: bold;
     font-size: 18px;
   }
+  &:hover {
+    background-color: #01317f;
+    box-shadow: 0 4px 9px rgba(1, 74, 216, 0.2);
+  }
 `;
