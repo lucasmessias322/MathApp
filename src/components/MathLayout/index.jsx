@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import HeaderComponent from "./HeaderComponent";
 import ButtonsCompoent from "./ButtonsCompoent";
 import styled from "styled-components";
-const audio = new Audio("/soundeffects/happy-pop-2-185287.mp3");
+const Popaudio = new Audio("/soundeffects/happy-pop-2-185287.mp3");
 
 export default function MathLayout({
   thermometer,
@@ -21,10 +21,10 @@ export default function MathLayout({
   checkAnswer,
 }) {
   const handleButtonClicked = (value) => {
-    audio.currentTime = 0; // Reinicia a reprodução
-    audio
-      .play()
-      .catch((error) => console.error("Erro ao iniciar a reprodução:", error));
+    Popaudio.currentTime = 0; // Reinicia a reprodução
+    Popaudio.play().catch((error) =>
+      console.error("Erro ao iniciar a reprodução:", error)
+    );
     switch (value) {
       case "C":
         setResponse("");
@@ -34,6 +34,8 @@ export default function MathLayout({
         break;
       case "🔊":
         setIsSoundEnabled(!isSoundEnabled);
+        break;
+      case "DoNothing":
         break;
       default:
         setResponse((prevResponse) => prevResponse + value);

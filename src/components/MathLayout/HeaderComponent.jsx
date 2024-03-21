@@ -20,12 +20,15 @@ export default function HeaderComponent({
   return (
     <Header>
       <OptionsLeft>
-        <Option >
+        <Option onClick={() => handleButtonClicked("DoNothing")}>
           <Link to="/">
             <FaHome />
           </Link>
         </Option>
-        <Option active={!isSoundEnabled} onClick={() => handleButtonClicked("🔊")}>
+        <Option
+          active={!isSoundEnabled}
+          onClick={() => handleButtonClicked("🔊")}
+        >
           {isSoundEnabled ? <FaVolumeUp /> : <FaVolumeMute />}
         </Option>
       </OptionsLeft>
@@ -73,8 +76,8 @@ const Option = styled.div`
   font-size: 20px;
   /* border: 2px solid #006eff; */
   background: linear-gradient(to bottom, #006eff, #024194);
-  box-shadow: 0px 4px 4px 0px #001736 ${props => props.active && "inset"};
-  transition: transform 0.1s ease-in-out ;
+  box-shadow: 0px 4px 4px 0px #001736 ${(props) => props.active && "inset"};
+  transition: transform 0.1s ease-in-out;
   display: flex;
   justify-content: center;
   align-items: center;
