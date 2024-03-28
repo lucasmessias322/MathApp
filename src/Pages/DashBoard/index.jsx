@@ -1,10 +1,15 @@
 import styled from "styled-components";
 import { Link } from "react-router-dom";
+import { FaGamepad } from "react-icons/fa";
 
 export default function DashBoard() {
   return (
     <Container>
-      <h2>MathGames</h2>
+      <Headerlogo>
+        <h2>MathGames</h2>
+        <FaGamepad className="gamepadIco" />
+      </Headerlogo>
+
       <GamesContainer>
         <Game>
           <Link to="aditionlevels">
@@ -36,13 +41,22 @@ const Container = styled.div`
   max-width: 400px;
   padding: 10px;
   margin: 0 auto;
+`;
 
+const Headerlogo = styled.div`
+  color: #014ad8;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  .gamepadIco {
+    font-size: 45px;
+    transform: rotate(45deg);
+  }
   h2 {
     font-size: 45px;
-    color: #014ad8;
-    padding: 20px 5px;
-    text-align: center;
   }
+  padding: 20px 5px;
 `;
 
 const GamesContainer = styled.ul`
