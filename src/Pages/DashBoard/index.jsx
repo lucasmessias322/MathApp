@@ -18,7 +18,7 @@ export default function DashBoard() {
         </Game>
         <Game>
           <Link to="/tabuadalevels">
-            <span>TABOADA DE MUTIPLICAÇÂO</span>
+            <span>TABOADA MUTIPLICAÇÂO</span>
           </Link>
         </Game>
         <Game>
