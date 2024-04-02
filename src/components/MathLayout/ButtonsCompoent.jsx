@@ -46,10 +46,10 @@ const Buttons = styled.button`
   box-shadow: 0px 4px 4px 0px #001736;
   border-radius: 20px;
   user-select: none;
-  transition: transform 0.1s ease-in-out;
+  transition: 0.1s ease-in-out;
 
   &:active {
-    transform: scale(0.95);
+    transform: scale(0.8);
     box-shadow: 0px 10px 10px 0px #001736 inset;
   }
 

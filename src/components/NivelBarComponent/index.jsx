@@ -37,7 +37,7 @@ const Container = styled.div`
 const NivelBar = styled.div`
   width: 100%;
   height: 25px;
-  background: #121216;
+  background: #16161c;
   border-radius: 20px;
 
   .fillnivelbar {

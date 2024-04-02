@@ -25,23 +25,22 @@ export default function MathLayout({
     Popaudio.play().catch((error) =>
       console.error("Erro ao iniciar a reprodução:", error)
     );
-    switch (value) {
-      case "C":
-        setResponse("");
-        break;
-      case "=":
-        checkAnswer();
-        break;
-      case "🔊":
-        setIsSoundEnabled(!isSoundEnabled);
-        break;
-      case "DoNothing":
-        break;
-      default:
+
+    if (value === "C") {
+      setResponse("");
+    } else if (value === "=") {
+      checkAnswer();
+    } else if (value === "🔊") {
+      setIsSoundEnabled(!isSoundEnabled);
+    } else if (value === "DoNothing") {
+      console.log("DoNothing");
+    } else {
+      if (response.length <= 10) {
         setResponse((prevResponse) => prevResponse + value);
-        break;
+      }
     }
   };
+
   return (
     <Container fillheight={thermometer}>
       <ContainerMathGame>
@@ -120,6 +119,7 @@ const DisplayEquation = styled.div`
 
 const DisplayResponse = styled.div`
   width: 100%;
+
   display: flex;
   justify-content: center;
   align-items: center;

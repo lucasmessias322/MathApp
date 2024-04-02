@@ -1,6 +1,7 @@
 import React, { useState, useContext } from "react";
 import { Link } from "react-router-dom";
 import { AiOutlineStar, AiTwotoneStar } from "react-icons/ai";
+import { FaStar } from "react-icons/fa";
 import { MdArrowBackIosNew } from "react-icons/md";
 import NivelBarComponent from "../../components/NivelBarComponent";
 import * as C from "./style";
@@ -19,7 +20,7 @@ export default function TabuadaLevels() {
 
     for (let i = 0; i < 5; i++) {
       if (i < starsEarned) {
-        stars.push(<AiTwotoneStar key={i} color="#ffd900" />);
+        stars.push(<FaStar key={i} color="#ffd900" />);
       } else {
         stars.push(<AiOutlineStar key={i} color="#0044C6" />);
       }
