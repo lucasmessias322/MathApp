@@ -33,8 +33,8 @@ const ButtonsContainer = styled.ul`
 const Button = styled.button`
   outline: none;
   border: none;
-  height: 70px;
-  width: 80px;
+  height: 90px;
+  width: 90px;
   margin: 2px;
   display: flex;
   align-items: center;
@@ -43,15 +43,15 @@ const Button = styled.button`
   font-weight: bold;
   color: white;
   cursor: pointer;
-  background: linear-gradient(179deg, #014ad8 1.22%, #002466 98.84%);
-  box-shadow: 5px 5px 4px 0px #010b1f;
-  border-radius: 5px;
+  background: linear-gradient(to bottom, #006eff, #024194);
+  box-shadow: 5px 5px 4px 0px #191c29;
+  border-radius: 10px;
   user-select: none;
   transition: 0.1s ease-in-out;
 
   &:active {
     transform: scale(0.8);
-    box-shadow: 0px 10px 10px 0px #161b29 inset;
+    box-shadow: 0px 10px 10px 0px #191c29 inset;
   }
 
   @media (min-width: 500px) {
