@@ -72,9 +72,9 @@ const Game = styled.li`
   user-select: none;
   width: 100%;
   list-style: none;
-  margin: 5px;
+  margin-top: 2px;
   width: 100%;
-  background-color: #23232b;
+  background-color: #212433;
   border-radius: 10px;
   text-align: center;
   padding: 22px 5px;

@@ -74,8 +74,8 @@ const Option = styled.div`
   padding: 5px;
   margin: 0px 5px;
   font-size: 20px;
-  background: linear-gradient(to bottom, #006eff, #024194);
-  box-shadow: 0px 4px 4px 0px #001736 ${(props) => props.active && "inset"};
+  background: linear-gradient(to bottom, #4470c7, #002466);
+  box-shadow: 0px 4px 4px 0px #161b29 ${(props) => props.active && "inset"};
   transition: transform 0.1s ease-in-out;
   display: flex;
   justify-content: center;
@@ -84,6 +84,6 @@ const Option = styled.div`
 
   &:active {
     transform: scale(0.8);
-    box-shadow: 0px 10px 10px 0px #001736 inset;
+    box-shadow: 0px 10px 10px 0px #161b29 inset;
   }
 `;

@@ -5,9 +5,9 @@ export default function ButtonsCompoent({ handleButtonClicked }) {
   return (
     <ButtonsContainer>
       {[1, 2, 3, 4, 5, 6, 7, 8, 9, 0, "C", "="].map((value) => (
-        <Buttons key={value} onClick={() => handleButtonClicked(value)}>
+        <Button key={value} onClick={() => handleButtonClicked(value)}>
           {value}
-        </Buttons>
+        </Button>
       ))}
     </ButtonsContainer>
   );
@@ -23,34 +23,35 @@ const ButtonsContainer = styled.ul`
   align-items: center;
   justify-content: center;
   list-style: none;
-  margin: 15px auto;
+  margin: 10px auto;
 
   @media (max-width: 500px) {
     max-width: 240px; /* Aumente a largura máxima para telas maiores, se necessário */
   }
 `;
 
-const Buttons = styled.button`
+const Button = styled.button`
   outline: none;
   border: none;
-  height: 90px;
-  width: 90px;
-  margin: 4px;
+  height: 70px;
+  width: 80px;
+  margin: 2px;
   display: flex;
   align-items: center;
   justify-content: center;
   font-size: 35px;
   font-weight: bold;
   color: white;
-  background: linear-gradient(to bottom, #006eff, #024194);
-  box-shadow: 0px 4px 4px 0px #001736;
-  border-radius: 20px;
+  cursor: pointer;
+  background: linear-gradient(179deg, #014ad8 1.22%, #002466 98.84%);
+  box-shadow: 5px 5px 4px 0px #010b1f;
+  border-radius: 5px;
   user-select: none;
   transition: 0.1s ease-in-out;
 
   &:active {
     transform: scale(0.8);
-    box-shadow: 0px 10px 10px 0px #001736 inset;
+    box-shadow: 0px 10px 10px 0px #161b29 inset;
   }
 
   @media (min-width: 500px) {

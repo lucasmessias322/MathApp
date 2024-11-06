@@ -73,7 +73,7 @@ const Container = styled.div`
 const ReturnArrow = styled.div`
   padding: 5px;
   font-size: 40px;
-  color: #0059ff;
+  color: #85a3ff;
   position: fixed;
   width: 100px;
   height: 100px;

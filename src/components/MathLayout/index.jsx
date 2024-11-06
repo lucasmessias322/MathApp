@@ -63,8 +63,8 @@ export default function MathLayout({
           ""
         )}
 
-        <DisplayEquation>{equation}</DisplayEquation>
-        <DisplayResponse>{response}</DisplayResponse>
+        <Display>{equation}</Display>
+        <Display>{response}</Display>
         <ButtonsCompoent handleButtonClicked={handleButtonClicked} />
       </ContainerMathGame>
     </Container>
@@ -101,38 +101,24 @@ const ContainerMathGame = styled.div`
   top: 0;
 `;
 
-const DisplayEquation = styled.div`
+const Display = styled.div`
   width: 100%;
+
   display: flex;
   justify-content: center;
   align-items: center;
 
   padding: 20px 0px;
-  border: 2px solid #006eff;
+  border: 2px solid #4470c7;
+  border-left: 5px solid #4470c7;
+  border-right: 5px solid #4470c7;
   background-color: transparent;
   border-radius: 10px;
   height: 100px;
   font-weight: bold;
   font-size: 40px;
   text-align: center;
-`;
-
-const DisplayResponse = styled.div`
-  width: 100%;
-
-  display: flex;
-  justify-content: center;
-  align-items: center;
-
-  padding: 20px;
-  border: 2px solid #006eff;
-  background-color: transparent;
-  border-radius: 10px;
-  height: 100px;
-  font-weight: bold;
-  font-size: 40px;
-  text-align: center;
-  margin-top: 10px;
+  margin-bottom: 5px;
 `;
 
 const EquationsProgressBarContainer = styled.div`

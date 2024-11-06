@@ -22,7 +22,7 @@ export default function TabuadaLevels() {
       if (i < starsEarned) {
         stars.push(<FaStar key={i} color="#ffd900" />);
       } else {
-        stars.push(<AiOutlineStar key={i} color="#0044C6" />);
+        stars.push(<FaStar key={i} color="#0044C6" />);
       }
     }
 
