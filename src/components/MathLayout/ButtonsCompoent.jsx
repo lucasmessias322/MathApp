@@ -35,7 +35,7 @@ const Button = styled.button`
   border: none;
   height: 90px;
   width: 90px;
-  margin: 2px;
+  margin: 4px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -55,14 +55,14 @@ const Button = styled.button`
   }
 
   @media (min-width: 500px) {
-    height: 80px;
-    width: 80px;
-    font-size: 30px;
-  }
-
-  @media (max-width: 300px) {
     height: 70px;
     width: 70px;
     font-size: 30px;
   }
+
+  /* @media (max-width: 300px) {
+    height: 90px;
+    width: 90px;
+    font-size: 30px;
+  } */
 `;
