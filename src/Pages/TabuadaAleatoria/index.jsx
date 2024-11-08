@@ -48,11 +48,23 @@ export default function TabuadaAleatoria() {
     setPlayWrongSound(!correct);
   };
 
+  // const updatePoints = (isCorrect) => {
+  //   const pointsChange = isCorrect ? 1 : -1;
+
+  //   setTotalPoints(totalPoints + pointsChange);
+  //   setCurrentGamepoints(currentGamepoints + pointsChange);
+  // };
   const updatePoints = (isCorrect) => {
     const pointsChange = isCorrect ? 1 : -1;
 
-    setTotalPoints(totalPoints + pointsChange);
-    setCurrentGamepoints(currentGamepoints + pointsChange);
+    // Impede que currentGamepoints e totalPoints sejam menores que zero
+    if (
+      totalPoints + pointsChange >= 0 &&
+      currentGamepoints + pointsChange >= 0
+    ) {
+      setTotalPoints(totalPoints + pointsChange);
+      setCurrentGamepoints(currentGamepoints + pointsChange);
+    }
   };
 
   const checkAnswer = () => {

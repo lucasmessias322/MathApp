@@ -57,11 +57,13 @@ const PhaseItem = styled.button`
   margin: 20px 10px;
   border-radius: 50%;
   border-bottom: 10px solid
-    ${(props) => (props.bordercolor ? props.bordercolor : "darkgray")};
+    ${(props) => (props.bordercolor ? "#43517c" : "#333333")};
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: ${(props) => (props.bgcolor ? props.bgcolor : "gray")};
+  background-color: ${(props) => (props.bgcolor ? "#6E86CC " : "#474747")};
+  opacity: ${(props) => (props.bgcolor ? 1 : 0.4)};
+
   padding-top: 15px;
   animation-name: ${(props) => props.animationname && props.animationname};
   animation-duration: 1s;
