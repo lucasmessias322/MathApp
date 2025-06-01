@@ -2,8 +2,10 @@ import styled from "styled-components";
 
 export const Container = styled.div`
   width: 100%;
-  max-width: 400px;
+  height: 100vh;
+
   margin: 0px auto;
+  background-color: #ffc355;
 `;
 
 export const LevelContainer = styled.ul`
@@ -28,14 +30,19 @@ export const Level = styled.li`
     justify-content: center;
     flex-direction: column;
 
+    span {
+      color: #592c10;
+    }
+
     width: 105px;
     height: 105px;
     padding: 20px;
 
     margin: 5px;
-    /* background: linear-gradient(to bottom, #006eff, #0059ce); */
-    background: linear-gradient(179deg, #014ad8 1.22%, #002466 98.84%);
-    box-shadow: 5px 5px 4px 0px #010b1f;
+
+    background-color: #fff7db;
+    border: 5px solid #ffc516;
+    box-shadow: 5px 5px 4px 0px rgb(88, 67, 9);
     color: white;
     font-size: 30px;
     font-weight: bold;
@@ -45,12 +52,12 @@ export const Level = styled.li`
     transition: background-color 0.2s ease-in-out, transform 0.1s ease-in-out;
 
     &:hover {
-      background-color: #343541;
+      background-color: #ffc516;
     }
 
     &:active {
       transform: scale(0.95);
-      box-shadow: 5px 5px 4px 0px #010b1f inset;
+      box-shadow: 5px 5px 4px 0px rgb(54, 41, 5) inset;
     }
 
     div.stars {
@@ -64,10 +71,7 @@ export const Level = styled.li`
 export const ReturnArrow = styled.div`
   padding: 5px;
   font-size: 40px;
-  color: #0059ff;
-  position: fixed;
-  width: 100px;
-  height: 100px;
+  color: #592c10;
+
   z-index: 9999;
-  top: 70px;
 `;

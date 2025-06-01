@@ -74,8 +74,11 @@ const Option = styled.div`
   padding: 5px;
   margin: 0px 5px;
   font-size: 20px;
-  background: linear-gradient(to bottom, #4470c7, #002466);
-  box-shadow: 0px 4px 4px 0px #161b29 ${(props) => props.active && "inset"};
+  background: linear-gradient(145deg, #02b8cc, #029bb3);
+  border: 4px solid #01a2b0;
+  box-shadow: 6px 6px 12px rgba(0, 0, 0, 0.4),
+    -4px -4px 8px rgba(255, 255, 255, 0.1), inset 0 -3px 6px rgba(0, 0, 0, 0.3),
+    inset 0 3px 6px rgba(255, 255, 255, 0.05);
   transition: transform 0.1s ease-in-out;
   display: flex;
   justify-content: center;
@@ -83,7 +86,9 @@ const Option = styled.div`
   border-radius: 100%;
 
   &:active {
-    transform: scale(0.8);
-    box-shadow: 0px 10px 10px 0px #161b29 inset;
+    transform: translateY(4px);
+    background: linear-gradient(to bottom, #02aecc, #017c94);
+    box-shadow: inset 0 3px 6px rgba(0, 0, 0, 0.5),
+      inset 0 -3px 6px rgba(255, 255, 255, 0.05);
   }
 `;

@@ -11,34 +11,38 @@ export default function NivelBarComponent() {
 
   return (
     <Container>
-      <NivelBar fillwidth={fillWidth}>
-        <div className="fillnivelbar">
-          <span>Nível {currentLevel}</span>
-        </div>
-      </NivelBar>
+      <NivelBarContainer>
+        <NivelBar fillwidth={fillWidth}>
+          <div className="fillnivelbar">
+            <span>Nível {currentLevel}</span>
+          </div>
+        </NivelBar>
+      </NivelBarContainer>
     </Container>
   );
 }
 
 const Container = styled.div`
   width: 100%;
-  max-width: 400px;
-  background-color: #1c1f2d;
 
-  position: fixed;
-  z-index: 999;
-
-  padding: 30px 20px;
   display: flex;
   align-items: center;
   justify-content: center;
 `;
 
+const NivelBarContainer = styled.div`
+  width: 100%;
+  border-radius: 40px;
+`;
+
 const NivelBar = styled.div`
   width: 100%;
-  height: 25px;
-  background: #181b25;
+  max-width: 400px;
+  height: 40px;
+  background-color: #fdf5d9;
   border-radius: 20px;
+  border: 5px solid #02BAD3;
+  margin: 0 auto;
 
   .fillnivelbar {
     height: 100%;
@@ -57,9 +61,9 @@ const NivelBar = styled.div`
     span {
       text-align: center;
       padding: 15px;
-      color: white;
+      color: #5a3310;
       font-size: 14px;
-      font-weight: bold;
+      font-weight: bolder;
     }
   }
 `;

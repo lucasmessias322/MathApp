@@ -38,7 +38,7 @@ export default function IslandsPhasesGenerator({
 
 const PhasesContainer = styled.div`
   padding: 10px 30px;
-  max-width: 400px;
+  max-width: 500px;
   margin: 0 auto;
   display: flex;
   flex-wrap: wrap;
@@ -47,6 +47,7 @@ const PhasesContainer = styled.div`
   align-items: flex-start; /* Alinhar os itens no topo */
   align-items: center;
   margin: 0px 0px;
+
 `;
 
 const PhaseItem = styled.button`
@@ -57,11 +58,11 @@ const PhaseItem = styled.button`
   margin: 20px 10px;
   border-radius: 50%;
   border-bottom: 10px solid
-    ${(props) => (props.bordercolor ? "#43517c" : "#333333")};
+    ${(props) => (props.bordercolor ? "#015f85" : "#333333")};
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: ${(props) => (props.bgcolor ? "#6E86CC " : "#474747")};
+  background-color: ${(props) => (props.bgcolor ? "#00b7ff " : "#474747")};
   opacity: ${(props) => (props.bgcolor ? 1 : 0.4)};
 
   padding-top: 15px;
@@ -74,7 +75,8 @@ const PhaseItem = styled.button`
   a {
     width: 100%;
     text-align: center;
-    color: #e7e7e7d5;
+    color:#ffffff;
+
     font-size: 35px;
 
     position: relative;

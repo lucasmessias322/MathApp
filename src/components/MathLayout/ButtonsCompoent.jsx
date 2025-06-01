@@ -15,54 +15,42 @@ export default function ButtonsCompoent({ handleButtonClicked }) {
 
 const ButtonsContainer = styled.ul`
   width: 100%;
-  max-width: 240px; /* Aumente a largura máxima para caber 3 botões por linha em dispositivos móveis */
+  max-width: 280px;
   display: grid;
-  grid-template-columns: repeat(3, 1fr); /* 3 colunas por linha */
-  grid-column-gap: 0px; /* Espaçamento entre as colunas verticais dos botões */
-  grid-row-gap: 0px; /* Espaçamento entre as linhas dos botões */
-  align-items: center;
-  justify-content: center;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 15px;
+  margin: 0 auto;
+  padding: 0;
   list-style: none;
-  margin: 10px auto;
-
-  @media (max-width: 500px) {
-    max-width: 240px; /* Aumente a largura máxima para telas maiores, se necessário */
-  }
 `;
 
 const Button = styled.button`
-  outline: none;
-  border: none;
-  height: 90px;
-  width: 90px;
-  margin: 4px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 35px;
+  width: 80px;
+  height: 80px;
+  font-size: 32px;
   font-weight: bold;
-  color: white;
+  font-family: "Courier New", Courier, monospace;
+  color: #5a3310;
+  background: linear-gradient(145deg, #02b8cc, #029bb3);
+  border-radius: 18px;
+  border: 4px solid #01a2b0;
+  box-shadow: 6px 6px 12px rgba(0, 0, 0, 0.4),
+    -4px -4px 8px rgba(255, 255, 255, 0.1), inset 0 -3px 6px rgba(0, 0, 0, 0.3),
+    inset 0 3px 6px rgba(255, 255, 255, 0.05);
   cursor: pointer;
-  background: linear-gradient(to bottom, #006eff, #024194);
-  box-shadow: 5px 5px 4px 0px #191c29;
-  border-radius: 10px;
   user-select: none;
-  transition: 0.1s ease-in-out;
+  transition: all 0.15s ease-in-out;
 
   &:active {
-    transform: scale(0.8);
-    box-shadow: 0px 10px 10px 0px #191c29 inset;
+    transform: scale(0.97);
+    background: linear-gradient(to bottom, #02aecc, #017c94);
+    box-shadow: inset 0 3px 6px rgba(0, 0, 0, 0.5),
+      inset 0 -3px 6px rgba(255, 255, 255, 0.05);
   }
 
-  @media (min-width: 500px) {
-    height: 70px;
-    width: 70px;
-    font-size: 30px;
+  @media (max-width: 500px) {
+    width: 80px;
+    height: 80px;
+    font-size: 28px;
   }
-
-  /* @media (max-width: 300px) {
-    height: 90px;
-    width: 90px;
-    font-size: 30px;
-  } */
 `;

@@ -22,7 +22,7 @@ export default function TaboadaCompleta() {
 
   return (
     <Container>
-      <h2>Level {tabuNumber}</h2>
+      <Title>Tabuada do {tabuNumber}</Title>
       <ul>
         {table.map((item) => (
           <li key={item.num}>
@@ -40,15 +40,11 @@ export default function TaboadaCompleta() {
 }
 
 const Container = styled.div`
-  color: white;
+  color: #02aecc;
+  width: 100%;
   height: 100vh;
-
-  h2 {
-    color: #0471ff;
-    font-size: 35px;
-    padding: 20px;
-    text-align: center;
-  }
+  padding: 10px 20px;
+  background: #001623;
 
   ul {
     width: 100%;
@@ -57,8 +53,6 @@ const Container = styled.div`
     justify-content: center;
     flex-direction: column;
     list-style: none;
-    padding: 10px;
-    margin: 0 auto;
 
     li {
       padding: 5px;
@@ -67,6 +61,14 @@ const Container = styled.div`
   }
 `;
 
+const Title = styled.h2`
+  font-size: 38px;
+  color: #02aecc;
+  padding-bottom: 20px;
+
+  font-family: "Fredoka One", "Comic Sans MS", cursive;
+  text-shadow: 2px 2px #56d4eb;
+`;
 const StartGameContainer = styled.div`
   width: 100%;
   padding-bottom: 70px;
@@ -87,12 +89,19 @@ const StartGameContainer = styled.div`
 
     padding: 20px;
     border-radius: 100%;
-    background: linear-gradient(179deg, #014ad8 1.22%, #002466 98.84%);
-    box-shadow: 5px 5px 4px 0px #010b1f;
+    background: linear-gradient(145deg, #02b8cc, #029bb3);
+
+    border: 4px solid #01a2b0;
+    box-shadow: 6px 6px 12px rgba(0, 0, 0, 0.4),
+      -4px -4px 8px rgba(255, 255, 255, 0.1),
+      inset 0 -3px 6px rgba(0, 0, 0, 0.3),
+      inset 0 3px 6px rgba(255, 255, 255, 0.05);
 
     &:active {
       transform: scale(0.95);
-      box-shadow: 5px 5px 4px 0px #010b1f inset;
+      background: linear-gradient(to bottom, #02aecc, #017c94);
+      box-shadow: inset 0 3px 6px rgba(0, 0, 0, 0.5),
+        inset 0 -3px 6px rgba(255, 255, 255, 0.05);
     }
   }
 `;
