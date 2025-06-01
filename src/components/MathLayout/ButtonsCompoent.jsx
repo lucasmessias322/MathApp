@@ -15,13 +15,15 @@ export default function ButtonsCompoent({ handleButtonClicked }) {
 
 const ButtonsContainer = styled.ul`
   width: 100%;
-  max-width: 280px;
+
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 15px;
+  grid-template-columns: repeat(3, auto);
+  gap: 5px;
+  justify-content: center;
   margin: 0 auto;
   padding: 0;
   list-style: none;
+
 `;
 
 const Button = styled.button`
@@ -30,7 +32,7 @@ const Button = styled.button`
   font-size: 32px;
   font-weight: bold;
   font-family: "Courier New", Courier, monospace;
-  color: #5a3310;
+  color: #fffffff0;
   background: linear-gradient(145deg, #02b8cc, #029bb3);
   border-radius: 18px;
   border: 4px solid #01a2b0;

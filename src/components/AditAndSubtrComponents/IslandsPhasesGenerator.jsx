@@ -1,31 +1,28 @@
-import { useState, useEffect } from "react";
-import styled from "styled-components";
 import { VscBook } from "react-icons/vsc";
 import { Link } from "react-router-dom";
+import styled, { keyframes, css } from "styled-components";
 
 export default function IslandsPhasesGenerator({
   phasesList,
   calculateMarginLeft,
   gameUrlPath,
 }) {
-  // Passo 1: Inicialize a variável para rastrear a última fase completa
   let lastReleasedPhase = -1;
 
-  // Passo 2: Encontre a última fase completa
   phasesList.forEach((item, index) => {
     if (item.releasedPhase) {
       lastReleasedPhase = index;
     }
   });
+
   return (
     <PhasesContainer>
       {phasesList.map((item, index) => (
         <PhaseItem
           key={index}
+          $unlocked={item.releasedPhase} // ✅ Corrigido com prefixo "$"
+          $highlight={lastReleasedPhase === index} // ✅ Corrigido com prefixo "$"
           style={{ marginLeft: `${calculateMarginLeft(index)}px` }}
-          bgcolor={item.releasedPhase ? item.bgColor : ""}
-          bordercolor={item.releasedPhase ? item.borderColor : ""}
-          animationname={lastReleasedPhase == index ? `upDownanimation` : ""}
         >
           <Link to={item.releasedPhase ? `${gameUrlPath}/${item.phase}` : ""}>
             <VscBook />
@@ -36,59 +33,65 @@ export default function IslandsPhasesGenerator({
   );
 }
 
+const float = keyframes`
+  0% { transform: translateY(0); }
+  50% { transform: translateY(-6px); }
+  100% { transform: translateY(0); }
+`;
+
 const PhasesContainer = styled.div`
-  padding: 10px 30px;
-  max-width: 500px;
+  padding: 20px;
+  max-width: 600px;
   margin: 0 auto;
   display: flex;
-  flex-wrap: wrap;
   flex-direction: column;
-  justify-content: center;
-  align-items: flex-start; /* Alinhar os itens no topo */
   align-items: center;
-  margin: 0px 0px;
-
+  gap: 30px;
 `;
 
 const PhaseItem = styled.button`
-  border: none;
-  outline: none;
-  width: 100px;
-  height: 50px;
-  margin: 20px 10px;
+  width: 80px;
+  height: 80px;
   border-radius: 50%;
-  border-bottom: 10px solid
-    ${(props) => (props.bordercolor ? "#015f85" : "#333333")};
+  border: ${(props) =>
+    props.$unlocked ? "4px solid #00ffe5" : "3px dashed #777"};
+  background: ${(props) =>
+    props.$unlocked
+      ? "linear-gradient(145deg, #00b7ff, #02687d)"
+      : "linear-gradient(145deg, #555, #333)"};
+  opacity: ${(props) => (props.$unlocked ? 1 : 0.4)};
+  box-shadow: ${(props) =>
+    props.$unlocked
+      ? "0 8px 16px rgba(0, 255, 229, 0.4)"
+      : "0 4px 8px rgba(0,0,0,0.6)"};
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: ${(props) => (props.bgcolor ? "#00b7ff " : "#474747")};
-  opacity: ${(props) => (props.bgcolor ? 1 : 0.4)};
-
-  padding-top: 15px;
-  animation-name: ${(props) => props.animationname && props.animationname};
-  animation-duration: 1s;
-  animation-iteration-count: infinite;
-  animation-timing-function: forwards;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
   position: relative;
+  cursor: ${(props) => (props.$unlocked ? "pointer" : "not-allowed")};
 
-  a {
-    width: 100%;
-    text-align: center;
-    color:#ffffff;
+  ${(props) =>
+    props.$highlight &&
+    css`
+      animation: ${float} 2s ease-in-out infinite;
+    `}
 
-    font-size: 35px;
-
-    position: relative;
+  &:hover {
+    transform: ${(props) => (props.$unlocked ? "scale(1.08)" : "none")};
+    box-shadow: ${(props) =>
+      props.$unlocked
+        ? "0 12px 24px rgba(0, 255, 229, 0.6)"
+        : "0 4px 8px rgba(0,0,0,0.6)"};
   }
 
-  @keyframes upDownanimation {
-    0%,
-    100% {
-      bottom: 0;
-    }
-    50% {
-      bottom: 5px;
-    }
+  a {
+    color: ${(props) => (props.$unlocked ? "#fff" : "#aaa")};
+    font-size: 38px;
+    text-decoration: none;
+    pointer-events: ${(props) => (props.$unlocked ? "auto" : "none")};
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
 `;

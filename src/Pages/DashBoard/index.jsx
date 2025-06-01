@@ -1,4 +1,3 @@
-
 import styled from "styled-components";
 import { Link } from "react-router-dom";
 import { FaGamepad } from "react-icons/fa";
@@ -76,22 +75,21 @@ const Container = styled.div`
 
 const Headerlogo = styled.div`
   color: #02b8cc;
-   text-shadow: 1px 1px 2px #002b31;
+  text-shadow: 1px 1px 2px #002b31;
   text-align: center;
   display: flex;
   align-items: center;
   justify-content: center;
+  text-shadow: 4px 4px 1px rgba(255, 0, 242, 0.5);
 
   .gamepadIco {
     font-size: 45px;
     transform: rotate(45deg);
     margin-left: 10px;
-    
   }
 
   h2 {
     font-size: 50px;
-    font-family: "Baloo 2", cursive;
   }
 
   padding: 20px 5px;
@@ -118,10 +116,8 @@ const Game = styled(motion.li)`
   transition: all 0.3s ease;
   background: linear-gradient(145deg, #02b8cc, #029bb3);
   border: 4px solid #01a2b0;
-  box-shadow:
-    6px 6px 12px rgba(0, 0, 0, 0.4),
-    -4px -4px 8px rgba(255, 255, 255, 0.1),
-    inset 0 -3px 6px rgba(0, 0, 0, 0.3),
+  box-shadow: 6px 6px 12px rgba(0, 0, 0, 0.4),
+    -4px -4px 8px rgba(255, 255, 255, 0.1), inset 0 -3px 6px rgba(0, 0, 0, 0.3),
     inset 0 3px 6px rgba(255, 255, 255, 0.05);
 
   a {
@@ -149,8 +145,7 @@ const Game = styled(motion.li)`
   &:hover {
     transform: scale(1.05) rotate(-1deg);
     background: linear-gradient(145deg, #02d0e8, #0290a9);
-    box-shadow:
-      8px 8px 16px rgba(0, 0, 0, 0.5),
+    box-shadow: 8px 8px 16px rgba(0, 0, 0, 0.5),
       -4px -4px 8px rgba(255, 255, 255, 0.1),
       inset 0 -3px 6px rgba(0, 0, 0, 0.2),
       inset 0 3px 6px rgba(255, 255, 255, 0.07);
@@ -161,7 +156,6 @@ const Game = styled(motion.li)`
     transform: scale(0.97);
     background: linear-gradient(to bottom, #02aecc, #017c94);
     box-shadow: inset 0 3px 6px rgba(0, 0, 0, 0.5),
-                inset 0 -3px 6px rgba(255, 255, 255, 0.05);
+      inset 0 -3px 6px rgba(255, 255, 255, 0.05);
   }
 `;
-

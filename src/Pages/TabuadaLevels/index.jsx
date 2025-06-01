@@ -23,7 +23,7 @@ export default function TabuadaLevels() {
       if (i < starsEarned) {
         stars.push(<FaStar key={i} color=" #ffc516;" />);
       } else {
-        stars.push(<FaStar key={i} color="#5c5131a4" />);
+        stars.push(<FaStar key={i} color="#5a5a5a83" />);
       }
     }
 
@@ -100,7 +100,7 @@ const Level = styled.li`
     font-size: 36px;
     font-weight: bold;
     font-family: "Comic Sans MS", "Fredoka One", cursive;
-    color: #592c10;
+    color: white;
 
     cursor: pointer;
     transition: all 0.2s ease;
@@ -113,7 +113,7 @@ const Level = styled.li`
       display: flex;
       justify-content: center;
       font-size: 16px;
-      color: #ffc516;
+      color: #ffbf00;
     }
 
     &:hover {
