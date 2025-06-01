@@ -1,4 +1,3 @@
-
 import React from "react";
 import HeaderComponent from "./HeaderComponent";
 import ButtonsCompoent from "./ButtonsCompoent";
@@ -91,10 +90,10 @@ const Container = styled.div`
   color: white;
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  /* justify-content: center; */
   align-items: center;
   height: 100vh;
-  padding: 5px 10px;
+  padding: 20px 10px;
   position: relative;
   overflow: hidden;
   background-color: #001f2e;
@@ -142,6 +141,10 @@ const ContainerMathGame = styled.div`
   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.8);
   position: relative;
   z-index: 2;
+
+  @media (max-width: 600px) {
+    box-shadow: none;
+  }
 `;
 
 const Display = styled.div`
@@ -153,7 +156,7 @@ const Display = styled.div`
   border-radius: 20px;
   font-size: 44px;
   font-weight: 700;
-  font-family: "Courier New", Courier, monospace;
+
   color: #ffffff;
   display: flex;
   justify-content: flex-end;

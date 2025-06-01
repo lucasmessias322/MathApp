@@ -15,23 +15,21 @@ export default function ButtonsCompoent({ handleButtonClicked }) {
 
 const ButtonsContainer = styled.ul`
   width: 100%;
-
   display: grid;
   grid-template-columns: repeat(3, auto);
-  gap: 5px;
+  gap: 10px;
   justify-content: center;
   margin: 0 auto;
   padding: 0;
   list-style: none;
-
 `;
 
 const Button = styled.button`
-  width: 80px;
-  height: 80px;
-  font-size: 32px;
+  width: 90px;
+  height: 90px;
+  font-size: 40px;
   font-weight: bold;
-  font-family: "Courier New", Courier, monospace;
+
   color: #fffffff0;
   background: linear-gradient(145deg, #02b8cc, #029bb3);
   border-radius: 18px;
@@ -51,8 +49,8 @@ const Button = styled.button`
   }
 
   @media (max-width: 500px) {
-    width: 80px;
-    height: 80px;
-    font-size: 28px;
+    width: 100px;
+    height: 100px;
+    font-size: 40px;
   }
 `;
