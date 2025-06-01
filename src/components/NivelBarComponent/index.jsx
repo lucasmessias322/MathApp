@@ -12,7 +12,7 @@ export default function NivelBarComponent() {
       <NivelBarContainer>
         <NivelBar>
           <Fill fillwidth={fillWidth}>
-            <LevelText>Nível {currentLevel}</LevelText>
+            <LevelText>{currentLevel}</LevelText>
           </Fill>
         </NivelBar>
       </NivelBarContainer>
@@ -30,7 +30,6 @@ const Container = styled.div`
 const NivelBarContainer = styled.div`
   width: 100%;
   border-radius: 40px;
-
 `;
 
 const NivelBar = styled.div`
@@ -77,6 +76,6 @@ const Fill = styled.div`
 const LevelText = styled.span`
   color: #ffffff;
   font-weight: bold;
-  font-size: 16px;
+  font-size: 20px;
   text-shadow: 0 0 6px rgba(2, 186, 211, 0.8);
 `;

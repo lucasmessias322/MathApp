@@ -99,7 +99,7 @@ const Level = styled.li`
 
     font-size: 36px;
     font-weight: bold;
-    font-family: "Comic Sans MS", "Fredoka One", cursive;
+
     color: white;
 
     cursor: pointer;
@@ -134,16 +134,25 @@ const Level = styled.li`
     }
   }
 `;
-
 const ReturnArrow = styled.div`
-  position: absolute;
-  top: 20px;
-  left: 20px;
-  font-size: 40px;
-  color: #02bad3;
-  z-index: 10;
-
+  border-radius: 100%;
+  background-color: rgba(0, 0, 0, 0.15);
+  color: #fff;
   a {
+    transition: 0.3s;
+    font-weight: bold;
+
+    padding: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 30px;
     color: inherit;
+    text-decoration: none;
+  }
+
+  &:hover {
+    transform: scale(1.1);
+    background-color: rgba(0, 0, 0, 0.25);
   }
 `;

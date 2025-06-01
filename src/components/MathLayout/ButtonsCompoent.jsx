@@ -17,7 +17,7 @@ const ButtonsContainer = styled.ul`
   width: 100%;
   display: grid;
   grid-template-columns: repeat(3, auto);
-  gap: 10px;
+  gap: 5px;
   justify-content: center;
   margin: 0 auto;
   padding: 0;
@@ -25,9 +25,9 @@ const ButtonsContainer = styled.ul`
 `;
 
 const Button = styled.button`
-  width: 90px;
-  height: 90px;
-  font-size: 40px;
+  width: 80px;
+  height: 70px;
+  font-size: 32px;
   font-weight: bold;
 
   color: #fffffff0;

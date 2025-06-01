@@ -93,7 +93,7 @@ const Container = styled.div`
   /* justify-content: center; */
   align-items: center;
   height: 100vh;
-  padding: 20px 10px;
+  padding: 0px 10px;
   position: relative;
   overflow: hidden;
   background-color: #001f2e;

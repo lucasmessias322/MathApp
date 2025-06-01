@@ -66,8 +66,8 @@ const Title = styled.h2`
   color: #02aecc;
   padding-bottom: 20px;
 
-  font-family: "Fredoka One", "Comic Sans MS", cursive;
-  text-shadow: 2px 2px #56d4eb;
+
+  text-shadow: 2px 2px #193b41;
 `;
 const StartGameContainer = styled.div`
   width: 100%;

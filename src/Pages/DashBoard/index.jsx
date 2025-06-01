@@ -80,7 +80,7 @@ const Headerlogo = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  text-shadow: 4px 4px 1px rgba(255, 0, 242, 0.5);
+  text-shadow: 4px 4px 1px #013a41;
 
   .gamepadIco {
     font-size: 45px;
