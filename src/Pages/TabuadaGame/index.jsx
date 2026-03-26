@@ -13,20 +13,30 @@ export default function TabuadaGame() {
   const [correctAnswer, setCorrectAnswer] = useState(0);
   const [pointsPerCorrect, setPointsPerCorrect] = useState(5);
   const [thermometer, setThermometer] = useState(0);
+  const [feedbackState, setFeedbackState] = useState("idle");
+  const [feedbackTick, setFeedbackTick] = useState(0);
+  const [feedbackMessage, setFeedbackMessage] = useState("");
   const [lastResponseTime, setLastResponseTime] = useState(Date.now());
-  const [starsEarned, setStarsEarned] = useState(0);
   const tabuNumber = parseInt(useParams().tabuada);
-  const { getLocalStorageValue, setLocalStorageValue } = useContext(AppContext);
-  const savedPoints = Number(getLocalStorageValue("totalPoints"));
-  const [totalPoints, setTotalPoints] = useState(savedPoints);
-  const stars = getLocalStorageValue(`stars_${tabuNumber}`);
+  const {
+    getLocalStorageValue,
+    setLocalStorageValue,
+    rewardAnswer,
+    rewardMilestone,
+  } = useContext(AppContext);
+  const stars = Number(getLocalStorageValue(`stars_${tabuNumber}`)) || 0;
 
   useEffect(() => {
-    if (savedPoints !== totalPoints) {
-      // Save points
-      setLocalStorageValue(`totalPoints`, totalPoints);
+    if (feedbackState === "idle") {
+      return undefined;
     }
-  }, [totalPoints]);
+
+    const timer = setTimeout(() => {
+      setFeedbackState("idle");
+    }, 650);
+
+    return () => clearTimeout(timer);
+  }, [feedbackState, feedbackTick]);
 
   useEffect(() => {
     const pointsMapping = {
@@ -42,22 +52,24 @@ export default function TabuadaGame() {
   }, [stars]);
 
   function increaseThermometer() {
-    let newThermometer = thermometer;
+    let newThermometer = thermometer + pointsPerCorrect;
 
-    newThermometer += pointsPerCorrect;
-
-    // when the termometer is 100%
     if (newThermometer >= 100) {
       newThermometer = 100;
 
-      if (Number(stars) !== 5) {
-        //add a star when the thermometer reaches 100%
-        setStarsEarned(starsEarned + 1);
+      if (stars !== 5) {
+        setLocalStorageValue(`stars_${tabuNumber}`, stars + 1);
 
-        // Save the stars number in the localStorage
-        setLocalStorageValue(`stars_${tabuNumber}`, Number(stars) + 1);
+        const milestoneResult = rewardMilestone({
+          mode: "multiplication_star",
+          xp: 80 + tabuNumber * 4,
+          coins: 10 + stars,
+          stars: 1,
+          games: 1,
+          label: "Estrela conquistada",
+        });
 
-        // Redirect the user to the tabuadalevels page
+        setFeedbackMessage(milestoneResult.message || "Estrela conquistada");
         navigateTo("/tabuadalevels");
       }
     }
@@ -68,34 +80,28 @@ export default function TabuadaGame() {
   function decreaseThermometer() {
     let newThermometer = thermometer;
 
-    // if the termometer is diferente off 100% decrease
-    if (newThermometer != 100) {
+    if (newThermometer !== 100) {
       newThermometer -= pointsPerCorrect;
     }
 
-    // Certifique-se de que o termômetro não seja menor que 0%
     if (newThermometer < 0) {
       newThermometer = 0;
     }
+
     setThermometer(newThermometer);
   }
 
   function decreaseThermometerBasedOnTime(elapsedTime) {
-    // Se passaram 2 segundos ou mais sem resposta
-    const decreaseAmount = Math.floor((elapsedTime / 1000) * 1); // Diminui 1% por segundo
+    const decreaseAmount = Math.floor((elapsedTime / 1000) * 1);
     const newThermometer = thermometer - decreaseAmount;
 
-    // Certifique-se de que o termômetro não seja menor que 0%
     if (newThermometer < 0) {
       setThermometer(0);
-
-      // se termometro for diferente de 100 decrementar caso contrario não fazer nada!
     } else if (thermometer !== 100) {
       setThermometer(newThermometer);
     }
   }
 
-  // Decrease termometer based on time
   useEffect(() => {
     const timer = setInterval(() => {
       const elapsedTime = Date.now() - lastResponseTime;
@@ -121,44 +127,48 @@ export default function TabuadaGame() {
     setResponse("");
   };
 
-  const updatePoints = (isCorrect) => {
-    const pointsChange = isCorrect ? 1 : -1;
-
-    setTotalPoints(totalPoints + pointsChange);
-  };
-
   const toggleSounds = (correct) => {
     setPlayCorrectSound(correct);
     setPlayWrongSound(!correct);
   };
 
   const checkAnswer = () => {
-    // Se correto retorna true se errado retorna false
     const isCorrect = parseInt(response) === correctAnswer;
+    const rewardResult = rewardAnswer(
+      isCorrect
+        ? {
+            mode: "multiplication",
+            isCorrect: true,
+            baseXp: 8 + Math.ceil(pointsPerCorrect),
+            baseCoins: 2,
+          }
+        : {
+            mode: "multiplication",
+            isCorrect: false,
+            wrongPenaltyXp: 2,
+            wrongPenaltyCoins: 0,
+          }
+    );
 
+    setFeedbackState(isCorrect ? "correct" : "wrong");
+    setFeedbackTick((prevTick) => prevTick + 1);
+    setFeedbackMessage(
+      rewardResult.message || (isCorrect ? "Boa resposta" : "Tente outra vez")
+    );
     toggleSounds(isCorrect);
-    if (totalPoints > 0) {
-      updatePoints(isCorrect);
-    }
 
     if (isCorrect) {
       generateEquation();
       increaseThermometer();
-
-      // Atualiza o tempo da última resposta
       setLastResponseTime(Date.now());
     } else {
-      // Mostra a resposta correta  por meio segundo
       setResponse(correctAnswer.toString());
 
       setTimeout(() => {
         setResponse("");
       }, 500);
 
-      // Chama a função p  ara atualizar o termômetro
       decreaseThermometer();
-
-      // Atualiza o tempo da última resposta mesmo em caso de resposta errada
       setLastResponseTime(Date.now());
     }
   };
@@ -176,6 +186,9 @@ export default function TabuadaGame() {
       setResponse={setResponse}
       setIsSoundEnabled={setIsSoundEnabled}
       checkAnswer={checkAnswer}
+      feedbackState={feedbackState}
+      feedbackTick={feedbackTick}
+      feedbackMessage={feedbackMessage}
     />
   );
 }

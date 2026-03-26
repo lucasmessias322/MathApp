@@ -3,25 +3,28 @@ import MathLayout from "../../components/MathLayout";
 import { AppContext } from "../../Contexts/AppContext";
 
 export default function TabuadaAleatoria() {
-  const { getLocalStorageValue, setLocalStorageValue } = useContext(AppContext);
+  const {
+    getLocalStorageValue,
+    setLocalStorageValue,
+    rewardAnswer,
+    rewardMilestone,
+  } = useContext(AppContext);
   const [equation, setEquation] = useState("");
   const [response, setResponse] = useState("");
   const [correctAnswer, setCorrectAnswer] = useState(0);
   const [playCorrectSound, setPlayCorrectSound] = useState(false);
   const [playWrongSound, setPlayWrongSound] = useState(false);
   const [isSoundEnabled, setIsSoundEnabled] = useState(true);
+  const [feedbackState, setFeedbackState] = useState("idle");
+  const [feedbackTick, setFeedbackTick] = useState(0);
+  const [feedbackMessage, setFeedbackMessage] = useState("");
 
   const recordGameRandomTabuPtsFromStorage =
-    getLocalStorageValue("randomTabuRecord");
-
-  // O operador ?? verifica se o valor à esquerda é null ou undefined e, se for o caso, usa o valor à direita como padrão.
+    Number(getLocalStorageValue("randomTabuRecord")) || 0;
   const [recordGamePoints, setRecordGamepoints] = useState(
-    recordGameRandomTabuPtsFromStorage ?? 0
+    recordGameRandomTabuPtsFromStorage
   );
   const [currentGamepoints, setCurrentGamepoints] = useState(0);
-
-  const savedPoints = Number(getLocalStorageValue("totalPoints"));
-  const [totalPoints, setTotalPoints] = useState(savedPoints);
 
   useEffect(() => {
     if (recordGamePoints < currentGamepoints) {
@@ -29,6 +32,18 @@ export default function TabuadaAleatoria() {
       setLocalStorageValue("randomTabuRecord", currentGamepoints);
     }
   }, [currentGamepoints]);
+
+  useEffect(() => {
+    if (feedbackState === "idle") {
+      return undefined;
+    }
+
+    const timer = setTimeout(() => {
+      setFeedbackState("idle");
+    }, 650);
+
+    return () => clearTimeout(timer);
+  }, [feedbackState, feedbackTick]);
 
   useEffect(() => {
     generateEquation();
@@ -48,38 +63,56 @@ export default function TabuadaAleatoria() {
     setPlayWrongSound(!correct);
   };
 
-  // const updatePoints = (isCorrect) => {
-  //   const pointsChange = isCorrect ? 1 : -1;
-
-  //   setTotalPoints(totalPoints + pointsChange);
-  //   setCurrentGamepoints(currentGamepoints + pointsChange);
-  // };
   const updatePoints = (isCorrect) => {
     const pointsChange = isCorrect ? 1 : -1;
 
-    // Impede que currentGamepoints e totalPoints sejam menores que zero
-    if (
-      totalPoints + pointsChange >= 0 &&
-      currentGamepoints + pointsChange >= 0
-    ) {
-      setTotalPoints(totalPoints + pointsChange);
+    if (currentGamepoints + pointsChange >= 0) {
       setCurrentGamepoints(currentGamepoints + pointsChange);
     }
   };
 
   const checkAnswer = () => {
-    // Se correto retorna true se errado retorna false
     const isCorrect = parseInt(response) === correctAnswer;
+    const rewardResult = rewardAnswer(
+      isCorrect
+        ? {
+            mode: "random_multiplication",
+            isCorrect: true,
+            baseXp: 12,
+            baseCoins: 3,
+          }
+        : {
+            mode: "random_multiplication",
+            isCorrect: false,
+            wrongPenaltyXp: 2,
+            wrongPenaltyCoins: 0,
+          }
+    );
 
+    setFeedbackState(isCorrect ? "correct" : "wrong");
+    setFeedbackTick((prevTick) => prevTick + 1);
+    setFeedbackMessage(
+      rewardResult.message || (isCorrect ? "Boa resposta" : "Tente outra vez")
+    );
     toggleSounds(isCorrect);
-    if (totalPoints > 0 || currentGamepoints > 0) {
-      updatePoints(isCorrect);
-    }
+    updatePoints(isCorrect);
 
     if (isCorrect) {
+      const nextPoints = currentGamepoints + 1;
+
+      if (nextPoints > recordGamePoints) {
+        const milestoneResult = rewardMilestone({
+          mode: "random_record",
+          xp: 24,
+          coins: 6,
+          games: 1,
+          label: "Novo recorde",
+        });
+        setFeedbackMessage(milestoneResult.message || "Novo recorde");
+      }
+
       generateEquation();
     } else {
-      // Mostra a resposta correta  por meio segundo
       setResponse(correctAnswer.toString());
 
       setTimeout(() => {
@@ -102,6 +135,9 @@ export default function TabuadaAleatoria() {
       setResponse={setResponse}
       setIsSoundEnabled={setIsSoundEnabled}
       checkAnswer={checkAnswer}
+      feedbackState={feedbackState}
+      feedbackTick={feedbackTick}
+      feedbackMessage={feedbackMessage}
     />
   );
 }

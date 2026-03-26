@@ -1,14 +1,79 @@
+@import url("https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;600;700;800&family=Fredoka:wght@400;500;600;700&display=swap");
+
 * {
   box-sizing: border-box;
-  margin: 0px;
-  padding: 0px;
+  margin: 0;
+  padding: 0;
   text-decoration: none;
   color: inherit;
 }
 
+:root {
+  font-family: "Baloo 2", "Fredoka", sans-serif;
+  color: #f3fff8;
+  background:
+    radial-gradient(circle at top left, rgba(88, 196, 255, 0.12), transparent 22%),
+    radial-gradient(circle at top right, rgba(120, 216, 255, 0.1), transparent 18%),
+    linear-gradient(180deg, #07131f 0%, #0e2235 46%, #0a1826 100%);
+}
+
 html,
 body {
-  font-family: "Fredoka", sans-serif;
-  background-color: #001623;
+  min-height: 100%;
+  font-family: "Baloo 2", "Fredoka", sans-serif;
+  background:
+    radial-gradient(circle at top left, rgba(88, 196, 255, 0.12), transparent 22%),
+    radial-gradient(circle at 80% 10%, rgba(120, 216, 255, 0.1), transparent 18%),
+    linear-gradient(180deg, #07131f 0%, #0e2235 46%, #0a1826 100%);
+  background-attachment: fixed;
+}
 
+body {
+  color: #f3fff8;
+  overflow-x: hidden;
+}
+
+body::before,
+body::after {
+  content: "";
+  position: fixed;
+  border-radius: 999px;
+  pointer-events: none;
+  z-index: 0;
+}
+
+body::before {
+  width: 280px;
+  height: 280px;
+  top: 90px;
+  left: -70px;
+  background: rgba(88, 196, 255, 0.08);
+  filter: blur(10px);
+}
+
+body::after {
+  width: 360px;
+  height: 360px;
+  right: -120px;
+  bottom: -80px;
+  background: rgba(120, 216, 255, 0.06);
+  filter: blur(12px);
+}
+
+#root {
+  min-height: 100vh;
+  position: relative;
+  z-index: 1;
+}
+
+button,
+input,
+textarea,
+select {
+  font: inherit;
+}
+
+a,
+button {
+  -webkit-tap-highlight-color: transparent;
 }

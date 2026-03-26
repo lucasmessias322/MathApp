@@ -19,14 +19,17 @@ export default function AditAndSubtrComponents({
   CurrentPhase,
 }) {
   const navigateTo = useNavigate();
-  const { getLocalStorageValue, setLocalStorageValue, savedPoints } =
-    useContext(AppContext);
+  const {
+    getLocalStorageValue,
+    setLocalStorageValue,
+    rewardAnswer,
+    rewardMilestone,
+  } = useContext(AppContext);
   const [isSoundEnabled, setIsSoundEnabled] = useState(true);
   const [progressBar, setProgressBar] = useState(0);
-  const [pointsPerCorrect, setPointsPerCorrect] = useState(0);
-  const [totalPoints, setTotalPoints] = useState(
-    Number(getLocalStorageValue("totalPoints"))
-  );
+  const [feedbackState, setFeedbackState] = useState("idle");
+  const [feedbackTick, setFeedbackTick] = useState(0);
+  const [feedbackMessage, setFeedbackMessage] = useState("");
   const [phasesList, setPhasesList] = useState(PhasesList);
 
   useEffect(() => {
@@ -37,44 +40,80 @@ export default function AditAndSubtrComponents({
     const phasesListFromStorage = JSON.parse(
       getLocalStorageValue(PhasesListName)
     );
-    if (!phasesListFromStorage) {
-      setPhasesList(phasesList);
-    } else if (phasesListFromStorage) {
-      setPhasesList(phasesListFromStorage);
-      console.log("Entrou no useEffect");
-    }
 
-    if (phasesListFromStorage[parseInt(CurrentPhase) - 1].wasComplete) {
-      setPointsPerCorrect(0);
-    } else if (!phasesListFromStorage[parseInt(CurrentPhase) - 1].wasComplete) {
-      setPointsPerCorrect(20);
+    if (!phasesListFromStorage) {
+      setPhasesList(PhasesList);
+    } else {
+      setPhasesList(phasesListFromStorage);
     }
   }, [CurrentPhase]);
 
   useEffect(() => {
-    if (savedPoints !== totalPoints) {
-      // Save points
-      setLocalStorageValue(`totalPoints`, totalPoints);
+    if (feedbackState === "idle") {
+      return undefined;
     }
-  }, [totalPoints]);
+
+    const timer = setTimeout(() => {
+      setFeedbackState("idle");
+    }, 650);
+
+    return () => clearTimeout(timer);
+  }, [feedbackState, feedbackTick]);
+
+  function getCurrentPhaseData() {
+    const phaseIndex = Math.max(0, parseInt(CurrentPhase) - 1);
+    const currentPhaseData = phasesList[phaseIndex];
+
+    return {
+      phaseIndex,
+      phaseNumber: phaseIndex + 1,
+      phaseData: currentPhaseData,
+      isFirstCompletion: !currentPhaseData?.wasComplete,
+      mode: RedirectLevelsUrl.includes("subtraction")
+        ? "subtraction"
+        : "addition",
+    };
+  }
+
+  function getAnswerReward(isCorrect) {
+    const { phaseNumber, isFirstCompletion, mode } = getCurrentPhaseData();
+
+    if (isCorrect) {
+      return {
+        mode,
+        isCorrect: true,
+        baseXp: isFirstCompletion ? 14 + phaseNumber : 8 + Math.floor(phaseNumber / 2),
+        baseCoins: isFirstCompletion ? 3 : 1,
+      };
+    }
+
+    return {
+      mode,
+      isCorrect: false,
+      wrongPenaltyXp: 2,
+      wrongPenaltyCoins: 0,
+    };
+  }
 
   const checkAnswer = () => {
-    if (parseInt(response) === correctAnswer) {
-      generateEquation(1, 10);
+    const isCorrect = parseInt(response) === correctAnswer;
+    const rewardResult = rewardAnswer(getAnswerReward(isCorrect));
+
+    setFeedbackState(isCorrect ? "correct" : "wrong");
+    setFeedbackTick((prevTick) => prevTick + 1);
+    setFeedbackMessage(
+      rewardResult.message || (isCorrect ? "Boa resposta" : "Tente de novo")
+    );
+
+    if (isCorrect) {
+      generateEquation();
       setPlayCorrectSound(true);
       setPlayWrongSound(false);
-      setTotalPoints(totalPoints + pointsPerCorrect);
-
       updateProgressBar(true);
     } else {
       setPlayCorrectSound(false);
       setPlayWrongSound(true);
 
-      if (totalPoints > 0) {
-        setTotalPoints(totalPoints - pointsPerCorrect);
-      }
-
-      // Mostra a resposta correta  por meio segundo
       setResponse(correctAnswer.toString());
 
       setTimeout(() => {
@@ -85,38 +124,58 @@ export default function AditAndSubtrComponents({
     }
   };
 
-  // termometer controlls
   const updateProgressBar = (isCorrect) => {
-    let NewprogressBar = progressBar;
+    let newProgressBar = progressBar;
 
     if (isCorrect) {
-      // Se a resposta estiver correta, aumente o termômetro
-      NewprogressBar += 10;
+      newProgressBar += 10;
 
-      // Certifique-se de que o termômetro não ultrapasse 100%
-      if (NewprogressBar > 100) {
-        NewprogressBar = 100;
+      if (newProgressBar > 100) {
+        newProgressBar = 100;
+        const { phaseIndex, phaseData, mode } = getCurrentPhaseData();
+        const updatedPhases = [...phasesList];
 
-        phasesList[parseInt(CurrentPhase)].releasedPhase = true;
-        phasesList[parseInt(CurrentPhase) - 1].wasComplete = true;
+        if (updatedPhases[phaseIndex + 1]) {
+          updatedPhases[phaseIndex + 1] = {
+            ...updatedPhases[phaseIndex + 1],
+            releasedPhase: true,
+          };
+        }
 
-        setLocalStorageValue(PhasesListName, JSON.stringify(phasesList));
+        updatedPhases[phaseIndex] = {
+          ...updatedPhases[phaseIndex],
+          wasComplete: true,
+        };
+
+        setPhasesList(updatedPhases);
+        setLocalStorageValue(PhasesListName, JSON.stringify(updatedPhases));
+
+        if (!phaseData?.wasComplete) {
+          const milestoneResult = rewardMilestone({
+            mode: `${mode}_phase`,
+            xp: 90,
+            coins: 12,
+            phases: 1,
+            games: 1,
+            label: "Fase concluida",
+          });
+
+          setFeedbackMessage(milestoneResult.message || "Fase concluida");
+        }
 
         navigateTo(RedirectLevelsUrl);
       }
-    } else if (NewprogressBar > 0) {
-      // Verifique se o termômetro não está em 0% antes de diminuir
-
-      if (NewprogressBar != 100) {
-        NewprogressBar -= 10;
+    } else if (newProgressBar > 0) {
+      if (newProgressBar !== 100) {
+        newProgressBar -= 10;
       }
 
-      // Certifique-se de que o termômetro não seja menor que 0%
-      if (NewprogressBar < 0) {
-        NewprogressBar = 0;
+      if (newProgressBar < 0) {
+        newProgressBar = 0;
       }
     }
-    setProgressBar(NewprogressBar);
+
+    setProgressBar(newProgressBar);
   };
 
   return (
@@ -132,6 +191,9 @@ export default function AditAndSubtrComponents({
       setResponse={setResponse}
       setIsSoundEnabled={setIsSoundEnabled}
       checkAnswer={checkAnswer}
+      feedbackState={feedbackState}
+      feedbackTick={feedbackTick}
+      feedbackMessage={feedbackMessage}
     />
   );
 }
