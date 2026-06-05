@@ -2,7 +2,6 @@
 import { useEffect, useContext, useState } from "react";
 import styled from "styled-components";
 import { motion } from "framer-motion";
-import NivelBarComponent from "../../components/NivelBarComponent";
 import IslandsPhasesGenerator from "../../components/AditAndSubtrComponents/IslandsPhasesGenerator";
 import { AppContext } from "../../Contexts/AppContext";
 import { MdArrowBackIosNew } from "react-icons/md";
@@ -44,7 +43,6 @@ export default function LevelsComponent({
             <MdArrowBackIosNew />
           </Link>
         </ReturnArrow>
-        <NivelBarComponent />
       </Header>
 
       <MainContainer>

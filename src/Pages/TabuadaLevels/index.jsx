@@ -2,7 +2,6 @@ import { useContext } from "react";
 import { Link } from "react-router-dom";
 import { FaStar } from "react-icons/fa";
 import { MdArrowBackIosNew } from "react-icons/md";
-import NivelBarComponent from "../../components/NivelBarComponent";
 import styled from "styled-components";
 import { motion } from "framer-motion";
 import { AppContext } from "../../Contexts/AppContext";
@@ -14,9 +13,10 @@ export default function TabuadaLevels() {
   const { getLocalStorageValue } = useContext(AppContext);
   const levels = numerosArray;
 
-  function renderStars(level) {
+  function renderStars(tableNumber) {
     const stars = [];
-    const starsEarned = Number(getLocalStorageValue(`stars_${level}`)) || 0;
+    const starsEarned =
+      Number(getLocalStorageValue(`stars_${tableNumber}`)) || 0;
 
     for (let i = 0; i < 5; i++) {
       if (i < starsEarned) {
@@ -32,12 +32,11 @@ export default function TabuadaLevels() {
   return (
     <Container>
       <Header bg="Transparent">
-        {/* <ReturnArrow>
+        <ReturnArrow>
           <Link to="/">
             <MdArrowBackIosNew />
           </Link>
-        </ReturnArrow> */}
-        <NivelBarComponent />
+        </ReturnArrow>
       </Header>
       <div className="dd">
         <StageIntro
@@ -97,7 +96,7 @@ const Container = styled.div`
   div.dd{
     width: 100%;
     height: auto;
-    padding-top: 180px;
+    padding-top: 20px;
 
 
 

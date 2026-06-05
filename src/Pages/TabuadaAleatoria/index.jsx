@@ -1,14 +1,7 @@
-import React, { useState, useEffect, useContext } from "react";
+import { useState, useEffect } from "react";
 import MathLayout from "../../components/MathLayout";
-import { AppContext } from "../../Contexts/AppContext";
 
 export default function TabuadaAleatoria() {
-  const {
-    getLocalStorageValue,
-    setLocalStorageValue,
-    rewardAnswer,
-    rewardMilestone,
-  } = useContext(AppContext);
   const [equation, setEquation] = useState("");
   const [response, setResponse] = useState("");
   const [correctAnswer, setCorrectAnswer] = useState(0);
@@ -18,20 +11,6 @@ export default function TabuadaAleatoria() {
   const [feedbackState, setFeedbackState] = useState("idle");
   const [feedbackTick, setFeedbackTick] = useState(0);
   const [feedbackMessage, setFeedbackMessage] = useState("");
-
-  const recordGameRandomTabuPtsFromStorage =
-    Number(getLocalStorageValue("randomTabuRecord")) || 0;
-  const [recordGamePoints, setRecordGamepoints] = useState(
-    recordGameRandomTabuPtsFromStorage
-  );
-  const [currentGamepoints, setCurrentGamepoints] = useState(0);
-
-  useEffect(() => {
-    if (recordGamePoints < currentGamepoints) {
-      setRecordGamepoints(currentGamepoints);
-      setLocalStorageValue("randomTabuRecord", currentGamepoints);
-    }
-  }, [currentGamepoints]);
 
   useEffect(() => {
     if (feedbackState === "idle") {
@@ -63,54 +42,15 @@ export default function TabuadaAleatoria() {
     setPlayWrongSound(!correct);
   };
 
-  const updatePoints = (isCorrect) => {
-    const pointsChange = isCorrect ? 1 : -1;
-
-    if (currentGamepoints + pointsChange >= 0) {
-      setCurrentGamepoints(currentGamepoints + pointsChange);
-    }
-  };
-
   const checkAnswer = () => {
     const isCorrect = parseInt(response) === correctAnswer;
-    const rewardResult = rewardAnswer(
-      isCorrect
-        ? {
-            mode: "random_multiplication",
-            isCorrect: true,
-            baseXp: 12,
-            baseCoins: 3,
-          }
-        : {
-            mode: "random_multiplication",
-            isCorrect: false,
-            wrongPenaltyXp: 2,
-            wrongPenaltyCoins: 0,
-          }
-    );
 
     setFeedbackState(isCorrect ? "correct" : "wrong");
     setFeedbackTick((prevTick) => prevTick + 1);
-    setFeedbackMessage(
-      rewardResult.message || (isCorrect ? "Boa resposta" : "Tente outra vez")
-    );
+    setFeedbackMessage(isCorrect ? "Boa resposta" : "Tente outra vez");
     toggleSounds(isCorrect);
-    updatePoints(isCorrect);
 
     if (isCorrect) {
-      const nextPoints = currentGamepoints + 1;
-
-      if (nextPoints > recordGamePoints) {
-        const milestoneResult = rewardMilestone({
-          mode: "random_record",
-          xp: 24,
-          coins: 6,
-          games: 1,
-          label: "Novo recorde",
-        });
-        setFeedbackMessage(milestoneResult.message || "Novo recorde");
-      }
-
       generateEquation();
     } else {
       setResponse(correctAnswer.toString());
@@ -123,8 +63,6 @@ export default function TabuadaAleatoria() {
 
   return (
     <MathLayout
-      recordGamePoints={recordGamePoints}
-      currentGamepoints={currentGamepoints}
       equation={equation}
       response={response}
       playCorrectSound={playCorrectSound}

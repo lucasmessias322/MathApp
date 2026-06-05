@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from "react";
+import { useState, useEffect, useContext } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import MathLayout from "../../components/MathLayout";
 import { AppContext } from "../../Contexts/AppContext";
@@ -11,19 +11,14 @@ export default function TabuadaGame() {
   const [playWrongSound, setPlayWrongSound] = useState(false);
   const [isSoundEnabled, setIsSoundEnabled] = useState(true);
   const [correctAnswer, setCorrectAnswer] = useState(0);
-  const [pointsPerCorrect, setPointsPerCorrect] = useState(5);
+  const [progressPerCorrect, setProgressPerCorrect] = useState(5);
   const [thermometer, setThermometer] = useState(0);
   const [feedbackState, setFeedbackState] = useState("idle");
   const [feedbackTick, setFeedbackTick] = useState(0);
   const [feedbackMessage, setFeedbackMessage] = useState("");
   const [lastResponseTime, setLastResponseTime] = useState(Date.now());
   const tabuNumber = parseInt(useParams().tabuada);
-  const {
-    getLocalStorageValue,
-    setLocalStorageValue,
-    rewardAnswer,
-    rewardMilestone,
-  } = useContext(AppContext);
+  const { getLocalStorageValue, setLocalStorageValue } = useContext(AppContext);
   const stars = Number(getLocalStorageValue(`stars_${tabuNumber}`)) || 0;
 
   useEffect(() => {
@@ -39,7 +34,7 @@ export default function TabuadaGame() {
   }, [feedbackState, feedbackTick]);
 
   useEffect(() => {
-    const pointsMapping = {
+    const progressMapping = {
       0: 5,
       1: 4,
       2: 3,
@@ -48,11 +43,11 @@ export default function TabuadaGame() {
       5: 0.1,
     };
 
-    setPointsPerCorrect(pointsMapping[stars] || 5);
+    setProgressPerCorrect(progressMapping[stars] || 5);
   }, [stars]);
 
   function increaseThermometer() {
-    let newThermometer = thermometer + pointsPerCorrect;
+    let newThermometer = thermometer + progressPerCorrect;
 
     if (newThermometer >= 100) {
       newThermometer = 100;
@@ -60,16 +55,7 @@ export default function TabuadaGame() {
       if (stars !== 5) {
         setLocalStorageValue(`stars_${tabuNumber}`, stars + 1);
 
-        const milestoneResult = rewardMilestone({
-          mode: "multiplication_star",
-          xp: 80 + tabuNumber * 4,
-          coins: 10 + stars,
-          stars: 1,
-          games: 1,
-          label: "Estrela conquistada",
-        });
-
-        setFeedbackMessage(milestoneResult.message || "Estrela conquistada");
+        setFeedbackMessage("Estrela conquistada");
         navigateTo("/tabuadalevels");
       }
     }
@@ -81,7 +67,7 @@ export default function TabuadaGame() {
     let newThermometer = thermometer;
 
     if (newThermometer !== 100) {
-      newThermometer -= pointsPerCorrect;
+      newThermometer -= progressPerCorrect;
     }
 
     if (newThermometer < 0) {
@@ -134,27 +120,10 @@ export default function TabuadaGame() {
 
   const checkAnswer = () => {
     const isCorrect = parseInt(response) === correctAnswer;
-    const rewardResult = rewardAnswer(
-      isCorrect
-        ? {
-            mode: "multiplication",
-            isCorrect: true,
-            baseXp: 8 + Math.ceil(pointsPerCorrect),
-            baseCoins: 2,
-          }
-        : {
-            mode: "multiplication",
-            isCorrect: false,
-            wrongPenaltyXp: 2,
-            wrongPenaltyCoins: 0,
-          }
-    );
 
     setFeedbackState(isCorrect ? "correct" : "wrong");
     setFeedbackTick((prevTick) => prevTick + 1);
-    setFeedbackMessage(
-      rewardResult.message || (isCorrect ? "Boa resposta" : "Tente outra vez")
-    );
+    setFeedbackMessage(isCorrect ? "Boa resposta" : "Tente outra vez");
     toggleSounds(isCorrect);
 
     if (isCorrect) {

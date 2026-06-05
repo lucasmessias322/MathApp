@@ -16,11 +16,11 @@ const gameModes = [
   {
     to: "aditionlevels",
     title: "Soma Turbo",
-    subtitle: "Junte pontos, faça combos e acelere nas contas",
+    subtitle: "Pratique somas rapidas e avance pelos desafios",
     icon: <FaRocket />,
     colors: ["#ff9b5f", "#ff5f7a"],
     glow: "rgba(255, 95, 122, 0.35)",
-    badge: "Combo rapido",
+    badge: "Treino rapido",
   },
   {
     to: "subtractionlevels",
@@ -34,11 +34,11 @@ const gameModes = [
   {
     to: "/tabuadalevels",
     title: "Reino da Tabuada",
-    subtitle: "Suba de nivel e colecione estrelas em cada fase",
+    subtitle: "Treine cada tabuada e colecione estrelas",
     icon: <FaCrown />,
     colors: ["#8b7bff", "#4f67ff"],
     glow: "rgba(79, 103, 255, 0.34)",
-    badge: "Modo ranking",
+    badge: "Modo estrelas",
   },
   {
     to: "/tabuadatleatoria",
@@ -513,3 +513,4 @@ const CardArrow = styled.span`
     display: none;
   }
 `;
+

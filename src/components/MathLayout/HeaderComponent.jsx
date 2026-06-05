@@ -1,6 +1,6 @@
 /* eslint-disable react/prop-types */
 import styled from "styled-components";
-import { FaVolumeUp, FaVolumeMute, FaHome, FaTrophy } from "react-icons/fa";
+import { FaVolumeUp, FaVolumeMute, FaHome } from "react-icons/fa";
 import { Link } from "react-router-dom";
 
 const AudioPlayer = ({ src, play, onEnded }) => (
@@ -10,8 +10,6 @@ const AudioPlayer = ({ src, play, onEnded }) => (
 export default function HeaderComponent({
   handleButtonClicked,
   isSoundEnabled,
-  recordGamePoints,
-  currentGamepoints,
   playCorrectSound,
   playWrongSound,
   setPlayCorrectSound,
@@ -30,15 +28,6 @@ export default function HeaderComponent({
           {isSoundEnabled ? <FaVolumeUp /> : <FaVolumeMute />}
         </Option>
       </OptionsLeft>
-
-      {recordGamePoints >= 0 && (
-        <ScoreBadge>
-          <FaTrophy />
-          <span>
-            {currentGamepoints}/{recordGamePoints}
-          </span>
-        </ScoreBadge>
-      )}
 
       <AudioPlayer
         src="/soundeffects/rightanswer.mp3"
@@ -62,7 +51,15 @@ const Header = styled.header`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding-bottom: 15px;
+  padding-bottom: 10px;
+
+  @media (max-width: 500px) {
+    padding-bottom: 15px;
+  }
+
+  @media (min-width: 701px) and (max-height: 720px) {
+    padding-bottom: 8px;
+  }
 `;
 
 const OptionsLeft = styled.div`
@@ -72,8 +69,8 @@ const OptionsLeft = styled.div`
 `;
 
 const Option = styled.div`
-  width: 48px;
-  height: 48px;
+  width: 44px;
+  height: 44px;
   padding: 5px;
   margin: 0 5px;
   font-size: 20px;
@@ -87,28 +84,20 @@ const Option = styled.div`
   border-radius: 18px;
   color: #ffffff;
 
+  @media (max-width: 500px) {
+    width: 48px;
+    height: 48px;
+  }
+
+  @media (min-width: 701px) and (max-height: 720px) {
+    width: 40px;
+    height: 40px;
+    border-radius: 14px;
+    font-size: 18px;
+  }
+
   &:active {
     transform: translateY(2px);
     box-shadow: 0 6px 12px rgba(27, 92, 186, 0.22);
-  }
-`;
-
-const ScoreBadge = styled.div`
-  min-width: 118px;
-  padding: 10px 14px;
-  border-radius: 18px;
-  background: linear-gradient(135deg, #17314c 0%, #143052 55%, #232f70 100%);
-  border: 1px solid rgba(123, 201, 255, 0.22);
-  box-shadow: 0 12px 20px rgba(4, 12, 23, 0.28);
-  color: #7bdcff;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
-
-  span {
-    font-size: 1.15rem;
-    font-weight: 800;
-    color: #f2fbff;
   }
 `;

@@ -36,10 +36,15 @@ const ButtonsContainer = styled.ul`
   width: 100%;
   display: grid;
   grid-template-columns: repeat(3, minmax(86px, 1fr));
-  gap: 12px;
+  gap: 10px;
   margin: 4px auto 0;
   padding: 0;
   list-style: none;
+
+  @media (min-width: 701px) {
+    grid-template-columns: repeat(3, minmax(78px, 1fr));
+    gap: 8px;
+  }
 
   @media (max-width: 500px) {
     gap: 10px;
@@ -63,7 +68,7 @@ const confirmVariant = css`
 
 const Button = styled.button`
   width: 100%;
-  min-height: 86px;
+  min-height: 76px;
   padding: 0;
   border: none;
   background: transparent;
@@ -79,12 +84,12 @@ const Button = styled.button`
         ? clearVariant
         : numberVariant}
 
-  border-radius: 26px;
+  border-radius: 10px;
   position: relative;
   overflow: visible;
 
   &:hover {
-    transform: translateY(-2px) scale(1.01);
+   // transform: translateY(-2px) scale(1.01);
     filter: saturate(1.05) brightness(1.03);
   }
 
@@ -106,6 +111,11 @@ const Button = styled.button`
               : "rgba(24, 59, 117, 0.22)"};
   }
 
+  @media (min-width: 701px) and (max-height: 720px) {
+    min-height: 58px;
+    border-radius: 10px;
+  }
+
   @media (max-width: 500px) {
     min-height: 92px;
     border-radius: 24px;
@@ -116,7 +126,7 @@ const ButtonInner = styled.span`
   position: relative;
   width: 100%;
   height: 100%;
-  min-height: 86px;
+  min-height: 76px;
   border-radius: inherit;
   border: 2px solid rgba(255, 255, 255, 0.75);
   display: flex;
@@ -124,6 +134,10 @@ const ButtonInner = styled.span`
   justify-content: center;
   overflow: hidden;
   background: inherit;
+
+  @media (min-width: 701px) and (max-height: 720px) {
+    min-height: 58px;
+  }
 
   @media (max-width: 500px) {
     min-height: 92px;
@@ -133,7 +147,7 @@ const ButtonInner = styled.span`
 const ButtonGlow = styled.span`
   position: absolute;
   inset: 6px 10px auto;
-  height: 22px;
+  height: 18px;
   border-radius: 999px;
   background: linear-gradient(
     180deg,
@@ -141,6 +155,11 @@ const ButtonGlow = styled.span`
     rgba(255, 255, 255, 0)
   );
   pointer-events: none;
+
+  @media (min-width: 701px) and (max-height: 720px) {
+    inset: 6px 10px auto;
+    height: 14px;
+  }
 `;
 
 const ButtonShadow = styled.span`
@@ -153,6 +172,11 @@ const ButtonShadow = styled.span`
   background: rgba(12, 26, 48, 0.16);
   filter: blur(4px);
   pointer-events: none;
+
+  @media (min-width: 701px) and (max-height: 720px) {
+    bottom: 6px;
+    height: 8px;
+  }
 `;
 
 const ButtonLabel = styled.span`
@@ -162,13 +186,21 @@ const ButtonLabel = styled.span`
   align-items: center;
   justify-content: center;
   color: #ffffff;
-  font-size: 2rem;
+  font-size: 1.85rem;
   font-weight: 900;
   text-shadow: 0 3px 0 rgba(24, 48, 94, 0.24);
 
   svg {
-    font-size: 1.8rem;
+    font-size: 1.65rem;
     filter: drop-shadow(0 3px 0 rgba(24, 48, 94, 0.2));
+  }
+
+  @media (min-width: 701px) and (max-height: 720px) {
+    font-size: 1.55rem;
+
+    svg {
+      font-size: 1.38rem;
+    }
   }
 
   @media (max-width: 500px) {

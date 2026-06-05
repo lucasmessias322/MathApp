@@ -6,31 +6,31 @@ export default function Header({ bg, children }) {
 
 const HeaderContainer = styled.div`
   width: 100%;
-  max-width: 760px;
+ // max-width: 760px;
   margin: 0 auto;
   padding: 14px 14px 18px;
   position: fixed;
   left: 50%;
   transform: translateX(-50%);
-  z-index: 9999;
+ // z-index: 9999;
   top: 0;
-  background:
+  /* background:
     radial-gradient(circle at top center, rgba(120, 216, 255, 0.12), transparent 65%),
     ${(props) =>
       props.bg && props.bg !== "Transparent"
         ? props.bg
-        : "linear-gradient(180deg, rgba(15, 31, 48, 0.98) 0%, rgba(11, 24, 38, 0.98) 100%)"};
-  backdrop-filter: blur(18px);
+        : "linear-gradient(180deg, rgba(15, 31, 48, 0.98) 0%, rgba(11, 24, 38, 0.98) 100%)"}; */
+ // backdrop-filter: blur(18px);
   border-bottom-left-radius: 34px;
   border-bottom-right-radius: 34px;
-  border: 1px solid rgba(123, 201, 255, 0.18);
+  //border: 1px solid rgba(123, 201, 255, 0.18);
   border-top: none;
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 12px;
-  box-shadow: 0 18px 32px rgba(0, 0, 0, 0.28),
-    inset 0 1px 0 rgba(255, 255, 255, 0.05);
+  /* box-shadow: 0 18px 32px rgba(0, 0, 0, 0.28),
+    inset 0 1px 0 rgba(255, 255, 255, 0.05); */
   font-family: "Baloo 2", "Fredoka", sans-serif;
 
   &::before {
@@ -63,11 +63,6 @@ const HeaderContainer = styled.div`
   > * {
     position: relative;
     z-index: 1;
-  }
-
-  > *:last-child {
-    flex: 1;
-    min-width: 0;
   }
 
   @media (max-width: 560px) {

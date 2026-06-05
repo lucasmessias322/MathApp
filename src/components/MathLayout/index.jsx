@@ -3,7 +3,6 @@ import HeaderComponent from "./HeaderComponent";
 import ButtonsCompoent from "./ButtonsCompoent";
 import styled from "styled-components";
 import { AnimatePresence, motion } from "framer-motion";
-import { GiTwoCoins } from "react-icons/gi";
 
 const Popaudio = new Audio("/soundeffects/happy-pop-2-185287.mp3");
 
@@ -17,8 +16,6 @@ export default function MathLayout({
   setPlayCorrectSound,
   setPlayWrongSound,
   progressBar,
-  recordGamePoints,
-  currentGamepoints,
   setResponse,
   setIsSoundEnabled,
   checkAnswer,
@@ -44,8 +41,6 @@ export default function MathLayout({
       setResponse((prevResponse) => prevResponse + value);
     }
   };
-
-  const showCoinIcon = feedbackMessage?.toLowerCase().includes("moedas");
 
   return (
     <Container>
@@ -83,7 +78,6 @@ export default function MathLayout({
                 exit={{ opacity: 0, y: -18, scale: 0.94 }}
                 transition={{ duration: 0.35 }}
               >
-                {showCoinIcon ? <GiTwoCoins /> : null}
                 {feedbackMessage || (feedbackState === "correct" ? "Boa" : "Ops")}
               </RewardToast>
             </>
@@ -96,8 +90,6 @@ export default function MathLayout({
         </GameTitleArea>
 
         <HeaderComponent
-          recordGamePoints={recordGamePoints}
-          currentGamepoints={currentGamepoints}
           handleButtonClicked={handleButtonClicked}
           isSoundEnabled={isSoundEnabled}
           playCorrectSound={playCorrectSound}
@@ -160,8 +152,9 @@ const Container = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  min-height: 100vh;
-  padding: 24px 10px 28px;
+  justify-content: center;
+  min-height: 100dvh;
+  padding: 12px 10px;
   position: relative;
   overflow: hidden;
   background:
@@ -230,7 +223,7 @@ const Wave = styled.div`
 const ContainerMathGame = styled.div`
   width: 100%;
   max-width: 440px;
-  padding: 22px 22px 24px;
+  padding: 14px 22px 18px;
   border-radius: 34px;
   margin: auto 0;
   background:
@@ -247,6 +240,19 @@ const ContainerMathGame = styled.div`
   position: relative;
   z-index: 2;
   overflow: hidden;
+
+  @media (min-width: 701px) {
+    max-width: 420px;
+    max-height: calc(100dvh - 24px);
+    padding: 14px 20px 16px;
+    border-radius: 30px;
+  }
+
+  @media (min-width: 701px) and (max-height: 720px) {
+    max-width: 390px;
+    padding: 10px 18px 12px;
+    border-radius: 28px;
+  }
 
   @media (max-width: 600px) {
     padding: 18px 16px 22px;
@@ -308,7 +314,7 @@ const RewardToast = styled(motion.div)`
 
 const GameTitleArea = styled.div`
   text-align: center;
-  margin-bottom: 14px;
+  margin-bottom: 10px;
   color: #fff;
 
   small {
@@ -327,17 +333,45 @@ const GameTitleArea = styled.div`
   }
 
   h1 {
-    margin-top: 10px;
+    margin-top: 8px;
     font-size: clamp(2rem, 5vw, 2.35rem);
     line-height: 0.95;
     text-shadow: 0 4px 0 rgba(38, 64, 138, 0.32);
+  }
+
+  @media (min-width: 701px) {
+    margin-bottom: 8px;
+
+    small {
+      padding: 5px 14px;
+      font-size: 0.78rem;
+    }
+
+    h1 {
+      margin-top: 6px;
+      font-size: 2rem;
+    }
+  }
+
+  @media (min-width: 701px) and (max-height: 720px) {
+    margin-bottom: 6px;
+
+    small {
+      padding: 4px 12px;
+      font-size: 0.72rem;
+    }
+
+    h1 {
+      margin-top: 5px;
+      font-size: 1.75rem;
+    }
   }
 `;
 
 const AnimatedDisplay = styled(motion.div)`
   width: 100%;
-  min-height: 92px;
-  margin-bottom: 15px;
+  min-height: 84px;
+  margin-bottom: 12px;
   background: linear-gradient(180deg, #ffffff 0%, #eef7ff 70%, #f7fbff 100%);
   border: 3px solid rgba(255, 255, 255, 0.92);
   border-radius: 26px;
@@ -362,7 +396,25 @@ const AnimatedDisplay = styled(motion.div)`
         : ""}
 
   @media (max-width: 420px) {
+    min-height: 92px;
+    margin-bottom: 15px;
     font-size: 36px;
+    padding: 0 16px;
+  }
+
+  @media (min-width: 701px) {
+    min-height: 72px;
+    margin-bottom: 10px;
+    border-radius: 22px;
+    font-size: 36px;
+    padding: 0 18px;
+  }
+
+  @media (min-width: 701px) and (max-height: 720px) {
+    min-height: 60px;
+    margin-bottom: 8px;
+    border-radius: 18px;
+    font-size: 32px;
     padding: 0 16px;
   }
 `;
@@ -370,7 +422,7 @@ const AnimatedDisplay = styled(motion.div)`
 const EquationsProgressBarContainer = styled.div`
   width: 100%;
   height: 16px;
-  margin: 15px 0;
+  margin: 10px 0;
   background: rgba(255, 255, 255, 0.12);
   border-radius: 999px;
   overflow: hidden;
@@ -383,5 +435,10 @@ const EquationsProgressBarContainer = styled.div`
     width: ${(props) => (props.fillwidth ? props.fillwidth + "%" : "0%")};
     transition: width 0.5s ease-in-out;
     box-shadow: 0 0 10px rgba(74, 174, 255, 0.24);
+  }
+
+  @media (min-width: 701px) and (max-height: 720px) {
+    height: 12px;
+    margin: 8px 0;
   }
 `;
