@@ -116,7 +116,7 @@ export default function MathLayout({
           }
           transition={{ duration: 0.45 }}
         >
-          {equation}
+          <DisplayText>{equation}</DisplayText>
         </AnimatedDisplay>
 
         <AnimatedDisplay
@@ -131,7 +131,7 @@ export default function MathLayout({
           }
           transition={{ duration: 0.45 }}
         >
-          {response}
+          <DisplayText>{response}</DisplayText>
         </AnimatedDisplay>
 
         <ButtonsCompoent handleButtonClicked={handleButtonClicked} />
@@ -372,28 +372,69 @@ const AnimatedDisplay = styled(motion.div)`
   width: 100%;
   min-height: 84px;
   margin-bottom: 12px;
-  background: linear-gradient(180deg, #ffffff 0%, #eef7ff 70%, #f7fbff 100%);
-  border: 3px solid rgba(255, 255, 255, 0.92);
-  border-radius: 26px;
+  background:
+    linear-gradient(180deg, #a8bdb5 0%, #c1d1c9 48%, #9cafaa 100%);
+  border: 4px solid #071422;
+  outline: 1px solid rgba(255, 255, 255, 0.18);
+  border-radius: 12px;
   font-size: 44px;
-  font-weight: 800;
-  color: #17324d;
+  font-family: "Consolas", "Lucida Console", monospace;
+  font-weight: 900;
+  letter-spacing: 0;
+  color: #152921;
   display: flex;
   justify-content: flex-end;
   align-items: center;
   padding: 0 20px;
-  box-shadow: inset 0 3px 10px rgba(80, 108, 199, 0.08),
-    0 14px 24px rgba(68, 94, 191, 0.12);
+  box-shadow:
+    inset 0 9px 14px rgba(5, 14, 17, 0.42),
+    inset 0 -3px 5px rgba(255, 255, 255, 0.16),
+    inset 7px 0 10px rgba(6, 18, 22, 0.22),
+    inset -7px 0 10px rgba(6, 18, 22, 0.16),
+    0 1px 0 rgba(255, 255, 255, 0.1);
+  text-shadow:
+    0 1px 0 rgba(230, 255, 244, 0.5),
+    0 0 8px rgba(35, 82, 65, 0.12);
   overflow-wrap: anywhere;
   position: relative;
   z-index: 1;
+  overflow: hidden;
+
+  &::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: 7px;
+    box-shadow:
+      inset 0 0 0 1px rgba(255, 255, 255, 0.1),
+      inset 0 0 22px rgba(24, 47, 43, 0.2);
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  &::after {
+    content: "";
+    position: absolute;
+    inset: 6px 10px auto;
+    height: 20%;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.12);
+    filter: blur(8px);
+    pointer-events: none;
+    z-index: 0;
+  }
 
   ${(props) =>
     props.$feedbackstate === "correct"
-      ? "box-shadow: inset 0 3px 10px rgba(80, 108, 199, 0.08), 0 0 0 2px rgba(123, 220, 255, 0.34), 0 16px 28px rgba(74, 174, 255, 0.18);"
+      ? "box-shadow: inset 0 9px 14px rgba(5, 14, 17, 0.42), inset 0 -3px 5px rgba(255, 255, 255, 0.16), inset 7px 0 10px rgba(6, 18, 22, 0.22), inset -7px 0 10px rgba(6, 18, 22, 0.16), 0 0 0 2px rgba(123, 220, 255, 0.34);"
       : props.$feedbackstate === "wrong"
-        ? "box-shadow: inset 0 3px 10px rgba(80, 108, 199, 0.08), 0 0 0 2px rgba(255, 98, 130, 0.22), 0 16px 28px rgba(255, 98, 130, 0.14);"
+        ? "box-shadow: inset 0 9px 14px rgba(5, 14, 17, 0.42), inset 0 -3px 5px rgba(255, 255, 255, 0.16), inset 7px 0 10px rgba(6, 18, 22, 0.22), inset -7px 0 10px rgba(6, 18, 22, 0.16), 0 0 0 2px rgba(255, 98, 130, 0.24);"
         : ""}
+
+  > span {
+    position: relative;
+    z-index: 1;
+  }
 
   @media (max-width: 420px) {
     min-height: 92px;
@@ -405,7 +446,7 @@ const AnimatedDisplay = styled(motion.div)`
   @media (min-width: 701px) {
     min-height: 72px;
     margin-bottom: 10px;
-    border-radius: 22px;
+    border-radius: 11px;
     font-size: 36px;
     padding: 0 18px;
   }
@@ -413,10 +454,17 @@ const AnimatedDisplay = styled(motion.div)`
   @media (min-width: 701px) and (max-height: 720px) {
     min-height: 60px;
     margin-bottom: 8px;
-    border-radius: 18px;
+    border-radius: 10px;
     font-size: 32px;
     padding: 0 16px;
   }
+`;
+
+const DisplayText = styled.span`
+  display: block;
+  max-width: 100%;
+  overflow-wrap: anywhere;
+  text-align: right;
 `;
 
 const EquationsProgressBarContainer = styled.div`

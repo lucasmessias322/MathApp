@@ -43,27 +43,51 @@ const ButtonsContainer = styled.ul`
 
   @media (min-width: 701px) {
     grid-template-columns: repeat(3, minmax(78px, 1fr));
-    gap: 8px;
+    gap: 12px;
   }
 
   @media (max-width: 500px) {
-    gap: 10px;
+    gap: 12px;
   }
 `;
 
 const numberVariant = css`
-  background: linear-gradient(180deg, #78deff 0%, #4d9fff 52%, #6468ff 100%);
-  //box-shadow: 0 16px 0 #274f94, 0 22px 30px rgba(24, 59, 117, 0.28);
+  --key-face-top: #466b8d;
+  --key-face-mid: #294862;
+  --key-face-bottom: #152c40;
+  --key-edge: #0b1d2f;
+  --key-edge-dark: #06111d;
+  --key-ring: rgba(156, 203, 238, 0.38);
+  --key-label: #ffffff;
+  --key-label-shadow: rgba(0, 9, 18, 0.5);
+  --key-glow: rgba(181, 224, 255, 0.24);
+  --key-shadow: rgba(2, 9, 17, 0.48);
 `;
 
 const clearVariant = css`
-  background: linear-gradient(180deg, #ffb68d 0%, #ff7d7b 55%, #ff5f91 100%);
- // box-shadow: 0 16px 0 #a8465f, 0 22px 30px rgba(153, 55, 88, 0.3);
+  --key-face-top: #d95c60;
+  --key-face-mid: #a53248;
+  --key-face-bottom: #6f1f36;
+  --key-edge: #4c1728;
+  --key-edge-dark: #300d19;
+  --key-ring: rgba(255, 185, 187, 0.42);
+  --key-label: #ffffff;
+  --key-label-shadow: rgba(42, 7, 18, 0.52);
+  --key-glow: rgba(255, 190, 190, 0.28);
+  --key-shadow: rgba(54, 10, 24, 0.48);
 `;
 
 const confirmVariant = css`
-  background: linear-gradient(180deg, #92f0ff 0%, #45cbff 45%, #4e7dff 100%);
- // box-shadow: 0 16px 0 #25589d, 0 22px 30px rgba(31, 91, 176, 0.32);
+  --key-face-top: #39a6d3;
+  --key-face-mid: #1f6cb7;
+  --key-face-bottom: #18438c;
+  --key-edge: #102c62;
+  --key-edge-dark: #0a1b3c;
+  --key-ring: rgba(164, 232, 255, 0.46);
+  --key-label: #ffffff;
+  --key-label-shadow: rgba(5, 19, 54, 0.5);
+  --key-glow: rgba(161, 232, 255, 0.32);
+  --key-shadow: rgba(5, 24, 64, 0.5);
 `;
 
 const Button = styled.button`
@@ -74,8 +98,11 @@ const Button = styled.button`
   background: transparent;
   cursor: pointer;
   user-select: none;
-  transition: transform 0.14s ease, filter 0.14s ease;
+  transition: transform 0.12s ease, filter 0.12s ease;
   -webkit-tap-highlight-color: transparent;
+  --press-lift: 7px;
+  --press-blur: 18px;
+  --press-opacity: 0.36;
 
   ${(props) =>
     props.$variant === "confirm"
@@ -84,31 +111,22 @@ const Button = styled.button`
         ? clearVariant
         : numberVariant}
 
-  border-radius: 10px;
+  border-radius: 18px;
   position: relative;
   overflow: visible;
+  filter: drop-shadow(0 10px 13px var(--key-shadow));
 
   &:hover {
-   // transform: translateY(-2px) scale(1.01);
-    filter: saturate(1.05) brightness(1.03);
+    transform: translateY(-1px);
+    filter: drop-shadow(0 12px 16px var(--key-shadow)) saturate(1.04);
   }
 
   &:active {
-    transform: translateY(10px) scale(0.98);
-    box-shadow: 0 6px 0
-        ${(props) =>
-          props.$variant === "confirm"
-            ? "#25589d"
-            : props.$variant === "clear"
-              ? "#a8465f"
-              : "#274f94"},
-      0 10px 16px
-        ${(props) =>
-          props.$variant === "confirm"
-            ? "rgba(31, 91, 176, 0.24)"
-            : props.$variant === "clear"
-              ? "rgba(153, 55, 88, 0.22)"
-              : "rgba(24, 59, 117, 0.22)"};
+    --press-lift: 2px;
+    --press-blur: 9px;
+    --press-opacity: 0.24;
+    transform: translateY(5px) scale(0.992);
+    filter: drop-shadow(0 4px 7px var(--key-shadow)) saturate(0.98);
   }
 
   @media (min-width: 701px) and (max-height: 720px) {
@@ -118,7 +136,7 @@ const Button = styled.button`
 
   @media (max-width: 500px) {
     min-height: 92px;
-    border-radius: 24px;
+    border-radius: 10px;
   }
 `;
 
@@ -128,12 +146,49 @@ const ButtonInner = styled.span`
   height: 100%;
   min-height: 76px;
   border-radius: inherit;
-  border: 2px solid rgba(255, 255, 255, 0.75);
+  border: 1px solid var(--key-ring);
   display: flex;
   align-items: center;
   justify-content: center;
   overflow: hidden;
-  background: inherit;
+  background:
+    radial-gradient(circle at 50% 0%, var(--key-glow) 0%, transparent 36%),
+    linear-gradient(
+      180deg,
+      var(--key-face-top) 0%,
+      var(--key-face-mid) 48%,
+      var(--key-face-bottom) 100%
+    );
+  box-shadow:
+    inset 0 2px 0 rgba(255, 255, 255, 0.92),
+    inset 0 -5px 10px rgba(35, 48, 68, 0.18),
+    0 var(--press-lift) 0 var(--key-edge),
+    0 calc(var(--press-lift) + 5px) var(--press-blur)
+      rgba(0, 0, 0, var(--press-opacity));
+  transition: box-shadow 0.12s ease, filter 0.12s ease;
+
+  &::before {
+    content: "";
+    position: absolute;
+    inset: 4px 6px auto;
+    height: 34%;
+    border-radius: inherit;
+    background: linear-gradient(
+      180deg,
+      rgba(255, 255, 255, 0.58),
+      rgba(255, 255, 255, 0.06)
+    );
+    pointer-events: none;
+  }
+
+  &::after {
+    content: "";
+    position: absolute;
+    inset: auto 0 0;
+    height: 22%;
+    background: linear-gradient(180deg, transparent, rgba(0, 0, 0, 0.12));
+    pointer-events: none;
+  }
 
   @media (min-width: 701px) and (max-height: 720px) {
     min-height: 58px;
@@ -146,36 +201,40 @@ const ButtonInner = styled.span`
 
 const ButtonGlow = styled.span`
   position: absolute;
-  inset: 6px 10px auto;
-  height: 18px;
+  inset: 7px 12px auto;
+  height: 10px;
   border-radius: 999px;
   background: linear-gradient(
     180deg,
-    rgba(255, 255, 255, 0.42),
-    rgba(255, 255, 255, 0)
+    rgba(255, 255, 255, 0.64),
+    rgba(255, 255, 255, 0.12)
   );
+  box-shadow: 0 1px 3px rgba(255, 255, 255, 0.22);
   pointer-events: none;
+  z-index: 1;
 
   @media (min-width: 701px) and (max-height: 720px) {
     inset: 6px 10px auto;
-    height: 14px;
+    height: 8px;
   }
 `;
 
 const ButtonShadow = styled.span`
   position: absolute;
-  left: 10px;
-  right: 10px;
-  bottom: 8px;
-  height: 10px;
+  left: 12px;
+  right: 12px;
+  bottom: 9px;
+  height: 8px;
   border-radius: 999px;
-  background: rgba(12, 26, 48, 0.16);
-  filter: blur(4px);
+  background: var(--key-edge-dark);
+  opacity: 0.18;
+  filter: blur(5px);
   pointer-events: none;
+  z-index: 1;
 
   @media (min-width: 701px) and (max-height: 720px) {
     bottom: 6px;
-    height: 8px;
+    height: 6px;
   }
 `;
 
@@ -185,14 +244,14 @@ const ButtonLabel = styled.span`
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  color: #ffffff;
+  color: var(--key-label);
   font-size: 1.85rem;
   font-weight: 900;
-  text-shadow: 0 3px 0 rgba(24, 48, 94, 0.24);
+  text-shadow: 0 2px 0 var(--key-label-shadow);
 
   svg {
     font-size: 1.65rem;
-    filter: drop-shadow(0 3px 0 rgba(24, 48, 94, 0.2));
+    filter: drop-shadow(0 2px 0 var(--key-label-shadow));
   }
 
   @media (min-width: 701px) and (max-height: 720px) {
