@@ -105,6 +105,12 @@ const ReturnArrow = styled.div`
     transform: scale(1.1);
     background: linear-gradient(180deg, #8be0ff 0%, #5aa9ff 60%, #7b7cff 100%);
   }
+
+  @media (max-width: 600px) {
+    &:hover {
+      transform: none;
+    }
+  }
 `;
 
 const MainContainer = styled.div`
@@ -150,6 +156,12 @@ const StageIntro = styled(motion.div)`
     font-size: 1.03rem;
     font-weight: 700;
     color: rgba(241, 248, 255, 0.92);
+  }
+
+  @media (max-width: 600px) {
+    border-radius: 24px;
+    backdrop-filter: none;
+    box-shadow: 0 14px 28px rgba(0, 0, 0, 0.26);
   }
 `;
 

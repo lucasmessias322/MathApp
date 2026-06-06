@@ -1,4 +1,5 @@
 /* eslint-disable react/prop-types */
+import { memo, useCallback } from "react";
 import HeaderComponent from "./HeaderComponent";
 import ButtonsCompoent from "./ButtonsCompoent";
 import styled from "styled-components";
@@ -6,7 +7,7 @@ import { AnimatePresence, motion } from "framer-motion";
 
 const Popaudio = new Audio("/soundeffects/happy-pop-2-185287.mp3");
 
-export default function MathLayout({
+function MathLayout({
   thermometer,
   equation,
   response,
@@ -23,11 +24,13 @@ export default function MathLayout({
   feedbackTick,
   feedbackMessage,
 }) {
-  const handleButtonClicked = (value) => {
-    Popaudio.currentTime = 0;
-    Popaudio.play().catch((error) =>
-      console.error("Erro ao iniciar a reproducao:", error)
-    );
+  const handleButtonClicked = useCallback((value) => {
+    if (isSoundEnabled) {
+      Popaudio.currentTime = 0;
+      Popaudio.play().catch((error) =>
+        console.error("Erro ao iniciar a reproducao:", error)
+      );
+    }
 
     if (value === "C") {
       setResponse("");
@@ -40,7 +43,7 @@ export default function MathLayout({
     } else if (response.length <= 10) {
       setResponse((prevResponse) => prevResponse + value);
     }
-  };
+  }, [checkAnswer, isSoundEnabled, response.length, setIsSoundEnabled, setResponse]);
 
   return (
     <Container>
@@ -50,9 +53,11 @@ export default function MathLayout({
       <WaterFill fillheight={thermometer}>
         <Wave style={{ bottom: "0", animationDuration: "6s" }} />
         <Wave
+          className="secondary"
           style={{ bottom: "10px", opacity: 0.5, animationDuration: "8s" }}
         />
         <Wave
+          className="tertiary"
           style={{ bottom: "20px", opacity: 0.3, animationDuration: "10s" }}
         />
       </WaterFill>
@@ -140,6 +145,10 @@ export default function MathLayout({
   );
 }
 
+const MemoizedMathLayout = memo(MathLayout);
+
+export default MemoizedMathLayout;
+
 const svg = encodeURIComponent(`
 <svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1440 320'>
   <path fill='%23ffffff' fill-opacity='0.35'
@@ -183,6 +192,11 @@ const SkyGlow = styled.div`
     left: -70px;
     background: rgba(255, 98, 130, 0.08);
   }
+
+  @media (max-width: 600px) {
+    filter: none;
+    opacity: 0.7;
+  }
 `;
 
 const WaterFill = styled.div`
@@ -216,6 +230,17 @@ const Wave = styled.div`
 
     100% {
       transform: translateX(-50%);
+    }
+  }
+
+  @media (max-width: 600px) {
+    height: 72px;
+    animation: none;
+    opacity: 0.45;
+
+    &.secondary,
+    &.tertiary {
+      display: none;
     }
   }
 `;
@@ -256,6 +281,9 @@ const ContainerMathGame = styled.div`
 
   @media (max-width: 600px) {
     padding: 18px 16px 22px;
+    border-radius: 24px;
+    backdrop-filter: none;
+    box-shadow: 0 14px 28px rgba(0, 0, 0, 0.26);
   }
 `;
 
@@ -274,6 +302,11 @@ const FeedbackFlash = styled(motion.div)`
       ? "radial-gradient(circle, rgba(255, 98, 130, 0.38) 0%, rgba(255, 98, 130, 0) 72%)"
       : "radial-gradient(circle, rgba(123, 220, 255, 0.34) 0%, rgba(123, 220, 255, 0) 72%)"};
   filter: blur(8px);
+
+  @media (max-width: 600px) {
+    filter: none;
+    opacity: 0.75;
+  }
 `;
 
 const RewardToast = styled(motion.div)`
@@ -441,6 +474,10 @@ const AnimatedDisplay = styled(motion.div)`
     margin-bottom: 15px;
     font-size: 36px;
     padding: 0 16px;
+
+    &::after {
+      filter: none;
+    }
   }
 
   @media (min-width: 701px) {

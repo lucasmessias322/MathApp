@@ -1,4 +1,4 @@
-import { useState, useEffect, useContext } from "react";
+import { useState, useEffect, useContext, useCallback, useRef } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import MathLayout from "../../components/MathLayout";
 import { AppContext } from "../../Contexts/AppContext";
@@ -16,7 +16,7 @@ export default function TabuadaGame() {
   const [feedbackState, setFeedbackState] = useState("idle");
   const [feedbackTick, setFeedbackTick] = useState(0);
   const [feedbackMessage, setFeedbackMessage] = useState("");
-  const [lastResponseTime, setLastResponseTime] = useState(Date.now());
+  const lastResponseTimeRef = useRef(Date.now());
   const tabuNumber = parseInt(useParams().tabuada);
   const { getLocalStorageValue, setLocalStorageValue } = useContext(AppContext);
   const stars = Number(getLocalStorageValue(`stars_${tabuNumber}`)) || 0;
@@ -77,20 +77,21 @@ export default function TabuadaGame() {
     setThermometer(newThermometer);
   }
 
-  function decreaseThermometerBasedOnTime(elapsedTime) {
+  const decreaseThermometerBasedOnTime = useCallback((elapsedTime) => {
     const decreaseAmount = Math.floor((elapsedTime / 1000) * 1);
-    const newThermometer = thermometer - decreaseAmount;
 
-    if (newThermometer < 0) {
-      setThermometer(0);
-    } else if (thermometer !== 100) {
-      setThermometer(newThermometer);
-    }
-  }
+    setThermometer((currentThermometer) => {
+      if (currentThermometer === 100) {
+        return currentThermometer;
+      }
+
+      return Math.max(0, currentThermometer - decreaseAmount);
+    });
+  }, []);
 
   useEffect(() => {
     const timer = setInterval(() => {
-      const elapsedTime = Date.now() - lastResponseTime;
+      const elapsedTime = Date.now() - lastResponseTimeRef.current;
 
       if (elapsedTime >= 2000) {
         decreaseThermometerBasedOnTime(elapsedTime);
@@ -98,20 +99,20 @@ export default function TabuadaGame() {
     }, 1000);
 
     return () => clearInterval(timer);
-  }, [lastResponseTime, thermometer]);
+  }, [decreaseThermometerBasedOnTime]);
 
-  useEffect(() => {
-    generateEquation();
-  }, [tabuNumber]);
-
-  const generateEquation = () => {
+  const generateEquation = useCallback(() => {
     const num1 = tabuNumber;
     const num2 = Math.floor(Math.random() * 10) + 1;
     const result = num1 * num2;
     setEquation(`${num1} x ${num2}`);
     setCorrectAnswer(result);
     setResponse("");
-  };
+  }, [tabuNumber]);
+
+  useEffect(() => {
+    generateEquation();
+  }, [generateEquation]);
 
   const toggleSounds = (correct) => {
     setPlayCorrectSound(correct);
@@ -129,7 +130,7 @@ export default function TabuadaGame() {
     if (isCorrect) {
       generateEquation();
       increaseThermometer();
-      setLastResponseTime(Date.now());
+      lastResponseTimeRef.current = Date.now();
     } else {
       setResponse(correctAnswer.toString());
 
@@ -138,7 +139,7 @@ export default function TabuadaGame() {
       }, 500);
 
       decreaseThermometer();
-      setLastResponseTime(Date.now());
+      lastResponseTimeRef.current = Date.now();
     }
   };
 

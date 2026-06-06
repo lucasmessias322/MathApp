@@ -96,6 +96,15 @@ const PhaseItem = styled.button`
         : "0 12px 20px rgba(4, 12, 23, 0.18)"};
   }
 
+  @media (max-width: 600px) {
+    animation: none;
+    transition: transform 0.12s ease;
+
+    &:hover {
+      transform: none;
+    }
+  }
+
   a {
     min-height: 146px;
     color: ${(props) => (props.$unlocked ? "#f2fbff" : "rgba(255,255,255,0.72)")};

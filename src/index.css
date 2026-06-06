@@ -77,3 +77,15 @@ a,
 button {
   -webkit-tap-highlight-color: transparent;
 }
+
+@media (max-width: 600px) {
+  html,
+  body {
+    background-attachment: scroll;
+  }
+
+  body::before,
+  body::after {
+    display: none;
+  }
+}

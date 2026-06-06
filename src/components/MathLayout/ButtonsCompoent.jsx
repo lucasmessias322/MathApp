@@ -1,10 +1,11 @@
 /* eslint-disable react/prop-types */
+import { memo } from "react";
 import styled, { css } from "styled-components";
 import { FaCheck, FaBackspace } from "react-icons/fa";
 
 const buttonItems = [1, 2, 3, 4, 5, 6, 7, 8, 9, 0, "C", "="];
 
-export default function ButtonsCompoent({ handleButtonClicked }) {
+function ButtonsCompoent({ handleButtonClicked }) {
   return (
     <ButtonsContainer>
       {buttonItems.map((value) => {
@@ -31,6 +32,10 @@ export default function ButtonsCompoent({ handleButtonClicked }) {
     </ButtonsContainer>
   );
 }
+
+const MemoizedButtonsCompoent = memo(ButtonsCompoent);
+
+export default MemoizedButtonsCompoent;
 
 const ButtonsContainer = styled.ul`
   width: 100%;
@@ -137,6 +142,17 @@ const Button = styled.button`
   @media (max-width: 500px) {
     min-height: 92px;
     border-radius: 10px;
+    filter: none;
+    transition: transform 0.08s ease;
+
+    &:hover {
+      transform: none;
+      filter: none;
+    }
+
+    &:active {
+      filter: none;
+    }
   }
 `;
 
@@ -196,6 +212,11 @@ const ButtonInner = styled.span`
 
   @media (max-width: 500px) {
     min-height: 92px;
+    box-shadow:
+      inset 0 2px 0 rgba(255, 255, 255, 0.84),
+      inset 0 -4px 8px rgba(35, 48, 68, 0.16),
+      0 var(--press-lift) 0 var(--key-edge);
+    transition: box-shadow 0.08s ease;
   }
 `;
 
@@ -267,6 +288,7 @@ const ButtonLabel = styled.span`
 
     svg {
       font-size: 1.95rem;
+      filter: none;
     }
   }
 `;
