@@ -48,7 +48,7 @@ const ButtonsContainer = styled.ul`
 
   @media (min-width: 701px) {
     grid-template-columns: repeat(3, minmax(78px, 1fr));
-    gap: 12px;
+    gap: 5px 5px;
   }
 
   @media (max-width: 500px) {
@@ -135,7 +135,7 @@ const Button = styled.button`
   }
 
   @media (min-width: 701px) and (max-height: 720px) {
-    min-height: 58px;
+   // min-height: 58px;
     border-radius: 10px;
   }
 

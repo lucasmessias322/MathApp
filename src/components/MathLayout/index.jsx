@@ -90,8 +90,8 @@ function MathLayout({
         </AnimatePresence>
 
         <GameTitleArea>
-          <small>Hora do desafio</small>
-          <h1>Resolva a conta</h1>
+          {/* <small>Hora do desafio</small> */}
+          {/* <h1>Resolva a conta</h1> */}
         </GameTitleArea>
 
         <HeaderComponent
@@ -108,6 +108,8 @@ function MathLayout({
             <div className="equationfillBar"></div>
           </EquationsProgressBarContainer>
         ) : null}
+
+        
 
         <AnimatedDisplay
           key={`equation-${feedbackState}-${feedbackTick}`}
@@ -163,7 +165,7 @@ const Container = styled.div`
   align-items: center;
   justify-content: center;
   min-height: 100dvh;
-  padding: 12px 10px;
+  //padding: 12px 10px;
   position: relative;
   overflow: hidden;
   background:
