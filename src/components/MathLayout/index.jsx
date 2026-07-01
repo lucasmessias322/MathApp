@@ -1,11 +1,34 @@
 /* eslint-disable react/prop-types */
-import { memo, useCallback } from "react";
+import { memo, useCallback, useEffect, useState } from "react";
 import HeaderComponent from "./HeaderComponent";
 import ButtonsCompoent from "./ButtonsCompoent";
 import styled from "styled-components";
 import { AnimatePresence, motion } from "framer-motion";
 
 const Popaudio = new Audio("/soundeffects/happy-pop-2-185287.mp3");
+const MOBILE_DISPLAY_QUERY = "(max-width: 600px)";
+
+function useIsMobileDisplay() {
+  const [isMobileDisplay, setIsMobileDisplay] = useState(() =>
+    typeof window !== "undefined"
+      ? window.matchMedia(MOBILE_DISPLAY_QUERY).matches
+      : false
+  );
+
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+
+    const query = window.matchMedia(MOBILE_DISPLAY_QUERY);
+    const updateIsMobileDisplay = () => setIsMobileDisplay(query.matches);
+
+    updateIsMobileDisplay();
+    query.addEventListener("change", updateIsMobileDisplay);
+
+    return () => query.removeEventListener("change", updateIsMobileDisplay);
+  }, []);
+
+  return isMobileDisplay;
+}
 
 function MathLayout({
   thermometer,
@@ -24,6 +47,9 @@ function MathLayout({
   feedbackTick,
   feedbackMessage,
 }) {
+  const isMobileDisplay = useIsMobileDisplay();
+  const idleDisplayAnimation = { scale: 1, x: 0, y: 0 };
+
   const handleButtonClicked = useCallback((value) => {
     if (isSoundEnabled) {
       Popaudio.currentTime = 0;
@@ -115,11 +141,13 @@ function MathLayout({
           key={`equation-${feedbackState}-${feedbackTick}`}
           $feedbackstate={feedbackState}
           animate={
-            feedbackState === "correct"
+            isMobileDisplay
+              ? idleDisplayAnimation
+              : feedbackState === "correct"
               ? { scale: [1, 1.03, 1], y: [0, -2, 0] }
               : feedbackState === "wrong"
                 ? { x: [0, -8, 8, -6, 6, 0] }
-                : { scale: 1, x: 0, y: 0 }
+                : idleDisplayAnimation
           }
           transition={{ duration: 0.45 }}
         >
@@ -130,11 +158,13 @@ function MathLayout({
           key={`response-${feedbackState}-${feedbackTick}`}
           $feedbackstate={feedbackState}
           animate={
-            feedbackState === "correct"
+            isMobileDisplay
+              ? idleDisplayAnimation
+              : feedbackState === "correct"
               ? { scale: [1, 1.05, 1], y: [0, -3, 0] }
               : feedbackState === "wrong"
                 ? { x: [0, -10, 10, -8, 8, 0] }
-                : { scale: 1, x: 0, y: 0 }
+                : idleDisplayAnimation
           }
           transition={{ duration: 0.45 }}
         >
