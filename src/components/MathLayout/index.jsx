@@ -46,18 +46,13 @@ function MathLayout({
   feedbackState,
   feedbackTick,
   feedbackMessage,
+  disableMotion = false,
 }) {
   const isMobileDisplay = useIsMobileDisplay();
+  const canAnimate = !disableMotion;
   const idleDisplayAnimation = { scale: 1, x: 0, y: 0 };
 
   const handleButtonClicked = useCallback((value) => {
-    if (isSoundEnabled) {
-      Popaudio.currentTime = 0;
-      Popaudio.play().catch((error) =>
-        console.error("Erro ao iniciar a reproducao:", error)
-      );
-    }
-
     if (value === "C") {
       setResponse("");
     } else if (value === "=") {
@@ -69,20 +64,34 @@ function MathLayout({
     } else if (response.length <= 10) {
       setResponse((prevResponse) => prevResponse + value);
     }
+
+    if (isSoundEnabled) {
+      window.setTimeout(() => {
+        Popaudio.currentTime = 0;
+        Popaudio.play().catch((error) =>
+          console.error("Erro ao iniciar a reproducao:", error)
+        );
+      }, 0);
+    }
   }, [checkAnswer, isSoundEnabled, response.length, setIsSoundEnabled, setResponse]);
 
   return (
-    <Container>
+    <Container $disableMotion={disableMotion}>
       <SkyGlow className="top" />
       <SkyGlow className="bottom" />
 
-      <WaterFill fillheight={thermometer}>
-        <Wave style={{ bottom: "0", animationDuration: "6s" }} />
+      <WaterFill fillheight={thermometer} $disableMotion={disableMotion}>
         <Wave
+          $disableMotion={disableMotion}
+          style={{ bottom: "0", animationDuration: "6s" }}
+        />
+        <Wave
+          $disableMotion={disableMotion}
           className="secondary"
           style={{ bottom: "10px", opacity: 0.5, animationDuration: "8s" }}
         />
         <Wave
+          $disableMotion={disableMotion}
           className="tertiary"
           style={{ bottom: "20px", opacity: 0.3, animationDuration: "10s" }}
         />
@@ -95,19 +104,19 @@ function MathLayout({
               <FeedbackFlash
                 key={`${feedbackState}-${feedbackTick}`}
                 $feedbackstate={feedbackState}
-                initial={{ opacity: 0, scale: 0.92 }}
-                animate={{ opacity: 1, scale: 1.08 }}
-                exit={{ opacity: 0, scale: 1.22 }}
-                transition={{ duration: 0.45, ease: "easeOut" }}
+                initial={canAnimate ? { opacity: 0, scale: 0.92 } : false}
+                animate={canAnimate ? { opacity: 1, scale: 1.08 } : false}
+                exit={canAnimate ? { opacity: 0, scale: 1.22 } : undefined}
+                transition={canAnimate ? { duration: 0.45, ease: "easeOut" } : { duration: 0 }}
               />
 
               <RewardToast
                 key={`toast-${feedbackState}-${feedbackTick}`}
                 $feedbackstate={feedbackState}
-                initial={{ opacity: 0, y: -12, scale: 0.92 }}
-                animate={{ opacity: 1, y: 0, scale: 1 }}
-                exit={{ opacity: 0, y: -18, scale: 0.94 }}
-                transition={{ duration: 0.35 }}
+                initial={canAnimate ? { opacity: 0, y: -12, scale: 0.92 } : false}
+                animate={canAnimate ? { opacity: 1, y: 0, scale: 1 } : false}
+                exit={canAnimate ? { opacity: 0, y: -18, scale: 0.94 } : undefined}
+                transition={canAnimate ? { duration: 0.35 } : { duration: 0 }}
               >
                 {feedbackMessage || (feedbackState === "correct" ? "Boa" : "Ops")}
               </RewardToast>
@@ -127,10 +136,14 @@ function MathLayout({
           playWrongSound={playWrongSound}
           setPlayCorrectSound={setPlayCorrectSound}
           setPlayWrongSound={setPlayWrongSound}
+          disableMotion={disableMotion}
         />
 
         {progressBar ? (
-          <EquationsProgressBarContainer fillwidth={progressBar}>
+          <EquationsProgressBarContainer
+            fillwidth={progressBar}
+            $disableMotion={disableMotion}
+          >
             <div className="equationfillBar"></div>
           </EquationsProgressBarContainer>
         ) : null}
@@ -141,7 +154,7 @@ function MathLayout({
           key={`equation-${feedbackState}-${feedbackTick}`}
           $feedbackstate={feedbackState}
           animate={
-            isMobileDisplay
+            !canAnimate || isMobileDisplay
               ? idleDisplayAnimation
               : feedbackState === "correct"
               ? { scale: [1, 1.03, 1], y: [0, -2, 0] }
@@ -158,7 +171,7 @@ function MathLayout({
           key={`response-${feedbackState}-${feedbackTick}`}
           $feedbackstate={feedbackState}
           animate={
-            isMobileDisplay
+            !canAnimate || isMobileDisplay
               ? idleDisplayAnimation
               : feedbackState === "correct"
               ? { scale: [1, 1.05, 1], y: [0, -3, 0] }
@@ -171,7 +184,11 @@ function MathLayout({
           <DisplayText>{response}</DisplayText>
         </AnimatedDisplay>
 
-        <ButtonsCompoent handleButtonClicked={handleButtonClicked} />
+        <ButtonsCompoent
+          handleButtonClicked={handleButtonClicked}
+          disableMotion={disableMotion}
+          instantInput={disableMotion}
+        />
       </ContainerMathGame>
     </Container>
   );
@@ -203,6 +220,18 @@ const Container = styled.div`
     radial-gradient(circle at 18% 18%, rgba(255, 98, 130, 0.08), transparent 20%),
     radial-gradient(circle at 82% 18%, rgba(126, 123, 255, 0.1), transparent 20%),
     linear-gradient(180deg, #07131f 0%, #0e2235 46%, #0a1826 100%);
+
+  ${(props) =>
+    props.$disableMotion
+      ? `
+        *,
+        *::before,
+        *::after {
+          animation: none !important;
+          transition: none !important;
+        }
+      `
+      : ""}
 `;
 
 const SkyGlow = styled.div`
@@ -242,7 +271,8 @@ const WaterFill = styled.div`
     rgba(53, 95, 193, 0.58),
     rgba(96, 195, 255, 0.16)
   );
-  transition: height 1s ease-in-out;
+  transition: ${(props) =>
+    props.$disableMotion ? "none" : "height 1s ease-in-out"};
   overflow: hidden;
 `;
 
@@ -252,7 +282,8 @@ const Wave = styled.div`
   height: 100px;
   background: url("data:image/svg+xml,${svg}");
   background-size: cover;
-  animation: waveAnimation linear infinite;
+  animation: ${(props) =>
+    props.$disableMotion ? "none" : "waveAnimation linear infinite"};
   opacity: ${(props) => props.opacity || 0.7};
 
   @keyframes waveAnimation {
@@ -313,7 +344,8 @@ const ContainerMathGame = styled.div`
 
   @media (max-width: 600px) {
     padding: 18px 16px 22px;
-    border-radius: 24px;
+    border-radius: 0px;
+   // height: 100vh;
     backdrop-filter: none;
     box-shadow: 0 14px 28px rgba(0, 0, 0, 0.26);
   }
@@ -550,7 +582,8 @@ const EquationsProgressBarContainer = styled.div`
     height: 100%;
     background: linear-gradient(to right, #7bdcff, #4aaeff, #6d72ff);
     width: ${(props) => (props.fillwidth ? props.fillwidth + "%" : "0%")};
-    transition: width 0.5s ease-in-out;
+    transition: ${(props) =>
+      props.$disableMotion ? "none" : "width 0.5s ease-in-out"};
     box-shadow: 0 0 10px rgba(74, 174, 255, 0.24);
   }
 

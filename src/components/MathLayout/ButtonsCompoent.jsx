@@ -1,11 +1,36 @@
 /* eslint-disable react/prop-types */
-import { memo } from "react";
+import { memo, useRef } from "react";
 import styled, { css } from "styled-components";
 import { FaCheck, FaBackspace } from "react-icons/fa";
 
 const buttonItems = [1, 2, 3, 4, 5, 6, 7, 8, 9, 0, "C", "="];
 
-function ButtonsCompoent({ handleButtonClicked }) {
+function ButtonsCompoent({
+  handleButtonClicked,
+  disableMotion = false,
+  instantInput = false,
+}) {
+  const lastInstantInputTimeRef = useRef(0);
+
+  const handlePointerDown = (event, value) => {
+    if (!instantInput || event.pointerType === "mouse") {
+      return;
+    }
+
+    event.preventDefault();
+    lastInstantInputTimeRef.current = Date.now();
+    handleButtonClicked(value);
+  };
+
+  const handleClick = (value) => {
+    if (Date.now() - lastInstantInputTimeRef.current < 700) {
+      lastInstantInputTimeRef.current = 0;
+      return;
+    }
+
+    handleButtonClicked(value);
+  };
+
   return (
     <ButtonsContainer>
       {buttonItems.map((value) => {
@@ -17,9 +42,11 @@ function ButtonsCompoent({ handleButtonClicked }) {
             key={value}
             type="button"
             $variant={isConfirm ? "confirm" : isClear ? "clear" : "number"}
-            onClick={() => handleButtonClicked(value)}
+            $disableMotion={disableMotion}
+            onPointerDown={(event) => handlePointerDown(event, value)}
+            onClick={() => handleClick(value)}
           >
-            <ButtonInner>
+            <ButtonInner $disableMotion={disableMotion}>
               <ButtonGlow />
               <ButtonLabel>
                 {isClear ? <FaBackspace /> : isConfirm ? <FaCheck /> : value}
@@ -103,7 +130,9 @@ const Button = styled.button`
   background: transparent;
   cursor: pointer;
   user-select: none;
-  transition: transform 0.12s ease, filter 0.12s ease;
+  touch-action: manipulation;
+  transition: ${(props) =>
+    props.$disableMotion ? "none" : "transform 0.12s ease, filter 0.12s ease"};
   -webkit-tap-highlight-color: transparent;
   --press-lift: 7px;
   --press-blur: 18px;
@@ -122,16 +151,24 @@ const Button = styled.button`
   filter: drop-shadow(0 10px 13px var(--key-shadow));
 
   &:hover {
-    transform: translateY(-1px);
-    filter: drop-shadow(0 12px 16px var(--key-shadow)) saturate(1.04);
+    transform: ${(props) =>
+      props.$disableMotion ? "none" : "translateY(-1px)"};
+    filter: ${(props) =>
+      props.$disableMotion
+        ? "drop-shadow(0 10px 13px var(--key-shadow))"
+        : "drop-shadow(0 12px 16px var(--key-shadow)) saturate(1.04)"};
   }
 
   &:active {
-    --press-lift: 2px;
-    --press-blur: 9px;
-    --press-opacity: 0.24;
-    transform: translateY(5px) scale(0.992);
-    filter: drop-shadow(0 4px 7px var(--key-shadow)) saturate(0.98);
+    --press-lift: ${(props) => (props.$disableMotion ? "7px" : "2px")};
+    --press-blur: ${(props) => (props.$disableMotion ? "18px" : "9px")};
+    --press-opacity: ${(props) => (props.$disableMotion ? "0.36" : "0.24")};
+    transform: ${(props) =>
+      props.$disableMotion ? "none" : "translateY(5px) scale(0.992)"};
+    filter: ${(props) =>
+      props.$disableMotion
+        ? "drop-shadow(0 10px 13px var(--key-shadow))"
+        : "drop-shadow(0 4px 7px var(--key-shadow)) saturate(0.98)"};
   }
 
   @media (min-width: 701px) and (max-height: 720px) {
@@ -181,7 +218,8 @@ const ButtonInner = styled.span`
     0 var(--press-lift) 0 var(--key-edge),
     0 calc(var(--press-lift) + 5px) var(--press-blur)
       rgba(0, 0, 0, var(--press-opacity));
-  transition: box-shadow 0.12s ease, filter 0.12s ease;
+  transition: ${(props) =>
+    props.$disableMotion ? "none" : "box-shadow 0.12s ease, filter 0.12s ease"};
 
   &::before {
     content: "";

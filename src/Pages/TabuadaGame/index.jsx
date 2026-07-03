@@ -159,6 +159,7 @@ export default function TabuadaGame() {
       feedbackState={feedbackState}
       feedbackTick={feedbackTick}
       feedbackMessage={feedbackMessage}
+      disableMotion
     />
   );
 }

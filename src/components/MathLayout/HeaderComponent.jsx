@@ -14,17 +14,24 @@ export default function HeaderComponent({
   playWrongSound,
   setPlayCorrectSound,
   setPlayWrongSound,
+  disableMotion = false,
 }) {
   return (
     <Header>
       <OptionsLeft>
-        <Option onClick={() => handleButtonClicked("DoNothing")}>
+        <Option
+          onClick={() => handleButtonClicked("DoNothing")}
+          $disableMotion={disableMotion}
+        >
           <Link to="/">
             <FaHome />
           </Link>
         </Option>
 
-        <Option onClick={() => handleButtonClicked("sound-toggle")}>
+        <Option
+          onClick={() => handleButtonClicked("sound-toggle")}
+          $disableMotion={disableMotion}
+        >
           {isSoundEnabled ? <FaVolumeUp /> : <FaVolumeMute />}
         </Option>
       </OptionsLeft>
@@ -77,7 +84,10 @@ const Option = styled.div`
   background: linear-gradient(180deg, #7bdcff 0%, #4a9dff 60%, #6b6dff 100%);
   border: 3px solid rgba(255, 255, 255, 0.88);
   box-shadow: 0 12px 18px rgba(27, 92, 186, 0.26);
-  transition: transform 0.12s ease-in-out, box-shadow 0.12s ease-in-out;
+  transition: ${(props) =>
+    props.$disableMotion
+      ? "none"
+      : "transform 0.12s ease-in-out, box-shadow 0.12s ease-in-out"};
   display: flex;
   justify-content: center;
   align-items: center;
@@ -97,7 +107,8 @@ const Option = styled.div`
   }
 
   &:active {
-    transform: translateY(2px);
+    transform: ${(props) =>
+      props.$disableMotion ? "none" : "translateY(2px)"};
     box-shadow: 0 6px 12px rgba(27, 92, 186, 0.22);
   }
 `;

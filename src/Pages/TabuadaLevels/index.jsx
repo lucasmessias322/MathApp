@@ -40,9 +40,9 @@ export default function TabuadaLevels() {
       </Header>
       <div className="dd">
         <StageIntro
-          initial={{ opacity: 0, y: 22 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.45 }}
+          
+         
+        
         >
           <small>Missao especial</small>
           <h1>Escolha a tabuada</h1>
@@ -53,9 +53,7 @@ export default function TabuadaLevels() {
           {levels.map((elem, index) => (
             <Level
               key={elem}
-              initial={{ opacity: 0, y: 18 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.35, delay: index * 0.04 }}
+             
             >
               <Link to={`/TaboadaCompleta/${elem}`}>
                 <NumberBadge>{elem}</NumberBadge>
@@ -241,7 +239,7 @@ const ReturnArrow = styled.div`
   box-shadow: 0 12px 20px rgba(37, 94, 206, 0.24);
 
   a {
-    transition: 0.3s;
+   
     font-weight: bold;
     padding: 10px;
     display: flex;
