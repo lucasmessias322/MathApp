@@ -345,7 +345,6 @@ const ContainerMathGame = styled.div`
   @media (max-width: 600px) {
     padding: 18px 16px 22px;
     border-radius: 0px;
-   // height: 100vh;
     backdrop-filter: none;
     box-shadow: 0 14px 28px rgba(0, 0, 0, 0.26);
   }

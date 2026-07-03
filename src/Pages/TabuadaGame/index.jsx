@@ -145,7 +145,7 @@ export default function TabuadaGame() {
 
   return (
     <MathLayout
-      thermometer={thermometer}
+      progressBar={thermometer}
       equation={equation}
       response={response}
       playCorrectSound={playCorrectSound}
