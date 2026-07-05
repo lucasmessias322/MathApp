@@ -9,6 +9,8 @@ import AditionGame from "./Pages/AditionGame";
 import SubtractionLevels from "./Pages/SubtractionLevels";
 import SubtractionGame from "./Pages/SubtractionGame";
 import TabuadaAleatoria from "./Pages/TabuadaAleatoria";
+import MutiplicationLevels from "./Pages/MutiplicationLevels";
+import MutiplicationGame from "./Pages/MutiplicationGame";
 
 export default function RoutesComponet() {
   return (
@@ -24,6 +26,8 @@ export default function RoutesComponet() {
         />
         <Route exact path="/aditionlevels" element={<AditionLevels />} />
         <Route exact path="/aditiongame/:phase" element={<AditionGame />} />
+        <Route exact path="/multiplicationlevels" element={<MutiplicationLevels />} />
+        <Route exact path="/multiplicationgame/:phase" element={<MutiplicationGame />} />
 
         <Route
           exact

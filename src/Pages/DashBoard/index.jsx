@@ -31,6 +31,16 @@ const gameModes = [
     glow: "rgba(63, 141, 255, 0.34)",
     badge: "Treino tatico",
   },
+
+  {
+    to: "/multiplicationlevels",
+    title: "Multiplicacao",
+    subtitle: "Treine multiplicacoes e avance pelos desafios",
+    icon: <FaBolt />,
+    colors: ["#ff9b5f", "#ff5f7a"],
+    glow: "rgba(255, 95, 122, 0.35)",
+    badge: "Treino rapido",
+  },
   {
     to: "/tabuadalevels",
     title: "Reino da Tabuada",
@@ -78,9 +88,7 @@ export default function DashBoard() {
           </BrandCopy>
         </BrandRow>
 
-        <HeroCard
-         
-        >
+        <HeroCard>
           <HeroAccent className="pink" />
           <HeroAccent className="blue" />
 
@@ -110,12 +118,7 @@ export default function DashBoard() {
 
       <GamesContainer>
         {gameModes.map((mode, index) => (
-          <Game
-            key={mode.title}
-            $colors={mode.colors}
-            $glow={mode.glow}
-           
-          >
+          <Game key={mode.title} $colors={mode.colors} $glow={mode.glow}>
             <Link to={mode.to}>
               <CardSpark />
               <IconBubble>{mode.icon}</IconBubble>
@@ -141,8 +144,16 @@ const Container = styled.div`
   padding: 28px 16px 40px;
   margin: 0 auto;
   background:
-    radial-gradient(circle at top center, rgba(94, 180, 255, 0.12), transparent 24%),
-    radial-gradient(circle at 20% 20%, rgba(255, 98, 130, 0.08), transparent 22%),
+    radial-gradient(
+      circle at top center,
+      rgba(94, 180, 255, 0.12),
+      transparent 24%
+    ),
+    radial-gradient(
+      circle at 20% 20%,
+      rgba(255, 98, 130, 0.08),
+      transparent 22%
+    ),
     linear-gradient(180deg, #07131f 0%, #0e2235 46%, #0a1826 100%);
   position: relative;
   overflow: hidden;
@@ -236,7 +247,11 @@ const TitleBadge = styled.span`
   margin-bottom: 10px;
   padding: 6px 14px;
   border-radius: 999px;
-  background: linear-gradient(90deg, rgba(255, 98, 130, 0.95), rgba(126, 123, 255, 0.95));
+  background: linear-gradient(
+    90deg,
+    rgba(255, 98, 130, 0.95),
+    rgba(126, 123, 255, 0.95)
+  );
   color: #fff;
   font-size: 0.9rem;
   font-weight: 800;
@@ -267,8 +282,12 @@ const HeroCard = styled(motion.div)`
   max-width: 760px;
   padding: 22px 24px 20px;
   border-radius: 30px;
-  background:
-    linear-gradient(135deg, rgba(17, 36, 58, 0.94) 0%, rgba(16, 30, 54, 0.9) 52%, rgba(28, 37, 77, 0.92) 100%);
+  background: linear-gradient(
+    135deg,
+    rgba(17, 36, 58, 0.94) 0%,
+    rgba(16, 30, 54, 0.9) 52%,
+    rgba(28, 37, 77, 0.92) 100%
+  );
   border: 1px solid rgba(132, 205, 255, 0.18);
   backdrop-filter: blur(14px);
   box-shadow: 0 24px 48px rgba(0, 0, 0, 0.28);
@@ -395,7 +414,9 @@ const Game = styled(motion.li)`
   border-radius: 34px;
   cursor: pointer;
   width: 100%;
-  transition: transform 0.25s ease, box-shadow 0.25s ease;
+  transition:
+    transform 0.25s ease,
+    box-shadow 0.25s ease;
   background: linear-gradient(
     135deg,
     ${(props) => props.$colors?.[0] || "#69c6ff"} 0%,
@@ -507,4 +528,3 @@ const CardArrow = styled.span`
     display: none;
   }
 `;
-
