@@ -124,10 +124,7 @@ function MathLayout({
           ) : null}
         </AnimatePresence>
 
-        <GameTitleArea>
-          {/* <small>Hora do desafio</small> */}
-          {/* <h1>Resolva a conta</h1> */}
-        </GameTitleArea>
+        
 
         <HeaderComponent
           handleButtonClicked={handleButtonClicked}

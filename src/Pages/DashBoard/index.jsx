@@ -79,9 +79,7 @@ export default function DashBoard() {
         </BrandRow>
 
         <HeroCard
-          initial={{ opacity: 0, y: 24 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.55 }}
+         
         >
           <HeroAccent className="pink" />
           <HeroAccent className="blue" />
@@ -116,11 +114,7 @@ export default function DashBoard() {
             key={mode.title}
             $colors={mode.colors}
             $glow={mode.glow}
-            initial={{ opacity: 0, y: 24 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.45, delay: index * 0.08 }}
-            whileHover={{ scale: 1.03, rotate: -1 }}
-            whileTap={{ scale: 0.985 }}
+           
           >
             <Link to={mode.to}>
               <CardSpark />

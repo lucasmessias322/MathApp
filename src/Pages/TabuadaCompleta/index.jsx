@@ -39,11 +39,7 @@ export default function TaboadaCompleta() {
       </TopBar>
 
       <Content>
-        <HeroCard
-          initial={{ opacity: 0, y: 18 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.4 }}
-        >
+        <HeroCard>
           <HeroBadge>Modo estudo</HeroBadge>
           <Title>Tabuada do {tabuNumber}</Title>
           <Description>
@@ -70,11 +66,7 @@ export default function TaboadaCompleta() {
           </Highlights>
         </HeroCard>
 
-        <LessonCard
-          initial={{ opacity: 0, y: 22 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.45, delay: 0.05 }}
-        >
+        <LessonCard>
           <SectionHeader>
             <div>
               <small>Sequencia completa</small>
@@ -85,21 +77,15 @@ export default function TaboadaCompleta() {
 
           <TableGrid>
             {table.map((item, index) => (
-              <TableItem
-                key={item.id}
-                initial={{ opacity: 0, y: 14 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.25, delay: index * 0.03 }}
-              >
+              <TableItem key={item.id}>
                 <EquationGroup>
-                  <Order>{String(item.id).padStart(2, "0")}</Order>
                   <div>
-                    <span>{item.label}</span>
+                    <span>
+                      {item.label} = {item.result}
+                    </span>
                     <small>Resultado da rodada</small>
                   </div>
                 </EquationGroup>
-
-                <ResultBubble>{item.result}</ResultBubble>
               </TableItem>
             ))}
           </TableGrid>
@@ -125,9 +111,21 @@ const Container = styled.div`
   position: relative;
   overflow: hidden;
   background:
-    radial-gradient(circle at top center, rgba(88, 196, 255, 0.12), transparent 18%),
-    radial-gradient(circle at 18% 18%, rgba(255, 98, 130, 0.08), transparent 20%),
-    radial-gradient(circle at 82% 18%, rgba(126, 123, 255, 0.1), transparent 20%),
+    radial-gradient(
+      circle at top center,
+      rgba(88, 196, 255, 0.12),
+      transparent 18%
+    ),
+    radial-gradient(
+      circle at 18% 18%,
+      rgba(255, 98, 130, 0.08),
+      transparent 20%
+    ),
+    radial-gradient(
+      circle at 82% 18%,
+      rgba(126, 123, 255, 0.1),
+      transparent 20%
+    ),
     linear-gradient(180deg, #07131f 0%, #0e2235 46%, #0a1826 100%);
 `;
 
@@ -187,7 +185,11 @@ const HeroCard = styled(motion.section)`
   padding: 24px 20px 20px;
   border-radius: 30px;
   background:
-    radial-gradient(circle at top right, rgba(255, 98, 130, 0.12), transparent 30%),
+    radial-gradient(
+      circle at top right,
+      rgba(255, 98, 130, 0.12),
+      transparent 30%
+    ),
     linear-gradient(
       135deg,
       rgba(14, 29, 46, 0.9) 0%,
@@ -273,7 +275,11 @@ const LessonCard = styled(motion.section)`
   padding: 22px 16px 18px;
   border-radius: 30px;
   background:
-    radial-gradient(circle at top left, rgba(88, 196, 255, 0.08), transparent 28%),
+    radial-gradient(
+      circle at top left,
+      rgba(88, 196, 255, 0.08),
+      transparent 28%
+    ),
     linear-gradient(135deg, #12263d 0%, #143052 58%, #222f6a 100%);
   border: 1px solid rgba(123, 201, 255, 0.18);
   box-shadow: 0 18px 34px rgba(0, 0, 0, 0.24);
@@ -345,7 +351,7 @@ const EquationGroup = styled.div`
 
   span {
     display: block;
-    font-size: 1.1rem;
+    font-size: 1.2rem;
     font-weight: 800;
     color: #f4fbff;
   }
@@ -429,7 +435,9 @@ const PlayButton = styled(Link)`
   gap: 10px;
   font-size: 1.05rem;
   font-weight: 900;
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
 
   &:hover {
     transform: translateY(-2px);
